@@ -30,7 +30,7 @@ const CreatePost = () => {
         <div className="cursor-pointer">
         <FaImage size={20}/>
         </div>
-        <button className="bg-[#1D9BF0] p-3 rounded-full cursor-pointer border-none w-20 font-bold text-white">Post</button>
+        <button className="bg-[#1D9BF0] p-3 rounded-full cursor-pointer border-none w-20 font-bold text-white hover:bg-blue-400">Post</button>
         </div>
         </div>
       </div>
