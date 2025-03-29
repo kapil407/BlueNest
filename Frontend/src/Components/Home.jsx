@@ -13,6 +13,7 @@ const Home = () => {
         <LeftSideBar/>
            <Feed/>
            <RightSideBar/>
+       
         </div>
      
         </>
