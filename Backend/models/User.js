@@ -38,6 +38,14 @@ const userSchema=new mongoose.Schema({
             }
         }
     },
+    following:{
+        type:Array, // store the all ids of those people , i follow
+        default:[]
+    },
+    followers:{
+        type:Array,  // store the all ids of those users who follow me 
+        default:[]
+    }
 
 
 
