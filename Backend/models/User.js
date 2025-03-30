@@ -37,8 +37,13 @@ const userSchema=new mongoose.Schema({
                 
             }
         }
-    }
+    },
 
 
-})
+
+},
+{
+    timestamps:true
+}
+)
 const newUser=mongoose.model("User",userSchema);  // User id model   
