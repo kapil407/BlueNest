@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Logout from "./Logout";
 
 const Login = () => {
   const [isLogin, setisLogin] = useState(true);
@@ -9,19 +10,19 @@ const Login = () => {
   return (
     <>
       <div className="h-screen w-screen flex justify-center items-center ">
-        <div className="flex justify-evenly w-[80%] ">
-          <div className="my-41">
+        <div className="flex justify-evenly w-[80%] items-center">
+          <div >
             <img
-              className=" w-35 h-35 "
+              className=" w-45 h-45 "
               src="https://www.edigitalagency.com.au/wp-content/uploads/new-Twitter-logo-x-black-png-1200x1227.png"
               alt="twitter-logo"
             />
           </div>
-          <div>
+          <div >
             <h1 className="font-bold text-6xl">Happening now</h1>
-            <h1 className="font-bold text-2xl my-2">Login</h1>
+            <h1 className="font-bold text-2xl my-2">{isLogin? "Login":"SignUp"}</h1>
             <div>
-              <form className="flex flex-col"> 
+              <form className="flex flex-col "> 
                 {!isLogin && (
                   <>
                     <input
@@ -52,10 +53,10 @@ const Login = () => {
                   className="border  border-gray-600 outline-blue-400  w-[60%] p-2 rounded-full my-2"
                 />
                <Link to="/">
-               <button  className="px-3 py-1 bg-[#1D9BF0] w-[60%] my-2 rounded-full cursor-pointer hover:bg-blue-400 text-white font-bold">Login</button>
+               <button  className="px-3 py-1 bg-[#1D9BF0] w-[60%] my-2 rounded-full cursor-pointer hover:bg-blue-400 text-white font-bold">{isLogin? "Login":"SignUp"}</button>
                </Link>
                 <h1>
-                  {isLogin ? "Already have an account? ": "Don't have an account? "}<span onClick={isLoginHandler} className="text-blue-600 cursor-pointer">{isLogin ? "Register" : "Login"}</span></h1>
+                  {isLogin ? "Already have an account? ": "Don't have an account? "}<span onClick={isLoginHandler} className="text-blue-600 cursor-pointer">{isLogin ? "SignUp" : "Login"}</span></h1>
               </form>
             </div>
           </div>

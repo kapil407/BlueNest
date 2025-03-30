@@ -1,6 +1,6 @@
 import express from 'express';
 const PORT=4000;
-import {connectDB} from './config/database.js'
+import {connectDB} from './config/Database.js'
 const app=express();
 app.get('/',(req,res)=>{
         res.send("hello");

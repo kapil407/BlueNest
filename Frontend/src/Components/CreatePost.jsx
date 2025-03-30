@@ -1,6 +1,7 @@
 import React from "react";
 import Avatar from 'react-avatar';
 import { FaImage } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 const CreatePost = () => {
   return (
     <>
@@ -20,16 +21,16 @@ const CreatePost = () => {
           </div>
          <div>
          <div className="flex ">
-            <div>
+            <Link to="/profile">
             <Avatar className="m-1 cursor-pointer" src="https://tecdn.b-cdn.net/img/new/avatars/2.webp" size="50" round={true} />
-            </div>
+            </Link>
             <input className="text-lg  ml-2 mt-1 outline-none border-none w-full" type="text"  placeholder="What's happening?"/>
           </div>
          </div>
         <div className="flex justify-between p-8 border-b border-gray-300 items-center">
-        <div className="cursor-pointer">
-        <FaImage size={20}/>
-        </div>
+        {/* <div> */}
+        <FaImage size={25} className="cursor-pointer"/>
+        {/* </div> */}
         <button className="bg-[#1D9BF0] p-3 rounded-full cursor-pointer border-none w-20 font-bold text-white hover:bg-blue-400">Post</button>
         </div>
         </div>

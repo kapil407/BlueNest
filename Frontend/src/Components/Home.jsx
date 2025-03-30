@@ -2,6 +2,7 @@ import React from 'react'
 import LeftSideBar from './LeftSideBar.jsx'
 import RightSideBar from './RightSideBar.jsx'
 import Feed from "./Feed.jsx"
+import { Outlet } from 'react-router-dom'
 
 
 const Home = () => {
@@ -11,8 +12,8 @@ const Home = () => {
   
       <div className='flex justify-between  w-[80%] mx-auto'>
         <LeftSideBar/>
-           <Feed/>
-           <RightSideBar/>
+          <Outlet/>
+        <RightSideBar/>
        
         </div>
      
