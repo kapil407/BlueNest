@@ -2,7 +2,8 @@ import bcrypt from 'bcrypt'
 import User from '../models/User.js'
 import cookie from 'cookie-parser'
 import jwt from 'jsonwebtoken'
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 const LoginController=async (req,res)=>{
@@ -20,7 +21,7 @@ const LoginController=async (req,res)=>{
                 res.status(400).json({message:"incorrect password"});
             }
         // creating token for create cookie 
-        const token= jwt.sign({userId:exitUser._id},"kapil@123$#@");
+        const token= jwt.sign({userId:exitUser._id}, process.env.JWT_SECRET); // process.env.JWT_SECRET, secret key 
 
         // send cookie as identity card
         res.cookie("token",token);
