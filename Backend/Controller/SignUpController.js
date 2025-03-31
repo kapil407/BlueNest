@@ -34,7 +34,7 @@ import User from '../models/User.js'
         }
         catch(err){
                 // console.log("kapil")
-                res.status(500).json({ error: err.message});
+               return res.status(500).json({ error: err.message});
               
                 
         }
