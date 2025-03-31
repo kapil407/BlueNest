@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import validator from 'validator'
 
 
 const userSchema=new mongoose.Schema({
@@ -30,12 +31,12 @@ const userSchema=new mongoose.Schema({
     userName:{
         type:String,
         required:true,
-        unique:true
+       
     },
     password:{
-        type:Number,
+        type:String,
         required:true,
-        minLength:[9,"Passwors must be greater then 8 "],
+        minLength:[6,"Passwors must be greater then 5 "],
         validate(value){
             if(!validator.isStrongPassword(value)){
                 throw new Error("Enter the strong password");
@@ -59,4 +60,5 @@ const userSchema=new mongoose.Schema({
     timestamps:true
 }
 )
-const newUser=mongoose.model("User",userSchema);  // User id model   
+ const User=mongoose.model("User",userSchema);  // User id model   
+ export default User;
