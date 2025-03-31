@@ -30,7 +30,7 @@ import User from '../models/User.js'
 
              const data=   await newUser.save();
                
-                res.json({ message:"signUp Successfully",data});
+               return  res.json({ message:"signUp Successfully",data});
         }
         catch(err){
                 // console.log("kapil")
