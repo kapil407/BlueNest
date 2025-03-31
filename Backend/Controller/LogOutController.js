@@ -5,8 +5,8 @@ const LogOutController=async (req,res)=>{
             try{
                 
              
-                res.cookie("token",process.env.SECRET_KEY,{expire:new Date(Date.now())});
-                res.json({message:"logout succesfully"});
+                res.cookie("token",process.env.SECRET_KEY,{expires:new Date(Date.now())});
+                return res.json({message:"logout succesfully"});
 
             }
             catch(err){
