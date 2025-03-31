@@ -13,16 +13,19 @@ const LoginController=async (req,res)=>{
         const exitUser=await User.findOne({emailId:emailId})
         const userPassword=exitUser.password;
         if(!exitUser){
-            res.status(400).json({message:"User not found"});
+           return res.status(400).json({message:"User not found"});
         }
         const decoded=await bcrypt.compare(password,userPassword);  // compare the password of inputPassword with exit password
+
+        // creating token for create cookie 
         const token= jwt.sign({userId:exitUser._id},"kapil@123$#@");
 
+        // send cookie as identity card
         res.cookie("token",token);
         res.json({message:"Login successfully"});
     }
      catch(err){
-            res.status(400).json({message:err.message});
+           return  res.status(400).json({message:err.message});
         }
 
 }
