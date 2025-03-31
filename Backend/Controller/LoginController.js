@@ -15,8 +15,10 @@ const LoginController=async (req,res)=>{
         if(!exitUser){
            return res.status(400).json({message:"User not found"});
         }
-        const decoded=await bcrypt.compare(password,userPassword);  // compare the password of inputPassword with exit password
-
+        const isMatch=await bcrypt.compare(password,userPassword);  // compare the password of inputPassword with exit password
+            if(!isMatch){
+                res.status(400).json({message:"incorrect password"});
+            }
         // creating token for create cookie 
         const token= jwt.sign({userId:exitUser._id},"kapil@123$#@");
 
