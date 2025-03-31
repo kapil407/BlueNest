@@ -1,8 +1,9 @@
 import express from 'express';
 const PORT=4660;
 import {connectDB} from './config/Database.js'
-import signUpRouter from './routes/auth.js'
+import {signUpRouter,loginRouter} from './routes/auth.js'
 import cookieParser from 'cookie-parser'
+
 
 const app=express();
 
@@ -16,6 +17,7 @@ app.use(cookieParser())  // extract the cookie from the request and add it to th
 
 
 app.use('/',signUpRouter);
+app.use('/',loginRouter)
 
 
 connectDB().then(()=>{

@@ -12,3 +12,4 @@ const LoginValidation=(req,res,next)=>{
         }
         next();
 }
+export default LoginValidation;
