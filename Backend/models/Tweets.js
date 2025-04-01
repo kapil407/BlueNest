@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 const tweetSchema=new mongoose.Schema({
     description:{
         type:String,
+        maxLength:[120,"not more than 120"]
     },
     likes:{
         type:Array,  //to store likes and return the length of array
@@ -27,3 +28,4 @@ const tweetSchema=new mongoose.Schema({
 }
 )
 const Tweet=mongoose.model("Tweet",tweetSchema);  // tweet model   
+export default Tweet;
