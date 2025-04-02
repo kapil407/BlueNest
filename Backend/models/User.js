@@ -51,7 +51,12 @@ const userSchema=new mongoose.Schema({
     followers:{
         type:Array,  // store the all ids of those users who follow me 
         default:[]
-    }
+    },
+    bookmarks:{
+        type:Array,   //to store of all userid who save this tweet 
+       default:[]  
+
+    },
 
 
 
