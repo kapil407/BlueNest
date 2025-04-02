@@ -4,7 +4,7 @@ const Logout=()=>{
         const [isLogout , setisLogout]=useState(false);
     return(
         <>
-        <Login props={isLogout}/>
+       
         </>
     )
 }
