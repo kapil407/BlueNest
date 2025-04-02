@@ -10,11 +10,7 @@ const tweetSchema=new mongoose.Schema({
         type:Array,  //to store likes and return the length of array
        default:[]
     },
-    bookmarks:{
-        type:Array,   //to store of all userid who save this tweet 
-       default:[]  
-
-    },
+   
     userId:{
         type:mongoose.Schema.ObjectId,  // userid of that person wwho create new tweet 
         ref:"User"                       // refer the model of that person
