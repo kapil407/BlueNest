@@ -137,24 +137,22 @@ export const bookmarksController=async (req,res)=>{
         const userId=req.userId;
         const tweetId=req.params.id;   // find tweetId
 
-        const tweetUser=await Tweet.findOne({_id:tweetId});  // by tweetId find that user 
+        // const tweetUser=await Tweet.findOne({_id:tweetId});  // by tweetId find that user 
      
             const logedInUser=req.user;
 
-            const description=tweetUser.description;   // extract description from tweetUser
+        //     const description=tweetUser.description;   // extract description from tweetUser
           
-            if( Object.keys(logedInUser.bookmarks).every(key=>{
-                logedInUser.bookmarks.includes(key);
-            })){
+            if( logedInUser.bookmarks.includes(tweetId)){
 
             
-              await User.findByIdAndUpdate(userId,{$pull:{bookmarks:{tweetId,description}}});
+              await User.findByIdAndUpdate(userId,{$pull:{bookmarks:tweetId}});
               const updatedUserData=await User.findById(userId);
-              return res.json({message:" remove bookmarks successfully"});
+              return res.json({message:" remove bookmarks successfully",data:updatedUserData});
 
             }
             else{
-             await User.findByIdAndUpdate(userId,{$push:{bookmarks:{tweetId,description}}});
+             await User.findByIdAndUpdate(userId,{$push:{bookmarks:tweetId}});
           
                 const updatedUserData=await User.findById(userId);
                 return res.json({message:" bookmarks successfully",data:updatedUserData});
@@ -173,4 +171,73 @@ export const getProfileController=async (req,res)=>{
             } catch (error) {
                 return res.status(400).json({message:error.message});
             }
+}
+
+export const getOthersProfileController=async (req,res)=>{
+            try {
+                    const userId=req.userId;
+                const othersUse=await User.find({_id:{$ne:userId}}).select("-password");
+                if(!othersUse){
+                    return res.status(400).json({message:"there is not User"});
+                }
+                return res.json(othersUse);
+
+            } catch (error) {
+                return res.status(400).json({error:error.message});
+            }
+}
+
+export const FollowingController=async (req,res)=>{
+    try {
+       
+            const loggedInUser=req.user;
+            const loggedInUserId=req.userId;
+            const following=loggedInUser?.following;
+           
+            const userId=req.params.id;
+     
+            const user=await User.findById(userId);
+                if(!user){
+                    return res.json({message:"user not found"})
+                }
+            const followers=user?.followers;
+       
+            if(!following.includes(userId)){
+                await User.findByIdAndUpdate(loggedInUserId,{$push:{following:userId}});  // push the user userId into following{ARRAY} of LoggedInUser
+                await User.findByIdAndUpdate(userId,{$push:{followers:loggedInUserId}}); // push the loggedInUserId of loggedInUser into followers{ARRAY} of user
+                return res.json({message:`You follow ${user.firstName}`});
+            } 
+            else{
+              
+                return res.json({message:`You already follow  ${user.firstName}`});
+            }
+    } catch (error) {
+        return res.status(400).json({error:error.message});
+    }
+}
+export const unFollowController=async (req,res)=>{
+        try {
+            const loggedInUser=req.user;
+            const loggedInUserId=req.userId;
+            const following=loggedInUser?.following;
+           
+            const userId=req.params.id;
+     
+            const user=await User.findById(userId);
+                if(!user){
+                    return res.json({message:"user not found"})
+                }
+            const followers=user?.followers;
+       
+           
+            if(following.includes(userId)){
+                await User.findByIdAndUpdate(loggedInUserId,{$pull:{following:userId}});  // pull the user userId from following{ARRAY} of LoggedInUser
+                await User.findByIdAndUpdate(userId,{$pull:{followers:loggedInUserId}}); // pull the loggedInUserId of loggedInUser from followers{ARRAY} of user
+              
+                return res.json({message:`You unfollow  ${user.firstName}`});
+            }
+            return res.json({message:`${user.firstName} has not follwed yet`});
+        } catch (error) {
+                return res.status(400).json({error:error.message});
+        }
 }
