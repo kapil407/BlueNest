@@ -1,7 +1,7 @@
 import express from 'express';
 const PORT=4660;
 import {connectDB} from './config/Database.js'
-import {signUpRouter,loginRouter,logOutRouter,TweetRouter,DeleteRouter,likeOrDisLikeRouter} from './routes/auth.js'
+import {signUpRouter,loginRouter,logOutRouter,TweetRouter,DeleteRouter,likeOrDisLikeRouter,editProfileRouter,bookmarksRouter,getProfileRouter} from './routes/auth.js'
 import cookieParser from 'cookie-parser'
 
 
@@ -22,7 +22,9 @@ app.use('/',logOutRouter);
 app.use('/',TweetRouter);
 app.use('/',DeleteRouter);
 app.use('/',likeOrDisLikeRouter);
-
+app.use('/',editProfileRouter);
+app.use('/',bookmarksRouter);
+app.use('/',getProfileRouter);
 
 connectDB().then(()=>{
         console.log("database is connectes sucessfully");
