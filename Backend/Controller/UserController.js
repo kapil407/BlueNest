@@ -6,6 +6,8 @@ import User from '../models/User.js'
 import cookie from 'cookie-parser'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv';
+import Tweet from "../models/Tweets.js";
+
 dotenv.config();
 
 
@@ -39,7 +41,7 @@ dotenv.config();
                return  res.json({ message:"signUp Successfully",data});
         }
         catch(err){
-                // console.log("kapil")
+             
                return res.status(500).json({ error: err.message});
               
                 
@@ -90,5 +92,85 @@ export const LogOutController=async (req,res)=>{
             }
             catch(err){
                 return res.status(400).json({message:err.message});
+            }
+}
+
+// for updating the profile so we have to first fetch the profile from DB
+
+export const editProfileController=async (req,res)=>{
+              try {
+                  const userId=req.userId;
+                  const loggedinUser=req.user;
+                 const allowedForEdit=["firstName" , "lastName" , "userName"];
+             
+                 
+                    /*
+                    Object.keys() return an array of all keys of object 
+                    and .every(()=>{
+                        })
+
+                        it iterate all the element of array that return by object.keys(),
+                        and run a callback function on each element and if the callback condtion is satisfeid for all elements then it return true otherwise it return false even on one element condition false
+                    */ 
+                 const isValidUpdate = Object.keys(req.body).every((key) => allowedForEdit.includes(key));
+                 if(!isValidUpdate){
+                          return res.json({message:"not permissable to edit"});
+                 }
+               
+               
+                 Object.keys(req.body).forEach((field)=>loggedinUser[field]=req.body[field]);    // update the fields of the loggInUser
+             const updated=await loggedinUser.save();
+                
+             
+
+                 return res.json({message:"data is successfully updated ",data:updated});
+              } catch (error) {
+                return res.status(400).json({message:error.message});
+              }
+
+                            
+}
+
+export const bookmarksController=async (req,res)=>{
+    try {       
+        
+        const userId=req.userId;
+        const tweetId=req.params.id;   // find tweetId
+
+        const tweetUser=await Tweet.findOne({_id:tweetId});  // by tweetId find that user 
+     
+            const logedInUser=req.user;
+
+            const description=tweetUser.description;   // extract description from tweetUser
+          
+            if( Object.keys(logedInUser.bookmarks).every(key=>{
+                logedInUser.bookmarks.includes(key);
+            })){
+
+            
+              await User.findByIdAndUpdate(userId,{$pull:{bookmarks:{tweetId,description}}});
+              const updatedUserData=await User.findById(userId);
+              return res.json({message:" remove bookmarks successfully"});
+
+            }
+            else{
+             await User.findByIdAndUpdate(userId,{$push:{bookmarks:{tweetId,description}}});
+          
+                const updatedUserData=await User.findById(userId);
+                return res.json({message:" bookmarks successfully",data:updatedUserData});
+            }
+        
+    } 
+    catch (error) {
+                 return res.status(200).json({message:error.message});
+    }
+}
+export const getProfileController=async (req,res)=>{
+            try {
+                
+                const user=req.user;
+                return res.json({message:user});
+            } catch (error) {
+                return res.status(400).json({message:error.message});
             }
 }
