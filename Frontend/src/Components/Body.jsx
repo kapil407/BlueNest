@@ -3,7 +3,7 @@ import {createBrowserRouter,RouterProvider } from 'react-router-dom'
 import Home from './Home'
 import Feed from './Feed'
 import Profile from './Profile'
-import Login from './Login'
+import LoginSignUp from './SignUpLogin.jsx'
 import Logout from './Logout'
 
 const Body=()=>{
@@ -18,7 +18,7 @@ const Body=()=>{
                         element:<Feed/>
                        },
                        {
-                        path:"/profile",
+                        path:"/profile/:id",
                         element:<Profile/>
                        },
                        {
@@ -29,8 +29,8 @@ const Body=()=>{
 
                 },
                 {
-                    path:'/Login',
-                    element:<Login/>
+                    path:'/LoginSignup',
+                    element:<LoginSignUp/>
                 }
     ])
     return (

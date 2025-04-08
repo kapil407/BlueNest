@@ -6,8 +6,11 @@ import { CgProfile } from "react-icons/cg";
 import { IoMdLogOut } from "react-icons/io";
 import { PiBookmarkSimple } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const LeftSideBar=()=>{
+  const {user}=useSelector(store=>store.user); // user is loggedInUser
+  
     return( 
     <>
   <div className="w-[20%] ">
@@ -27,7 +30,8 @@ const LeftSideBar=()=>{
         <MdOutlineNotificationsNone size={30}/>
         <h1>Notification</h1>
         </div>
-        <Link to='/profile' className="flex items-center justify-between font-bold text-2xl w-34  mt-2 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in">
+        {/*  this redirect to loggedIn User */}
+        <Link to={`/profile/${user?._id}`} className="flex items-center justify-between font-bold text-2xl w-34  mt-2 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in">
         <CgProfile size={30}/>
         <h1>Profile</h1>
         </Link>

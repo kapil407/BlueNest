@@ -1,9 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Avatar from "react-avatar";
+import  useGetProfile  from "../hooks/useGetProfile.js";
+import { useSelector } from "react-redux";
+
 
 function Profile() {
+
+  const {id}=useParams();
+  useGetProfile(id);
+
+  const {profile ,otherUsers}=useSelector(store=>store.user);
+
+ 
+  
   return (
     <>
       <div className="w-[50%] border-l border-r border-gray-200">
@@ -16,7 +27,7 @@ function Profile() {
               />
             </Link>
             <div className="flex flex-col ml-4">
-              <h1 className="font-bold text-lg ">Kapil</h1>
+              <h1 className="font-bold text-lg ">{profile?.firstName}</h1>
               <p className="text-gray-600">10 Post</p>
             </div>
           </div>
@@ -34,13 +45,13 @@ function Profile() {
             />
           </div>
           <div className="text-right my-4">
-            <button className="rounded-full  px-3 py-1 hover:bg-gray-200 border border-gray-400 cursor-pointer ">
+            <button className="rounded-full mr-1 px-3 py-1 hover:bg-gray-200 border border-gray-400 cursor-pointer ">
               Edit Profile
             </button>
           </div>
           <div className="m-4">
-            <h1 className="font-bold text-xl">Kapil</h1>
-            <p className="text-sm text-gray-600">@kapil_keer</p>
+            <h1 className="font-bold text-xl">{profile?.firstName}</h1>
+            <p className="text-sm text-gray-600">{profile?.userName}</p>
           </div>
           <div className="m-4">
             <p>Dream as if you'll live forever. Live as if you'll die today.</p>
