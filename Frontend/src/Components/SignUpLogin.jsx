@@ -88,7 +88,7 @@ const dispatch=useDispatch();
         <div className="flex justify-evenly w-[80%] items-center">
           <div>
             <img
-              className=" w-45 h-45 "
+              className=" w-70 h-72 "
               src="https://www.edigitalagency.com.au/wp-content/uploads/new-Twitter-logo-x-black-png-1200x1227.png"
               alt="twitter-logo"
             />

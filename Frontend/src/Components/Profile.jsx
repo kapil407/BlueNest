@@ -10,14 +10,14 @@ function Profile() {
 
   const {id}=useParams();
   useGetProfile(id);
-
+    const {user}=useSelector(store=>store.user);
   const {profile ,otherUsers}=useSelector(store=>store.user);
 
- 
+        
   
   return (
     <>
-      <div className="w-[50%] border-l border-r border-gray-200">
+      <div className="w-[50%] border-l border-r border-gray-200 ">
         <div>
           <div className="flex my-2 ml-2">
             <Link to="/" className="flex items-center  ">
@@ -45,9 +45,11 @@ function Profile() {
             />
           </div>
           <div className="text-right my-4">
-            <button className="rounded-full mr-1 px-3 py-1 hover:bg-gray-200 border border-gray-400 cursor-pointer ">
-              Edit Profile
-            </button>
+          {profile?._id === user?._id ? (
+          <button className="bg-blue-500 text-white px-4 py-2 mr-2 rounded-3xl cursor-pointer">Edit Profile</button>
+         ) : (
+         <button className="bg-black text-white px-4 py-2 mr-2 rounded-3xl  cursor-pointer">Follow</button>
+            )}
           </div>
           <div className="m-4">
             <h1 className="font-bold text-xl">{profile?.firstName}</h1>

@@ -10,7 +10,7 @@ function RightSideBar({otherUsers}) {
   return (
    
     <>
-      <div className='w-[25%] mt-2 h-auto'>
+      <div className='w-[25%] mt-2 h-auto '>
          <div>
          <div className='bg-gray-100 flex p-3 rounded-full '>
             <IoSearch size={25}/>

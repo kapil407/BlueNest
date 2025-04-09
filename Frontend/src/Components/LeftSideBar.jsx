@@ -13,7 +13,9 @@ const LeftSideBar=()=>{
   
     return( 
     <>
-  <div className="w-[20%] ">
+    <div className="w-[20%]">
+
+  <div className="w-[18%] fixed">
     <div className="hover:bg-gray-200 hover:cursor-pointer rounded-full w-14 h-14 flex items-center justify-center transition delay-75 ease-in ">
         <img  className=" object-cover w-7 h-7 " src="https://www.edigitalagency.com.au/wp-content/uploads/new-Twitter-logo-x-black-png-1200x1227.png" alt="twitter-logo"/>
     </div>  
@@ -43,9 +45,10 @@ const LeftSideBar=()=>{
         <IoMdLogOut/>
         <h1>Logout</h1>
         </Link>
-        <button className="font-bold text-lg bg-[#1D9BF0] text-white rounded-full mt-2 p-1.5 hover:cursor-pointer hover:bg-blue-400 transition delay-75 ease-in">Post</button>
+        <button className="font-bold text-lg bg-[#1D9BF0] text-white rounded-full mt-2 p-1.5 hover:cursor-pointer hover:bg-blue-400 transition delay-75 ease-in w-45">Post</button>
     </div>
   </div>
+    </div>
     </>
 )}
 export default LeftSideBar
