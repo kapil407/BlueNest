@@ -5,6 +5,7 @@ import Feed from './Feed'
 import Profile from './Profile'
 import LoginSignUp from './SignUpLogin.jsx'
 import Logout from './Logout'
+import EditeProfile from './Editeprofile.jsx'
 
 const Body=()=>{
     const appRouter=createBrowserRouter([
@@ -24,6 +25,10 @@ const Body=()=>{
                        {
                         path:"/Logout",
                         element:<Logout/>
+                       },
+                       {
+                       path:'/EditeProfile',
+                       element:<EditeProfile/>
                        }
                     ]
 

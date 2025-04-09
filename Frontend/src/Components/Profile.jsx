@@ -46,7 +46,12 @@ function Profile() {
           </div>
           <div className="text-right my-4">
           {profile?._id === user?._id ? (
+         <>
+          <Link to={"/EditeProfile"}>
           <button className="bg-blue-500 text-white px-4 py-2 mr-2 rounded-3xl cursor-pointer">Edit Profile</button>
+          </Link>
+         </>
+
          ) : (
          <button className="bg-black text-white px-4 py-2 mr-2 rounded-3xl  cursor-pointer">Follow</button>
             )}
