@@ -3,10 +3,11 @@ import { BiRefresh } from "react-icons/bi";
 
  const tweetSlice=createSlice({
         name:"tweet",
-        name:"refresh",
+      
         initialState:{
             tweet:null,
-            refresh:false
+            refresh:false,
+            isActive:true
         },
         reducers:{
             getMyTweets:(state,action)=>{
@@ -14,9 +15,13 @@ import { BiRefresh } from "react-icons/bi";
             },
             getRefresh:(state=>{
                 state.refresh=!state.refresh;
-            })
+            }),
+            getIsActive:(state,action)=>{
+                state.isActive=action.payload;
+            }
+
         }
 
  })
-export  const {getMyTweets,getRefresh} =tweetSlice.actions;
+export  const {getMyTweets,getRefresh,getIsActive} =tweetSlice.actions;
  export default tweetSlice.reducer;

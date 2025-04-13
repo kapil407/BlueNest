@@ -3,7 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Avatar from "react-avatar";
 import  useGetProfile  from "../hooks/useGetProfile.js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import {USER_API_END_POINT} from '../Utils/constant.js'
+import toast from "react-hot-toast";
+import { getRefresh } from "../redux/tweetSlice.js";
+import { followingUpdate, getMyProfile, getOtherUsers, getUser } from "../redux/userSlice.js";
 
 
 function Profile() {
@@ -11,9 +16,60 @@ function Profile() {
   const {id}=useParams();
   useGetProfile(id);
     const {user}=useSelector(store=>store.user);
+    const dispatch=useDispatch(); 
+    // console.log("user->",user);
   const {profile ,otherUsers}=useSelector(store=>store.user);
 
-        
+
+        // console.log(user?.following?.includes(id.toString()));
+   const followAndUnfollowHandler=async ()=>{
+          if(user?.following?.includes(id?.toString())){
+                // unfollow logic 
+                try {
+                      const res=await axios.post(`${USER_API_END_POINT}/unfollow/${id}`,
+                        {},
+                        {
+                        withCredentials:true
+                      });
+                     
+
+                      dispatch(followingUpdate(id))
+              dispatch(getRefresh(id));
+                     
+                      // console.log("unfollow res->",res);
+                      if(res?.data?.success){
+                        toast.success(res?.data?.message);
+                      }
+                    
+                } 
+                catch (error) {
+                  console.error(error) ; 
+                }
+          }
+          else{
+            //follow logic
+            try {
+              const res=await axios.post(`${USER_API_END_POINT}/follow/${id}`,
+                {},
+                {
+                withCredentials:true
+              });
+              console.log( dispatch(followingUpdate(id)))
+              console.log(dispatch(getRefresh(id)));
+              
+             
+              if(res?.data?.success){
+                toast.success(res?.data?.message);
+              }
+             
+              
+              console.log("follow res->",res);
+            } 
+            catch (error) {
+              console.error(error)  
+            } 
+          }
+        }
   
   return (
     <>
@@ -53,7 +109,7 @@ function Profile() {
          </>
 
          ) : (
-         <button className="bg-black text-white px-4 py-2 mr-2 rounded-3xl  cursor-pointer">Follow</button>
+         <button onClick={followAndUnfollowHandler} className="bg-black text-white px-4 py-2 mr-2 rounded-3xl  cursor-pointer">{user?.following?.includes(id.toString()) ? "following" : "follow"}</button>
             )}
           </div>
           <div className="m-4">

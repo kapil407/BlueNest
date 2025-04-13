@@ -1,17 +1,23 @@
-import React from 'react'
+import React ,{useEffect} from 'react'
 import LeftSideBar from './LeftSideBar.jsx'
 import RightSideBar from './RightSideBar.jsx'
 // import Feed from "./Feed.jsx"
-import { Outlet } from 'react-router-dom'
+import { Outlet ,useNavigate} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import useOtherUsers from '../hooks/useOtherUsers.js'
 import useGetTweets from '../hooks/useGetTweets.js'
 
 
 const Home = () => {
+  const navigate=useNavigate();
   const {user,otherUsers}=useSelector(store=>store.user);
   useOtherUsers();
   useGetTweets();
+  useEffect(()=>{
+    if(!user){
+      navigate('/LoginSignup');
+    }
+  })
   
   return (
         <>          

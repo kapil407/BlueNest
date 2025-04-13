@@ -17,7 +17,7 @@ const LoginSignUp = () => {
   const [userName, setUserName] = useState("");
   const [show,setshow]=useState(false);
 
-  const [isLogin, setisLogin] = useState(false);
+  const [isLogin, setisLogin] = useState(true);
   const navigate=useNavigate();
 const dispatch=useDispatch();
 
@@ -94,10 +94,12 @@ const dispatch=useDispatch();
             />
           </div>
           <div>
-            <h1 className="font-bold text-6xl">Happening now</h1>
+           <div className="h-32">
+           <h1 className="font-bold text-6xl ">Happening now</h1>
             <h1 className="font-bold text-2xl my-2">
               {isLogin ? "Login" : "SignUp"}
             </h1>
+           </div>
             <div>
               <form onSubmit={submittedHandler} className="flex flex-col ">
                 {!isLogin && (
@@ -130,9 +132,9 @@ const dispatch=useDispatch();
                   placeholder="Enter email"
                   value={emailId}
                   onChange={(e) => setEmailId(e.target.value)}
-                  className="border  border-gray-600 outline-blue-400  w-[60%] p-2 rounded-full my-2"
+                  className="border-2  border-gray-600 outline-blue-400  w-[60%] p-2 rounded-full my-2"
                 />
-               <div className="flex items-center border w-67 rounded-3xl my-2 " >
+               <div className="flex items-center border-2  w-67 rounded-3xl my-2  hover:border-blue-400 " >
                <input
                   type={show?"text":"password"}
                   value={password}
@@ -145,7 +147,7 @@ const dispatch=useDispatch();
                </div>
                 <button
                   type="submit"
-                  className="px-3 py-1 bg-[#1D9BF0] w-[60%] my-2 rounded-full cursor-pointer hover:bg-blue-400 text-white font-bold"
+                  className="px-3 py-2 bg-[#1D9BF0] w-[60%] my-2 rounded-full cursor-pointer hover:bg-blue-400 text-white font-bold"
                 >
                   {isLogin ? "Login" : "Create account"}
                 </button>
