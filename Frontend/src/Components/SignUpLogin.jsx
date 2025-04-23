@@ -36,12 +36,11 @@ const dispatch=useDispatch();
           }
           
         );
-        // console.log(res);
-        // console.log(res?.data?.message);
+       console.log("login->", res);
         dispatch(getUser(res?.data?.user)); // update (add userData)the slice 
         if(res.request.status){
           navigate("/")
-          // console.log(res.data.userData._id);
+        
          
           toast.success(res.data.message);
         }

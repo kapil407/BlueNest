@@ -9,7 +9,7 @@ const Feed = () => {
   // console.log("feed->",tweet);
   return (
     <>
-      <div className="w-[50%] flex mt-1 border border-gray-300 flex-col ">
+      <div className="w-[58%] flex mt-1 border border-gray-300 flex-col ">
         <CreatePost />
 
         {

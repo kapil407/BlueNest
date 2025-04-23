@@ -54,9 +54,9 @@ const CreatePost = () => {
               onClick={forYouHandler}
               className={`${
                 isActive
-                  ? "border-b-3 border-blue-400"
+                  ? "border-b-3 border-blue-400 "
                   : "border-b border-transparent"
-              } flex justify-center cursor-pointer hover:bg-gray-400 w-full text-center transition delay-75 py-3 px-2 `}
+              } flex justify-center cursor-pointer hover:bg-gray-400 w-full text-center transition delay-75 py-3 px-2  `}
             >
               <h1 className="font-bold text-gray-700 text-lg">For you</h1>
             </div>
@@ -69,7 +69,7 @@ const CreatePost = () => {
                   : "border border-transparent"
               } flex justify-center cursor-pointer hover:bg-gray-400 w-full text-center transition delay-75 py-3 px-2`}
             >
-              <h1 className="font-bold text-gray-700 text-lg">Following</h1>
+              <h1 className="font-bold text-gray-700 text-lg ">Following</h1>
             </div>
           </div>
           <div>

@@ -23,7 +23,7 @@ const Home = () => {
         <>          
            
   
-      <div className='flex justify-between  w-[80%] mx-auto relative scrollbar-webkit'>
+      <div className='flex justify-between  w-[90%] mx-auto relative '>
         <LeftSideBar/>
           <Outlet/>
         <RightSideBar  otherUsers={otherUsers}/> {/* pass the otherUsers as props */}

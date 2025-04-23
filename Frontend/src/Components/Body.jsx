@@ -6,6 +6,9 @@ import Profile from './Profile'
 import LoginSignUp from './SignUpLogin.jsx'
 import Logout from './Logout'
 import EditeProfile from './Editeprofile.jsx'
+import { Message } from './Message.jsx'
+import { ChatRoom } from './ChatRoom.jsx'
+
 
 const Body=()=>{
     const appRouter=createBrowserRouter([
@@ -29,7 +32,21 @@ const Body=()=>{
                        {
                        path:'/EditeProfile',
                        element:<EditeProfile/>
+                       },
+                       {
+                        path:'/Message',
+                        element:<Message/>,
+                        
+
+                            
+                       },
+                       {
+                        path:'/Message/:targetUserId',
+                        element:<Message/>
                        }
+                
+                      
+                      
                     ]
 
                 },

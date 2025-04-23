@@ -108,7 +108,7 @@ const Tweets = ({ tweet }) => {
                   <PiBookmarkSimpleBold size={25} />
                   <p className="ml-2">0</p>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center hover:bg-red-500  rounded-3xl p-2">
                   <Link onClick={() => DeleteTweetHandler(tweet?._id)}>
                     <MdOutlineDelete size={25} />
                   </Link>
