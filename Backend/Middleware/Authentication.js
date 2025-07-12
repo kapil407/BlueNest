@@ -7,6 +7,7 @@ import User from '../models/User.js'
 
 const isAuthentication=async (req,res,next)=>{
             try {
+            
                
                 const cookies=req.cookies;
               
@@ -29,8 +30,8 @@ const isAuthentication=async (req,res,next)=>{
            
                 req.userId =decoded.userId;
                 req.user=user;
-                 
-            //    console.log("userId->"+userId)
+               
+             
                  next();
 
             } 

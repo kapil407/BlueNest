@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import validator from 'validator'
+import validator from 'validator';
 
 
 const userSchema=new mongoose.Schema({
@@ -57,6 +57,12 @@ const userSchema=new mongoose.Schema({
        default:[]  
 
     },
+    bio:{
+        type:String,
+        default:"Hey there! I'm new here"
+    }
+   
+    
 
 
 

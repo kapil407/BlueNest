@@ -1,86 +1,159 @@
-import Tweet from '../models/Tweets.js'
+import Tweet from "../models/Tweets.js";
+import User from "../models/User.js";
 
-export const createTweetController=async (req,res)=>{
+export const createTweetController = async (req, res) => {
+  try {
+    const { description } = req.body;
+    const userId = req.userId;
+    //  const user=req.user;
 
-   try {
-     const {description}=req.body;
-     const userId=req.userId;
-     const user=req.user;
- 
     // console.log("_id->"+userId);
+    const user = await User.findById(userId).select("-password");
+    // console.log("user->"+user)
+    if (!description.length) {
+      return res.status(400).json({ message: "write down tweet" });
+    }
+    const newTweet = new Tweet({
+      description,
+      userId: userId,
+      userDetails: user,
+    });
 
-     if(!description.length){
-         return res.status(400).json({message:"write down tweet"});
-     }
-     const newTweet=new Tweet({
-         description,
-         userId:userId
- 
-     });
- 
-     const data=await newTweet.save();
-     
-     return res.json({message:`${user.firstName} your Tweet successfully created`,data});
- 
-   } catch (error) {
-        return res.status(401).json({message:error.message});
-   }
+    const data = await newTweet.save();
 
-}
+    return res.json({
+      message: `${user.firstName} your Tweet successfully created`,
+      data,
+      success: true,
+    });
+  } catch (error) {
+    return res.status(401).json({ message: error.message });
+  }
+};
 
-export const deleteTweetController=async (req,res)=>{
-      try {
+export const deleteTweetController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const tweet = await Tweet.findById(id);
+    const TweetuserId = tweet.userId;
+    // console.log("TweetUserId-> ",TweetuserId)
+    const loggedInUserId = req.userId;
 
-        const {id}=req.params;
-        if(!id){
-          return res.status(400).json({message:"tweet id id requird to delete tweet"});
-        }
-       
-             // deleteTweet
-          const deleteTweet=await Tweet.findByIdAndDelete(id);
+    // console.log("loggedInUserId",loggedInUserId);
+    if (!id) {
+      return res
+        .status(400)
+        .json({ message: "tweet id requird to delete tweet" });
+    }
 
-          //if  return null 
-          if(!deleteTweet){
-            return res.status(401).json({message:"delete is not deleted"})
-          }
-         
-          return res.json({message:"tweet delete successfully and Deleted tweet is :",data:deleteTweet});
+    if (loggedInUserId == TweetuserId) {
+      // deleteTweet
+      const deleteTweet = await Tweet.findByIdAndDelete(id);
 
-      } catch (error) {
-          return res.status(401).json({message:error.message});
+      //if  return null
+      if (!deleteTweet) {
+        return res.status(401).json({ message: "tweet is not deleted" });
       }
-}
 
+      return res.json({
+        message: "tweet delete successfully :",
+        data: deleteTweet,
+        success: true,
+      });
+    } else {
+      return res.json({
+        message: "You are not autherized to delete this tweet",
+        success: false,
+      });
+    }
+  } catch (error) {
+    return res.status(401).json({ message: error.message });
+  }
+};
 
-export const likeOrDisLikeController=async (req,res)=>{
-        try {
-              const {id}=req.params;
-              const tweet=await Tweet.findById(id);   // fetch the tweet from Tweet model 
-              if(!tweet){
-                  return res.json({message:"tweet is not found"});
-              }
+export const likeOrDisLikeController = async (req, res) => {
+  try {
+    const userId = req.userId;
 
-                const likes=tweet.likes;  // extract the likes array from tweet
-             
-              // console.log(likes)
-              const userId=req.userId;
-              const user=req.user;
-              if(likes.includes(userId)){
+    const Tweetid = req.params.id;
 
-               await Tweet.findByIdAndUpdate(id,{$pull:{likes:userId}});
+    const tweet = await Tweet.findById(Tweetid); // fetch the tweet from Tweet model
+    if (!tweet) {
+      return res.json({ message: "tweet is not found" });
+    }
 
-                const updatedLike=await Tweet.findById(id);  // fetch updated array of likes and  it return an array
+    const likes = tweet.likes; // extract the likes array from tweet
 
-                return res.json({message:`${user.firstName} dislike your tweet and total likes are  and ${updatedLike.likes.length}`});
-              }
-              else{
-                await Tweet.findByIdAndUpdate(id,{$push:{likes:userId}});
-                const updatedLike=await Tweet.findById(id);   // fetch updated array of likes and  it return an array
-                
-                return res.json({message:`${user.firstName} like your tweet  and total likes are ${updatedLike.likes.length}`});
-              }
+    const user = req.user;
+    
 
-        } catch (error) {
-            return res.status(400).json({message:error.message});
-        }
-                }
+    if (tweet.likes.includes(userId)) {
+      await Tweet.findByIdAndUpdate(Tweetid, { $pull: { likes: userId } });
+
+      const updatedLike = await Tweet.findById(Tweetid); // fetch updated array of likes and  it return an array
+
+      let Length = updatedLike.likes.length;
+     
+      return res.json({
+        message: `Dislike`,
+        success: false,
+        Length,
+      });
+    } else {
+      await Tweet.findByIdAndUpdate(Tweetid, { $push: { likes: userId } });
+
+      const updatedLike = await Tweet.findById(Tweetid); // fetch updated array of likes and  it return an array
+      
+      let Length = updatedLike.likes.length;
+      
+      return res.json({
+        message: ` Like  `,
+        success: true,
+        Length,
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
+
+export const getAllTweetsController = async (req, res) => {
+  try {
+    const user = req.user;
+    const followingId = user.following;
+    // console.log(followingId);
+    const userId = req.userId;
+    // console.log("user->",user)
+    const allUserIds = [...followingId, user._id]; // following + loggedInUser
+
+    const alltweet = await Tweet.find({
+      userId: { $in: allUserIds },
+    }).select("-password");
+    // console.log(alltweet)
+    if (!alltweet) {
+      return res.status(400).json({ message: "Create tweet " });
+    }
+    return res.status(200).json({ message: "allTweets", alltweet });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+export const getfollowTweetsController = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const loggedInUser = await User.findById(userId);
+    const followingUsers = loggedInUser.following;
+    const allTweets = await Tweet.find({
+      userId: { $in: followingUsers },
+    });
+
+    if (!allTweets || allTweets.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "No tweets from following users." });
+    }
+    return res.status(200).json({ message: "followTweets", allTweets });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
