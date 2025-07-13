@@ -7,7 +7,7 @@ const MessageSchema=new mongoose.Schema({
         required:true,
         ref:"User"       
     },
-    recieverId:{
+    receiverId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:true
@@ -16,7 +16,6 @@ const MessageSchema=new mongoose.Schema({
         type:String,
         required:true
     }
-
 },
 {
     timestamps:true
