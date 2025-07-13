@@ -8,10 +8,8 @@ import { getAllTweetsController } from "../Controller/TweetController.js";
 import {getfollowTweetsController} from '../Controller/TweetController.js'
 
 const router=express.Router();
-// const deleteTweetRouter=express.Router();
-// const tweetRouter=express.Router();
-// const allTweetsRouter=express.Router();
-// const followTweetsRouter=express.Router();
+
+
 
 router.post('/createTweet',isAuthentication ,createTweetController);
 router.delete('/deleteTweet/:id',isAuthentication,deleteTweetController);
