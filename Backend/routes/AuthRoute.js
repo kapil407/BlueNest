@@ -1,7 +1,7 @@
-import { SignUpValidation } from "../utils/signUpValidation.js";
 import express from "express";
+import { SignUpValidation } from "../utils/signUpValidation.js";
 import loginValidation from "../utils/loginValidation.js";
-import isAuthentication from "../Middleware/Authentication.js";
+import isAuth from "../Middleware/Authentication.js";
 
 import {
   signUpController,
@@ -15,48 +15,23 @@ import {
   unFollowController,
 } from "../Controller/UserController.js";
 
-const signUpRouter = express.Router();
-const loginRouter = express.Router();
-const logOutRouter = express.Router();
+const router = express.Router();
 
-const editProfileRouter = express.Router();
-const bookmarksRouter = express.Router();
-const getProfileRouter = express.Router();
-const getOthersProfileRouter = express.Router();
-const FollowingRouter = express.Router();
-const unFollowRouter = express.Router();
+// Auth routes
+router.post("/signup", SignUpValidation, signUpController);
+router.post("/login", loginValidation, LoginController);
+router.post("/logout", LogOutController);
 
-signUpRouter.post("/signUp", SignUpValidation, signUpController); // signup API
-loginRouter.post("/login", loginValidation, LoginController); // login api
-logOutRouter.post("/logout", LogOutController);
+// Profile routes
+router.patch("/updateProfile", isAuth, editProfileController);
+router.get("/getProfile/:id", isAuth, getProfileController);
+router.get("/getOthersProfile", isAuth, getOthersProfileController);
 
-editProfileRouter.patch(
-  "/updateProfile",
-  isAuthentication,
-  editProfileController
-);
-bookmarksRouter.patch(
-  "/bookmarkstweet/:id",
-  isAuthentication,
-  bookmarksController
-);
-getProfileRouter.get("/getProfile/:id", isAuthentication, getProfileController);
-getOthersProfileRouter.get(
-  "/getOthersProfile",
-  isAuthentication,
-  getOthersProfileController
-);
-FollowingRouter.post("/follow/:id", isAuthentication, FollowingController);
-unFollowRouter.post("/unfollow/:id", isAuthentication, unFollowController);
+// Bookmark route
+router.patch("/bookmarkstweet/:id", isAuth, bookmarksController);
 
-export {
-  signUpRouter,
-  loginRouter,
-  logOutRouter,
-  editProfileRouter,
-  bookmarksRouter,
-  getProfileRouter,
-  getOthersProfileRouter,
-  FollowingRouter,
-  unFollowRouter,
-};
+// Follow/Unfollow routes
+router.post("/follow/:id", isAuth, FollowingController);
+router.post("/unfollow/:id", isAuth, unFollowController);
+
+export default router;

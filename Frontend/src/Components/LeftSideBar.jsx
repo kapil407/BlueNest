@@ -25,10 +25,15 @@ const LeftSideBar = () => {
 
   const logoutHandler = async () => {
     try {
-      const res = await axios.post(`${USER_API_END_POINT}/logout`, {
+      const res = await axios.post(`${USER_API_END_POINT}/logout`, 
+        {
+          headers:{
+            "content-type":"application/json"
+          },
         withCredentials: true,
-      });
-      console.log("logout->", res);
+        }
+    );
+      // console.log("logout->", res);
       dispatch(getMyTweets(null));
       dispatch(getUser(null));
       dispatch(getMyProfile(null));
@@ -37,7 +42,8 @@ const LeftSideBar = () => {
       if (res?.data?.success) {
         toast.success(res?.data?.message);
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
     }
   };

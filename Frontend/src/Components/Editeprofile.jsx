@@ -26,7 +26,7 @@ const EditeProfile = () => {
  const [lastName, setLastName] = useState(profile?.lastName || "");
 
   const [userName, setUserName] = useState(profile?.userName || "");
-//   console.log(firstName ," ", lastName, " ", userName);
+
 const [bio, setBio] = useState(profile?.bio || "");
   const EditeHandler = async () => {
     try {
@@ -40,14 +40,18 @@ const [bio, setBio] = useState(profile?.bio || "");
       
         },
         {
+          headers:{
+               "content-type":"application/json" // tells the server that the data that is coming to u is json type 
+          },  
+       
           withCredentials: true,
         }
       );
-      // console.log("res->",res)
+     
       if(res?.data?.success){
         toast.success(res.data.message);
       }
-      // console.log("res-> ",res);
+     
       dispatch(getRefresh());
      
     } catch (error) {

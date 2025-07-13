@@ -7,18 +7,17 @@ import { likeOrDisLikeController } from "../Controller/TweetController.js";
 import { getAllTweetsController } from "../Controller/TweetController.js";
 import {getfollowTweetsController} from '../Controller/TweetController.js'
 
-const likeOrDisLikeRouter=express.Router();
-const deleteTweetRouter=express.Router();
-const tweetRouter=express.Router();
-const allTweetsRouter=express.Router();
-const followTweetsRouter=express.Router();
+const router=express.Router();
+// const deleteTweetRouter=express.Router();
+// const tweetRouter=express.Router();
+// const allTweetsRouter=express.Router();
+// const followTweetsRouter=express.Router();
+
+router.post('/createTweet',isAuthentication ,createTweetController);
+router.delete('/deleteTweet/:id',isAuthentication,deleteTweetController);
+router.put('/tweetLikeOrDisLike/:id',isAuthentication,likeOrDisLikeController);
+router.get('/allTweets',isAuthentication,getAllTweetsController);
+router.get('/followTweets/:id',getfollowTweetsController)
 
 
-tweetRouter.post('/createTweet',isAuthentication ,createTweetController);
-deleteTweetRouter.delete('/deleteTweet/:id',isAuthentication,deleteTweetController);
-likeOrDisLikeRouter.put('/tweetLikeOrDisLike/:id',isAuthentication,likeOrDisLikeController);
-allTweetsRouter.get('/allTweets',isAuthentication,getAllTweetsController);
-followTweetsRouter.get('/followTweets/:id',getfollowTweetsController)
-
-
-export  {tweetRouter,deleteTweetRouter,likeOrDisLikeRouter,allTweetsRouter,followTweetsRouter};
+export  default router;

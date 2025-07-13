@@ -6,11 +6,17 @@ import { CgLayoutGrid } from 'react-icons/cg';
 
 function RightSideBar({otherUsers}) {
   const {id}=useParams();
+  // const searchHandler=(value)=>{
+  //     console.log("value-> ",value);
+  //     otherUsers?.firstName.filter((name)=>{
+  //       return name.includes(value);
+  //     })
+  // }
 
   return (
    
     <>
-      <div className='w-[23%] mt-1 h-auto ml-2'>
+      <div className='w-[22%] mt-1 h-auto ml-2'>
          <div>
          <div className='bg-gray-100 flex p-3 rounded-full '>
             <IoSearch size={25}/>
@@ -31,7 +37,7 @@ function RightSideBar({otherUsers}) {
           <Avatar className="m-1 cursor-pointer" src="https://tecdn.b-cdn.net/img/new/avatars/2.webp" size="50" round={true} />
            <div className='ml-2'>
            <h1 className='font-bold'>{otherUser?.firstName}</h1>
-           <p>@{`${otherUser?.userName}`}</p>
+           <p>{`${otherUser?.userName}`}</p>
            </div>
           </div>
           {/* redirect to otherUsers profile */}

@@ -25,7 +25,7 @@ const Tweets = ({ tweet }) => {
 
   const likeDisLikeHandler = async (id) => {
     try {
-      console.log("likeslength->",tweet.likes.length);
+      // console.log("likeslength->",tweet.likes.length);
       const res = await axios.put(
         `${TWEET_API_END_POINT}/tweetLikeOrDisLike/${id}`,
         { id: user?._id },
@@ -35,9 +35,10 @@ const Tweets = ({ tweet }) => {
       );
       dispatch(getRefresh());
 
-      console.log("likes res->", res);
+      // console.log("likes res->", res);
 
       if (res?.data?.success) {
+        console.log(res.data);
         toast.success(res?.data?.message);
       } else {
         toast.success(res?.data?.message);

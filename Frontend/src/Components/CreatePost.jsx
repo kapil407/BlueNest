@@ -28,7 +28,7 @@ const CreatePost = () => {
         }
       );
 
-      dispatch(getRefresh()); // when this hit , it call fetRefresh in useGetTweets hook and get the tweet on thet ui
+      dispatch(getRefresh()); // when this hit , it call getRefresh in useGetTweets hook and get the tweet on thet ui
 
       if (res?.data?.success) {
         toast.success(res?.data?.message);

@@ -4,7 +4,7 @@ import Home from './Home'
 import Feed from './Feed'
 import Profile from './Profile'
 import LoginSignUp from './SignUpLogin.jsx'
-import Logout from './Logout'
+// import Logout from './Logout'
 import EditeProfile from './Editeprofile.jsx'
 import { Message } from './Message.jsx'
 import { ChatRoom } from './ChatRoom.jsx'
@@ -25,10 +25,10 @@ const Body=()=>{
                         path:"/profile/:id",
                         element:<Profile/>
                        },
-                       {
-                        path:"/Logout",
-                        element:<Logout/>
-                       },
+                    //    {
+                    //     path:"/Logout",
+                    //     element:<Logout/>
+                    //    },
                        {
                        path:'/EditeProfile',
                        element:<EditeProfile/>

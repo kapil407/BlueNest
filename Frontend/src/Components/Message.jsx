@@ -4,6 +4,8 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { createSocketConnection } from "../Utils/socket";
 import { useParams, Link } from "react-router-dom";
+import { FaRegImage } from "react-icons/fa";
+// import { Navigate } from "react-router-dom";
 
 export const Message = () => {
   const [sendMessages,setSendMessage]=useState([]);
@@ -11,14 +13,20 @@ export const Message = () => {
   const [newMessage, setnewMessage] = useState("");
   const { targetUserId } = useParams();
   // console.log("targetUserId->",targetUserId);
+  // const navigate=Navigate();
+  
   const { user, otherUsers } = useSelector((store) => store?.user);
   const userId = user?._id;
   const followingsId = user?.following;
 
   const followings = otherUsers?.filter((otherUser) =>
-    followingsId.includes(otherUser?._id)
+    followingsId?.includes(otherUser?._id)
   );
-
+  // console.log("followingUser",followings)
+const targetUser=followings.filter(otherUser=>{
+    return targetUserId?.includes(otherUser?._id)
+  });
+  // console.log("targetUser",targetUser);
   useEffect(() => {
     if (!user) return;
     // as soon this page is load useEffect is mount
@@ -30,10 +38,9 @@ export const Message = () => {
       targetUserId,
     });
     socket.on("recievedMessage", ({ firstName, text ,targetUserId}) => {
-      // if(targetUserId===userId) return ;
-      // console.log("text-> ",text);
-      if(targetUserId===userId){
-          // console.log("kapil");
+     
+      if(targetUserId===userId){  // jab target msg recieved karta hai then ye triggerd hoga 
+         
           setRecievedMessage((recievedMessage)=>[...recievedMessage,{firstName,text}]);
       }
      else{ 
@@ -46,20 +53,23 @@ export const Message = () => {
   }, [userId, targetUserId]);
 
   const sendMessage = () => {
-    // if(targetUserId===userId) return ;
+   
     const socket = createSocketConnection();
-    socket.emit("sendMessage", {
-      firstName: user?.firstName,
-      userId,
-      targetUserId,
-      text: newMessage,
-    });
-    // setSendMessage(sendMessages=>[...sendMessages,{firstName:user?.firstName,text:newMessage}]);
+    if(newMessage){
+      socket.emit("sendMessage", {
+        firstName: user?.firstName,
+        userId,
+        targetUserId,
+        text: newMessage,
+      });
+    }
+    
+   
     setnewMessage("");
   };
   return (
     <>
-      <div className="flex justify-center border  border-gray-200 my-1  w-[55%] h-[95%] fixed left-[18%]">
+      <div className="flex justify-center border  border-gray-200 my-1  w-[55%] h-[95%] fixed left-[20%]">
         {/* { this is left div for users} */}
         <div className="w-[30%] border-r border-gray-300 flex  flex-col break-words whitespace-normal p-1 bg-gray-100 ">
           <p className="font-semibold  my-1">Chat</p>
@@ -70,7 +80,7 @@ export const Message = () => {
             className="outline-none border-gray-300 rounded border-b p-1 my-1 text-gray-900 border-b-gray-400 bg-gray-100"
           />
 
-          <div className=" overflow-y-scroll h-[95%] custom-scrollbar mx-1 ">
+          <div className=" overflow-y-scroll h-[95%] hover:custom-scrollbar mx-1 ">
             {followings?.map((followingUser) => {
               return (
                 <>
@@ -95,8 +105,13 @@ export const Message = () => {
         {/* { this is message box} */}
         <div className="w-[70%] h-[100%] ">
           <div className="border-b flex items-center p-2 border-gray-200 bg-gray-100 w-[100%]">
-            <IoMdArrowRoundBack className="cursor-pointer mr-2 " />
-            <h1 className="cursor-pointer">kapil keer</h1>
+           <Link to={'/Message'}>
+           <IoMdArrowRoundBack  className="cursor-pointer mr-2 " />
+           </Link>
+          <Link to={'/profile/:targetUserId'}>
+          
+          <h1 className="cursor-pointer">{targetUser[0]?.firstName} {targetUser[0]?.lastName}</h1>
+          </Link>
           </div>
           {/*chat box*/}
           <div className="w-[100%] flex flex-col justify-between break-words whitespace-normal  h-[94%] ">
@@ -131,13 +146,14 @@ export const Message = () => {
                
               }
             </div>
-            <div className="border-t border-gray-200 p-1.8 bg-gray-200 w-[100%]">
+            <div className="border-t  border-gray-200 p-1.8 bg-gray-200 w-[100%] flex items-center">
+            <FaRegImage className="ml-1 cursor-pointer" size={20}/>
               <input
                 value={newMessage}
                 onChange={(e) => setnewMessage(e.target.value)}
                 type="text"
                 placeholder="Write here "
-                className="outline-none w-[87%] p-2 mr-1.5   text-gray-800 rounded "
+                className="outline-none w-[85%] p-2 mr-1.5  ml-2 text-gray-800 rounded "
               />
               <button
                 onClick={sendMessage}

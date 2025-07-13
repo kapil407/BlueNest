@@ -87,7 +87,8 @@ export const likeOrDisLikeController = async (req, res) => {
     const user = req.user;
     
 
-    if (tweet.likes.includes(userId)) {
+    if (tweet.likes.includes(userId)) 
+      {
       await Tweet.findByIdAndUpdate(Tweetid, { $pull: { likes: userId } });
 
       const updatedLike = await Tweet.findById(Tweetid); // fetch updated array of likes and  it return an array
@@ -99,7 +100,9 @@ export const likeOrDisLikeController = async (req, res) => {
         success: false,
         Length,
       });
-    } else {
+    }
+     else 
+     {
       await Tweet.findByIdAndUpdate(Tweetid, { $push: { likes: userId } });
 
       const updatedLike = await Tweet.findById(Tweetid); // fetch updated array of likes and  it return an array
@@ -112,7 +115,9 @@ export const likeOrDisLikeController = async (req, res) => {
         Length,
       });
     }
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     return res.status(400).json({ message: error.message });
   }
 };
@@ -121,20 +126,23 @@ export const getAllTweetsController = async (req, res) => {
   try {
     const user = req.user;
     const followingId = user.following;
-    // console.log(followingId);
+  
     const userId = req.userId;
-    // console.log("user->",user)
-    const allUserIds = [...followingId, user._id]; // following + loggedInUser
+   
+    const allUserIds = [...followingId, user._id]; // followingIds + loggedInUserId -> concatenate
 
     const alltweet = await Tweet.find({
       userId: { $in: allUserIds },
-    }).select("-password");
-    // console.log(alltweet)
-    if (!alltweet) {
+    }).sort({createdAt:-1}).select("-password");
+   
+    if (!alltweet) 
+    {
       return res.status(400).json({ message: "Create tweet " });
     }
     return res.status(200).json({ message: "allTweets", alltweet });
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     return res.status(400).json({ error: error.message });
   }
 };

@@ -73,7 +73,7 @@ function Profile() {
 
   return (
     <>
-      <div className="w-[50%] border-l border-r border-gray-200 fixed left-[19%]">
+      <div className="w-[50%] border-l border-r border-gray-200 fixed left-[22%]">
         <div className="border-b border-gray-200">
           <div className="flex my-2 ml-2">
             <Link to="/" className="flex items-center  ">
