@@ -86,33 +86,30 @@ export const likeOrDisLikeController = async (req, res) => {
 
     const user = req.user;
     
-
+let updatedTweets;
     if (tweet.likes.includes(userId)) 
       {
-      await Tweet.findByIdAndUpdate(Tweetid, { $pull: { likes: userId } });
+     updatedTweets= await Tweet.findByIdAndUpdate(Tweetid, { $pull: { likes: userId } },{new:true});
 
-      const updatedLike = await Tweet.findById(Tweetid); // fetch updated array of likes and  it return an array
+   
 
-      let Length = updatedLike.likes.length;
+     
      
       return res.json({
         message: `Dislike`,
         success: false,
-        Length,
+        Length:updatedTweets.likes.length,
       });
     }
      else 
      {
-      await Tweet.findByIdAndUpdate(Tweetid, { $push: { likes: userId } });
+    updatedTweets=  await Tweet.findByIdAndUpdate(Tweetid, { $push: { likes: userId } },{new:true});
 
-      const updatedLike = await Tweet.findById(Tweetid); // fetch updated array of likes and  it return an array
-      
-      let Length = updatedLike.likes.length;
       
       return res.json({
-        message: ` Like  `,
+        message: "Like",
         success: true,
-        Length,
+      Length:updatedTweets.likes.length,
       });
     }
   } 
