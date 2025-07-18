@@ -1,6 +1,6 @@
 import express from "express";
 import { SignUpValidation } from "../utils/signUpValidation.js";
-import loginValidation from "../utils/loginValidation.js";
+// import loginValidation from "../utils/loginValidation.js";
 import isAuth from "../Middleware/Authentication.js";
 
 import {
@@ -19,7 +19,7 @@ const router = express.Router();
 
 // Auth routes
 router.post("/signup", SignUpValidation, signUpController);
-router.post("/login", loginValidation, LoginController);
+router.post("/login",  LoginController);
 router.post("/logout", LogOutController);
 
 // Profile routes

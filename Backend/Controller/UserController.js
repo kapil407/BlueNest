@@ -68,11 +68,13 @@ export const LoginController=async (req,res)=>{
     const {emailId,password}=req.body
    
         // Search User in data
-        const user=await User.findOne({emailId:emailId})
-        const userPassword=user.password;
+        const user=await User.findOne({emailId:emailId});
+      
         if(!user){
            return res.status(400).json({message:"User not found"});
         }
+          const userPassword=user.password;
+
         const isMatch=await bcrypt.compare(password,userPassword);  // compare the password of inputPassword with exist password
             if(!isMatch){
                return res.status(400).json({message:"incorrect password"});
@@ -82,9 +84,9 @@ export const LoginController=async (req,res)=>{
         const token= jwt.sign({userId:user._id}, process.env.JWT_SECRET); // process.env.JWT_SECRET, secret key 
 
         // send cookie as identity card
-        res.cookie("token",token);
+        // res.cookie("token",token);
        
-     return res.json({message:"Login successfully" ,user,success:true});
+     return res.cookie("token",token,{ httpOnly: true,expires:new Date(Date.now()+24*60*60*1000)}).json({message:"Login successfully" ,user,success:true});
     }
      catch(err){
            return  res.status(400).json({message:err.message});

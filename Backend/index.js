@@ -21,19 +21,9 @@ const corsOption = {
 app.use(cors(corsOption)); //This applies the CORS settings globally to all incoming requests.
 
 app.use("/", userRoutes);
-// app.use("/", loginRouter);
-// app.use("/", logOutRouter);
+
 app.use("/", tweetRoutes);
-// app.use("/", deleteTweetRouter);
-// app.use("/", likeOrDisLikeRouter);
-// app.use("/", editProfileRouter);
-// app.use("/", bookmarksRouter);
-// app.use("/", getProfileRouter);
-// app.use("/", getOthersProfileRouter);
-// app.use("/", FollowingRouter);
-// app.use("/", unFollowRouter);
-// app.use("/", allTweetsRouter);
-// app.use("/", followTweetsRouter);
+
 
 
 app.use("/api/message",sendMessageRouter);
