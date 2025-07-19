@@ -16,12 +16,12 @@ import { getMyProfile, getUser, getOtherUsers} from "../redux/userSlice.js";
 import { useDispatch } from "react-redux";
 import { getMyTweets } from "../redux/tweetSlice.js";
 import { Message } from "./Message.jsx";
-
 const LeftSideBar = () => {
   
   const dispatch=useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.user); // user is loggedInUser
+  const {tweet}=useSelector(store=>store.tweet);
 
   const logoutHandler = async () => {
     try {
@@ -64,36 +64,36 @@ const LeftSideBar = () => {
           <div className="flex flex-col justify-between">
             <Link
               to="/"
-              className="flex items-center justify-between font-bold text-2xl w-32  mt-2 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in"
+              className="flex items-center justify-between font-bold text-2xl w-32  mt-4 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in"
             >
               <IoMdHome size={30} />
               <h1>Home</h1>
             </Link>
            
-            <div className="flex items-center justify-between font-bold text-2xl w-49  mt-2 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in">
+            {/* <div className="flex items-center justify-between font-bold text-2xl w-49  mt-2 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in">
               <MdOutlineNotificationsNone size={30} />
               <h1>Notification</h1>
-            </div>
+            </div> */}
             {/*  this redirect to loggedIn User */}
             <Link
               to={`/profile/${user?._id}`}
-              className="flex items-center justify-between font-bold text-2xl w-34  mt-2 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in"
+              className="flex items-center justify-between font-bold text-2xl w-34  mt-4 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in"
             >
               <CgProfile size={30} />
               <h1>Profile</h1>
             </Link>
-            <div className="flex items-center justify-between font-bold text-2xl w-47  mt-2 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in">
+            <Link  to={`/bookmarks/${user?._id}`} className="flex items-center justify-between font-bold text-2xl w-47  mt-4 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in">
               <PiBookmarkSimple size={30} />
               <h1>Bookmarks</h1>
-            </div>
+            </Link>
             <div
               onClick={logoutHandler}
-              className="flex items-center justify-between font-bold text-2xl w-36  mt-2 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full"
+              className="flex items-center justify-between font-bold text-2xl w-36  mt-4 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full"
             >
               <IoMdLogOut />
               <h1>Logout</h1>
             </div>
-            <Link to={'/Message'} className="flex items-center justify-between font-bold text-2xl w-43   mt-2 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in">
+            <Link to={'/Message'} className="flex items-center justify-between font-bold text-2xl w-43   mt-4 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in">
               <IoChatbubbleEllipsesOutline size={30} />
               <h1>Messages</h1>
             </Link>

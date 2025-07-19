@@ -84,7 +84,7 @@ function Profile() {
             </Link>
             <div className="flex flex-col ml-4">
               <h1 className="font-bold text-lg ">
-                {profile?.firstName} {profile?.lastName}
+                {profile?.firstName} 
               </h1>
               <p className="text-gray-600">10 Post</p>
             </div>

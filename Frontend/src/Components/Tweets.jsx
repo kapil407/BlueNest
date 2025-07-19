@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "react-avatar";
-import { FaImage } from "react-icons/fa6";
+import { FaDiaspora, FaImage } from "react-icons/fa6";
 import { FaRegComment } from "react-icons/fa";
 import { BiLike } from "react-icons/bi";
 import { Link } from "react-router-dom";
@@ -11,21 +11,27 @@ import { TWEET_API_END_POINT } from "../Utils/constant";
 import { getRefresh } from "../redux/tweetSlice";
 import { toast } from "react-hot-toast";
 import { MdOutlineDelete } from "react-icons/md";
+import { USER_API_END_POINT } from "../Utils/constant";
+
+import { isAction } from "@reduxjs/toolkit";
+
+import { getBookMarksIds } from "../redux/userSlice.js";
+
+import useBookmarks from '../hooks/useBookmarks.js'
 
 const Tweets = ({ tweet }) => {
-  const { userDetails } = tweet;
-  
 
+  const {handleBookmark}=useBookmarks();
+  const { userDetails } = tweet;
 
   const { user } = useSelector((store) => store.user);
-  // const { tweet } = useSelector((store) => store.tweet);
 
 
   const dispatch = useDispatch();
 
   const likeDisLikeHandler = async (id) => {
     try {
-      // console.log("likeslength->",tweet.likes.length);
+      
       const res = await axios.put(
         `${TWEET_API_END_POINT}/tweetLikeOrDisLike/${id}`,
         { id: user?._id },
@@ -59,8 +65,7 @@ const Tweets = ({ tweet }) => {
       dispatch(getRefresh());
       if (res?.data?.success) {
         toast.success(res?.data?.message);
-      }
-      else {
+      } else {
         toast.success(res?.data?.message);
       }
       // console.log("res inside DeleteHandler-> ", res);
@@ -69,24 +74,29 @@ const Tweets = ({ tweet }) => {
       console.error(error);
     }
   };
+
+  
+
   return (
     <>
       <div className="border-b border-gray-200">
         <div className="w-full">
           <div>
             <div className="ml-1 flex  items-center">
-              <Avatar
-                className="m-1 cursor-pointer"
-                src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
-                size="50"
-                round={true}
-              />
+              <Link to={`profile/${tweet?.userId}`}>
+                <Avatar
+                  className="m-1 cursor-pointer"
+                  src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
+                  size="50"
+                  round={true}
+                />
+              </Link>
               <div className="ml-2 w-full">
                 <div className="flex ml-2 items-center mt-4">
                   <h1 className="font-bold text-lg ml-1">
                     {userDetails[0]?.firstName}
                   </h1>
-                  <p className="ml-1">{userDetails[0]?.userName} .1m</p>
+                  <p className="ml-1">@{userDetails[0]?.userName} .1m</p>
                 </div>
                 <div>
                   <p>{tweet?.description}</p>
@@ -105,20 +115,28 @@ const Tweets = ({ tweet }) => {
                   </Link>
                   <p className="ml-2">{`${tweet.likes.length}`}</p>
                 </div>
-                <div className="flex hover:bg-yellow-200 p-2 rounded-full cursor-pointer">
+                <div
+                  onClick={() => handleBookmark(tweet?._id)}
+                  className="flex hover:bg-yellow-200 p-2 rounded-full cursor-pointer"
+                >
                   <PiBookmarkSimpleBold size={25} />
-                  <p className="ml-2">0</p>
+                 
                 </div>
                 <div className="flex items-center hover:bg-red-500  rounded-3xl p-2">
-                  <Link onClick={() => DeleteTweetHandler(tweet?._id)}>
-                    <MdOutlineDelete size={25} />
-                  </Link>
+                  {user?._id === tweet.userId && (
+                    <>
+                      <Link onClick={() => DeleteTweetHandler(tweet?._id)}>
+                        <MdOutlineDelete size={25} />
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+     
     </>
   );
 };

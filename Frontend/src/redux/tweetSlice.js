@@ -7,7 +7,8 @@ import { BiRefresh } from "react-icons/bi";
         initialState:{
             tweet:null,
             refresh:false,
-            isActive:true
+            isActive:true,
+            
         },
         reducers:{
             getMyTweets:(state,action)=>{

@@ -46,6 +46,7 @@ const dispatch=useDispatch();
         }
        
       } catch (error) {
+        toast.success(error.response.data.message);
         console.log(error);
       }
      
@@ -70,6 +71,7 @@ const dispatch=useDispatch();
         }
        
       } catch (error) {
+        toast.success(error.response.data.message);
         console.log(error);
       }
     }
@@ -87,7 +89,7 @@ const dispatch=useDispatch();
         <div className="flex justify-evenly w-[80%] items-center">
           <div>
             <img
-              className=" w-70 h-72 "
+              className=" w-78 h-85 "
               src="https://www.edigitalagency.com.au/wp-content/uploads/new-Twitter-logo-x-black-png-1200x1227.png"
               alt="twitter-logo"
             />

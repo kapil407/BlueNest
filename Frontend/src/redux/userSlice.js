@@ -1,37 +1,45 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
-
-const userSlice=createSlice({
-    name:"user",        // name of slice 
-    initialState:{
-        user:null,
-        otherUsers:null,
-        profile:null
-    },
-    reducers:{
+const userSlice = createSlice({
+  name: "user", // name of slice
+  initialState: {
+    user: null,
+    otherUsers: null,
+    profile: null,
+    bookmarksIds: null,
+  },
+  reducers: {
     // multiple Actions
-    getUser:(state,action)=>{
-            state.user=action.payload
+    getUser: (state, action) => {
+      state.user = action.payload;
     },
-    getOtherUsers:(state,action)=>{
-            state.otherUsers=action.payload;
+    getOtherUsers: (state, action) => {
+      state.otherUsers = action.payload;
     },
-    getMyProfile:(state,action)=>{
-        
-        state.profile=action.payload;
+    getMyProfile: (state, action) => {
+      state.profile = action.payload;
     },
-    followingUpdate:(state,action)=>{
-        if(state.user?.following?.includes(action.payload)){
-                state.user.following=state.user.following.filter(itemId=>{
-                    return itemId!=action.payload
-                })
-        }
-        else{
-            // follow
-                state.user?.following?.push(action.payload);
-        }
-    }
-}
+    getBookMarksIds: (state, action) => {
+      state.bookmarksIds = action.payload;
+    },
+
+    followingUpdate: (state, action) => {
+      if (state.user?.following?.includes(action.payload)) {
+        state.user.following = state.user.following.filter((itemId) => {
+          return itemId != action.payload;
+        });
+      } else {
+        // follow
+        state.user?.following?.push(action.payload);
+      }
+    },
+  },
 });
-export const {getUser,getOtherUsers,getMyProfile,followingUpdate}=userSlice.actions;
+export const {
+  getUser,
+  getOtherUsers,
+  getMyProfile,
+  followingUpdate,
+  getBookMarksIds,
+} = userSlice.actions;
 export default userSlice.reducer;
