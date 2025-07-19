@@ -13,6 +13,7 @@ import {
   getOthersProfileController,
   FollowingController,
   unFollowController,
+  getBookmarksTweetsController
 } from "../Controller/UserController.js";
 
 const router = express.Router();
@@ -29,6 +30,7 @@ router.get("/getOthersProfile", isAuth, getOthersProfileController);
 
 // Bookmark route
 router.patch("/bookmarkstweet/:id", isAuth, bookmarksController);
+router.post("/getbookmarkedtweets", isAuth, getBookmarksTweetsController);
 
 // Follow/Unfollow routes
 router.post("/follow/:id", isAuth, FollowingController);

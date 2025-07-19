@@ -85,36 +85,34 @@ export const likeOrDisLikeController = async (req, res) => {
     const likes = tweet.likes; // extract the likes array from tweet
 
     const user = req.user;
-    
-let updatedTweets;
-    if (tweet.likes.includes(userId)) 
-      {
-     updatedTweets= await Tweet.findByIdAndUpdate(Tweetid, { $pull: { likes: userId } },{new:true});
 
-   
+    let updatedTweets;
+    if (tweet.likes.includes(userId)) {
+      updatedTweets = await Tweet.findByIdAndUpdate(
+        Tweetid,
+        { $pull: { likes: userId } },
+        { new: true }
+      );
 
-     
-     
       return res.json({
         message: `Dislike`,
         success: false,
-        Length:updatedTweets.likes.length,
+        Length: updatedTweets.likes.length,
       });
-    }
-     else 
-     {
-    updatedTweets=  await Tweet.findByIdAndUpdate(Tweetid, { $push: { likes: userId } },{new:true});
+    } else {
+      updatedTweets = await Tweet.findByIdAndUpdate(
+        Tweetid,
+        { $push: { likes: userId } },
+        { new: true }
+      );
 
-      
       return res.json({
         message: "Like",
         success: true,
-      Length:updatedTweets.likes.length,
+        Length: updatedTweets.likes.length,
       });
     }
-  } 
-  catch (error) 
-  {
+  } catch (error) {
     return res.status(400).json({ message: error.message });
   }
 };
@@ -123,23 +121,22 @@ export const getAllTweetsController = async (req, res) => {
   try {
     const user = req.user;
     const followingId = user.following;
-  
+
     const userId = req.userId;
-   
+
     const allUserIds = [...followingId, user._id]; // followingIds + loggedInUserId -> concatenate
 
     const alltweet = await Tweet.find({
       userId: { $in: allUserIds },
-    }).sort({createdAt:-1}).select("-password");
-   
-    if (!alltweet) 
-    {
+    })
+      .sort({ createdAt: -1 })
+      .select("-password");
+
+    if (!alltweet) {
       return res.status(400).json({ message: "Create tweet " });
     }
     return res.status(200).json({ message: "allTweets", alltweet });
-  } 
-  catch (error) 
-  {
+  } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 };
