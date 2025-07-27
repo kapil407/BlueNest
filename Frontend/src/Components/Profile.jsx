@@ -83,9 +83,7 @@ function Profile() {
               />
             </Link>
             <div className="flex flex-col ml-4">
-              <h1 className="font-bold text-lg ">
-                {profile?.firstName} 
-              </h1>
+              <h1 className="font-bold text-lg ">{profile?.firstName}</h1>
               <p className="text-gray-600">10 Post</p>
             </div>
           </div>
@@ -112,19 +110,27 @@ function Profile() {
                 </Link>
               </>
             ) : (
-              <button
-                onClick={followAndUnfollowHandler}
-                className="bg-black text-white px-4 py-2 mr-2 rounded-3xl  cursor-pointer"
-              >
-                {user?.following?.includes(id.toString())
-                  ? "following"
-                  : "follow"}
-              </button>
-
-              
+              <>
+                <button
+                  onClick={followAndUnfollowHandler}
+                  className="bg-black text-white px-4 py-2 mr-2 rounded-3xl  cursor-pointer"
+                >
+                  {user?.following?.includes(id.toString())
+                    ? "following"
+                    : "follow"}
+                </button>
+                {/* message btn*/}
+                {user?.following.includes(id?.toString()) && (
+                  <Link to={`/Message/${id}`}>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-3xl cursor-pointer">
+                      Message
+                    </button>
+                  </Link>
+                )}
+              </>
             )}
           </div>
-          
+
           <div className="m-4">
             <h1 className="font-bold text-xl">{profile?.firstName}</h1>
             <p className="text-sm text-gray-600">{profile?.userName}</p>

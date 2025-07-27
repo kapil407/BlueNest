@@ -33,10 +33,10 @@ const Body = () => {
           path: "/EditeProfile",
           element: <EditeProfile />,
         },
-        {
-          path: "/Message",
-          element: <Message />,
-        },
+        // {
+        //   path: "/Message",
+        //   element: <Message />,
+        // },
         {
           path: "/Message/:targetUserId",
           element: <Message />,
