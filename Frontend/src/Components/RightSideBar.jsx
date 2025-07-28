@@ -6,24 +6,19 @@ import { CgLayoutGrid } from 'react-icons/cg';
 
 function RightSideBar({otherUsers}) {
   const {id}=useParams();
-  // const searchHandler=(value)=>{
-  //     console.log("value-> ",value);
-  //     otherUsers?.firstName.filter((name)=>{
-  //       return name.includes(value);
-  //     })
-  // }
+ 
 
   return (
    
     <>
-      <div className='w-[22%] mt-1 h-auto ml-2'>
+      <div className='w-[22%] mt-1 h-auto ml-2 '>
          <div>
-         <div className='bg-gray-100 flex p-3 rounded-full '>
+         <div className='bg-gray-100 flex p-3 rounded-full  border-1 border-gray-300'>
             <IoSearch size={25}/>
             <input type="text" placeholder='Search' className='ml-2 outline-none ' />
           </div>
-          <div className='bg-gray-100 mt-3 rounded-2xl p-1.5 '>
-          <h1 className='font-bold text-lg mb-2 mt-2 mr-1'>Who to follow</h1>
+          <div className='bg-gray-100 mt-3 rounded-2xl p-1.5 border border-gray-300'>
+          <h1 className='font-bold text-lg mb-2 mt-2 mr-1 text-center'>Who to follow</h1>
           
         <div className='flex justify-between flex-col '>
        {

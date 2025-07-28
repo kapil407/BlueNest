@@ -53,15 +53,15 @@ const LeftSideBar = () => {
             className="hover:bg-gray-200 hover:cursor-pointer rounded-full w-14 h-14 flex items-center justify-center transition delay-75 ease-in "
           >
             <img
-              className=" object-cover w-7 h-7 "
-              src="https://www.edigitalagency.com.au/wp-content/uploads/new-Twitter-logo-x-black-png-1200x1227.png"
+              className=" object-cover w-11 h-11 rounded-full "
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2xL9YcC2jKkxlbeGWZhJzL6xfcTphcZs6aZsagG0mol0P540IlaZo1uP_o3KWQchKLQU&usqp=CAU"
               alt="twitter-logo"
             />
           </Link>
           <div className="flex flex-col justify-between">
             <Link
               to="/"
-              className="flex items-center justify-between font-bold text-2xl w-32  mt-4 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in"
+              className="flex items-center justify-between font-bold text-2xl w-32  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300  "
             >
               <IoMdHome size={30} />
               <h1>Home</h1>
@@ -70,21 +70,21 @@ const LeftSideBar = () => {
             {/*  this redirect to loggedIn User */}
             <Link
               to={`/profile/${user?._id}`}
-              className="flex items-center justify-between font-bold text-2xl w-34  mt-4 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in"
+              className="flex items-center justify-between font-bold text-2xl w-34  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 "
             >
               <CgProfile size={30} />
               <h1>Profile</h1>
             </Link>
             <Link
               to={`/bookmarks/${user?._id}`}
-              className="flex items-center justify-between font-bold text-2xl w-47  mt-4 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in"
+              className="flex items-center justify-between font-bold text-2xl w-47  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 "
             >
               <PiBookmarkSimple size={30} />
               <h1>Bookmarks</h1>
             </Link>
             <div
               onClick={logoutHandler}
-              className="flex items-center justify-between font-bold text-2xl w-36  mt-4 p-2 hover:bg-gray-200 hover:cursor-pointer rounded-full"
+              className="flex items-center justify-between font-bold text-2xl w-36  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full border border-gray-300 "
             >
               <IoMdLogOut />
               <h1>Logout</h1>

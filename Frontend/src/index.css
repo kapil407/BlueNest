@@ -48,4 +48,6 @@ html::-webkit-scrollbar {
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #888;
   }
-  
+  body{
+    background-color: #f0f2f5;
+  }

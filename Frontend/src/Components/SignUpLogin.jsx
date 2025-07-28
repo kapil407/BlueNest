@@ -89,19 +89,23 @@ const dispatch=useDispatch();
         <div className="flex justify-evenly w-[80%] items-center">
           <div>
             <img
-              className=" w-78 h-85 "
-              src="https://www.edigitalagency.com.au/wp-content/uploads/new-Twitter-logo-x-black-png-1200x1227.png"
+              className=" w-100 h-100 rounded-full border-4 border-gray-400 "
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHNnbQN9Yb8t5SY1IorY9ThhpMMOnjLTD-1g&s"
               alt="twitter-logo"
             />
           </div>
-          <div>
-           <div className="h-32">
-           <h1 className="font-bold text-6xl ">Happening now</h1>
-            <h1 className="font-bold text-2xl my-2">
+          <div className="  w-[50%] flex flex-col items-center justify-center pb-6 
+                bg-gray-800 bg-opacity-10 backdrop-blur-md 
+                rounded-2xl shadow-lg border border-white border-opacity-30 
+                p-6 text-white  ">
+           
+          
+       
+          <h1 className="font-bold text-2xl mt-6 mb-4">
               {isLogin ? "Login" : "SignUp"}
             </h1>
-           </div>
-            <div>
+          
+            <div className=" h-[60%] w-[70%]  ">
               <form onSubmit={submittedHandler} className="flex flex-col ">
                 {!isLogin && (
                   <>
@@ -110,21 +114,21 @@ const dispatch=useDispatch();
                       placeholder="Enter firstname"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="border  border-gray-600 outline-blue-400  w-[60%] p-2 rounded-full my-2"
+                      className="border-2 mb-4 border-gray-600 outline-blue-400  w-[100%] p-3 rounded-full my-2"
                     />
                     <input
                       type="text"
                       placeholder="Enter lastname"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="border  border-gray-600 outline-blue-400  w-[60%] p-2 rounded-full my-2"
+                      className="border-2  mb-4  border-gray-600 outline-blue-400   w-[100%] p-3 rounded-full my-2"
                     />
                     <input
                       type="text"
                       placeholder="Enter username"
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
-                      className="border  border-gray-600 outline-blue-400  w-[60%] p-2 rounded-full my-2"
+                      className="border-2 p-3 border-gray-600 outline-blue-400 mb-4  w-[100%]  rounded-full my-2"
                     />
                   </>
                 )}
@@ -133,27 +137,27 @@ const dispatch=useDispatch();
                   placeholder="Enter email"
                   value={emailId}
                   onChange={(e) => setEmailId(e.target.value)}
-                  className="border-2  border-gray-600 outline-blue-400  w-[60%] p-2 rounded-full my-2"
+                  className="border-2   mb-4 border-gray-600 outline-blue-400   w-[100%] p-3 rounded-full my-2"
                 />
-               <div className="flex items-center border-2  w-67 rounded-3xl my-2  hover:border-blue-400 " >
+               <div className="flex items-center border-2 border-gray-600  mb-4 w-[100%] rounded-3xl my-2  hover:border-blue-400  " >
                <input
                   type={show?"text":"password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"
-                  className=" outline-none  w-[90%] p-2 "
+                  className=" outline-none  w-[100%] p-3"
                 />
-                <BiSolidShow onClick={()=>setshow(!show)} size={20}/>
+                <BiSolidShow onClick={()=>setshow(!show)} size={20} className="mr-2"/>
 
                </div>
                 <button
                   type="submit"
-                  className="px-3 py-2 bg-[#1D9BF0] w-[60%] my-2 rounded-full cursor-pointer hover:bg-blue-400 text-white font-bold"
+                  className="px-3 py-3 bg-[#1D9BF0] w-[100%] my-2 rounded-full cursor-pointer hover:bg-blue-400 text-white font-bold"
                 >
                   {isLogin ? "Login" : "Create account"}
                 </button>
 
-                <h1>
+                <h1 className="text-center">
                   {isLogin
                     ? "Already have an account? "
                     : "Don't have an account? "}
@@ -166,7 +170,11 @@ const dispatch=useDispatch();
                 </h1>
               </form>
             </div>
-          </div>
+     
+        </div>
+                
+                
+           
         </div>
       </div>
     </>
