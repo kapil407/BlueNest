@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { USER_API_END_POINT } from "../Utils/constant.js";
 import { useDispatch } from "react-redux";
-import { getMyProfile } from "../redux/userSlice";
+import { getMyProfile } from "../redux/userSlice.js";
 // import { IoMdVolumeHigh } from "react-icons/io";
 
 const useGetProfile = (id) => {

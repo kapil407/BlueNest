@@ -7,6 +7,8 @@ const userSlice = createSlice({
     otherUsers: null,
     profile: null,
     bookmarksIds: null,
+      // authUser:null,
+      // onlineUsers:null,
   },
   reducers: {
     // multiple Actions
@@ -22,6 +24,12 @@ const userSlice = createSlice({
     getBookMarksIds: (state, action) => {
       state.bookmarksIds = action.payload;
     },
+      //  setAuthUser:(state,action)=>{
+      //       state.authUser = action.payload;
+      //   },
+      //     setOnlineUsers:(state,action)=>{
+      //       state.onlineUsers = action.payload;
+      //   },
 
     followingUpdate: (state, action) => {
       if (state.user?.following?.includes(action.payload)) {
@@ -41,5 +49,6 @@ export const {
   getMyProfile,
   followingUpdate,
   getBookMarksIds,
+ 
 } = userSlice.actions;
 export default userSlice.reducer;

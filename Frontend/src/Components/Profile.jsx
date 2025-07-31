@@ -24,6 +24,8 @@ function Profile() {
   const dispatch = useDispatch();
 
   const { profile, otherUsers, user } = useSelector((store) => store.user);
+  console.log("profile->",profile);
+  console.log("user->",user);
 
   const followAndUnfollowHandler = async () => {
     if (user?.following?.includes(id?.toString())) {
@@ -64,7 +66,7 @@ function Profile() {
           toast.success(res?.data?.message);
         }
 
-        // console.log("follow res->",res);
+        console.log("follow res->",res);
       } catch (error) {
         console.error(error);
       }
@@ -142,11 +144,11 @@ function Profile() {
             <div className="flex ml-4 py-2 ">
               <button className="cursor-pointer   text-gray-700 font-semibold">
                 {" "}
-                {user?.following.length} Following
+                {profile?.following.length} Following
               </button>
 
               <button className="cursor-pointer   text-gray-700 font-semibold ml-2">
-                {user?.followers.length} Followers
+                {profile?.followers.length} Followers
               </button>
             </div>
           </div>

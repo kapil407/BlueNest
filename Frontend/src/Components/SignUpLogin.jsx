@@ -38,6 +38,8 @@ const dispatch=useDispatch();
         );
        console.log("login->", res);
         dispatch(getUser(res?.data?.user)); // update (add userData)the slice 
+   
+        
         if(res.request.status){
           navigate("/")
         
@@ -77,6 +79,7 @@ const dispatch=useDispatch();
     }
   };
 
+
   const isLoginSignupHandler = () => {
     // toggle for logina and signUp
     setisLogin(!isLogin);
@@ -95,9 +98,9 @@ const dispatch=useDispatch();
             />
           </div>
           <div className="  w-[50%] flex flex-col items-center justify-center pb-6 
-                bg-gray-800 bg-opacity-10 backdrop-blur-md 
-                rounded-2xl shadow-lg border border-white border-opacity-30 
-                p-6 text-white  ">
+    bg-white/10 backdrop-blur-md backdrop-saturate-150 
+    rounded-2xl shadow-xl border border-white/50 
+    p-6 text-black ">
            
           
        

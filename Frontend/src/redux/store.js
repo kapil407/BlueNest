@@ -2,6 +2,7 @@ import {configureStore,combineReducers} from "@reduxjs/toolkit";
 
 import userSlice from './userSlice.js'
 import tweetSlice from './tweetSlice.js'
+import messageSlice from './messageSlice.js'
 import {
     persistStore,
     persistReducer,
@@ -22,6 +23,7 @@ import {
 const rootReducer = combineReducers({
     user:userSlice,
     tweet:tweetSlice,
+    message:messageSlice,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
