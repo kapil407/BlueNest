@@ -1,29 +1,44 @@
-import {Server} from "socket.io"
+import { Server } from "socket.io";
 
-export const initializSocket=(httpServer)=>{
-    const io=new Server(httpServer,{
-           cors: {
-            origin:"http://localhost:5173"
-           }
-    })
-    
-    io.on("connection",(socket)=>{
-            // Eveent Handler
-        socket.on("joinChat",({firstName,userId,targetUserId})=>{
-                // create room fopr user and targetUser
-              if(targetUserId){
-                const room=[userId,targetUserId].sort().join("_");
-                console.log(firstName,"room-> ",room);
-                socket.join(room); 
-              }
-        })
-        socket.on("sendMessage",({firstName,userId,targetUserId,text})=>{
-                const roomId=[userId,targetUserId].sort().join("_");
-                console.log( userId,"text-> ",text);
-                io.to(roomId).emit("recievedMessage",{firstName,text,targetUserId});
-        })
-        socket.on("disconnect",()=>{
+export let io;
+export const userSocketMap = {}; // userId => socketId
 
-        })
-    })
-}
+export const initSocket = (server) => {
+  io = new Server(server, {
+    cors: {
+      origin: "http://localhost:5173",
+      credentials: true,
+    },
+  });
+
+  io.on("connection", (socket) => {
+    const userId = socket.handshake.query.userId;
+    console.log("🔌 User connected: ", userId);
+
+    if (userId) {
+      userSocketMap[userId] = socket.id;
+    }
+
+    // Send online users to all
+    io.emit("getOnlineUser", Object.keys(userSocketMap));
+
+    // Listen for sendMessage
+    socket.on("sendMessage", ({ senderId, receiverId, message }) => {
+      const receiverSocketId = userSocketMap[receiverId];
+
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("receiveMessage", {
+          senderId,
+          receiverId,
+          message,
+        });
+      }
+    });
+
+    //  Disconnect cleanup
+    socket.on("disconnect", () => {
+      delete userSocketMap[userId];
+      io.emit("getOnlineUser", Object.keys(userSocketMap));
+    });
+  });
+};

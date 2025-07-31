@@ -10,7 +10,7 @@ const isAuthentication = async (req, res, next) => {
     const cookies = req.cookies;
 
     const token = cookies.token;
-    console.log(token);
+    // console.log(token);
 
     if (!token) {
       throw new Error("token is invalid");

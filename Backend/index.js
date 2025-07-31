@@ -1,44 +1,50 @@
 import express from "express";
-const PORT = 4660;
+import http from "http";
+import { Server } from "socket.io";
 import { connectDB } from "./config/Database.js";
-import sendMessageRouter from './routes/MessageRoute.js'
 
-import userRoutes from './routes/AuthRoute.js';
-import tweetRoutes from './routes/TweetRoute.js'
+import userRoutes from "./routes/AuthRoute.js";
+import tweetRoutes from "./routes/TweetRoute.js";
+import MessageRouter from "./routes/MessageRoute.js";
+import { initSocket } from "./utils/socket.js";
+
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import http from "http";
-import { initializSocket } from "./utils/socket.js";
 
 const app = express();
-app.use(express.json()); // extract the json data from req and convert into the js object and add to the req.body
-app.use(cookieParser()); // extract the cookie from the request and add it to the req.cookies
+const PORT = 4660;
+
+const server = http.createServer(app);
+
+
+app.use(express.json());
+app.use(cookieParser());
+
 const corsOption = {
   origin: "http://localhost:5173",
   credentials: true,
 };
-app.use(cors(corsOption)); //This applies the CORS settings globally to all incoming requests.
+app.use(cors(corsOption));
 
+// Routes
 app.use("/", userRoutes);
-
 app.use("/", tweetRoutes);
+app.use("/", MessageRouter);
 
 
+initSocket(server);
 
-app.use("/api/message",sendMessageRouter);
-
-const httpServer = http.createServer(app); // wrap the express application by HTTP  server for using socket.io
-
-initializSocket(httpServer);
-
+// DB connection + Server start
 connectDB()
   .then(() => {
-    console.log("database is connectes sucessfully");
-    httpServer.listen(PORT, () => {
-      console.log("sever is listening at port " + PORT);
+    console.log(" Database connected successfully");
+    server.listen(PORT, () => {
+      console.log("Server is listening at port " + PORT);
     });
   })
   .catch((err) => {
-    console.error("error" + err.message);
+    console.error(" connection error: " + err.message);
   });
+
+

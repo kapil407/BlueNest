@@ -67,7 +67,7 @@ export const LoginController = async (req, res) => {
     return res
       .cookie("token", token, {
         httpOnly: true,
-        expires: new Date(Date.now() + 24 * 60 * 60 * 100),
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       })
       .json({ message: "Login successfully", user, success: true });
   } catch (err) {
@@ -146,20 +146,26 @@ export const bookmarksController = async (req, res) => {
       const tweet = await Tweet.findById(tweetId);
     console.log("tweet-> ",tweet?.userId);
     if(userId===tweet.userId.toString()){
-      
+          return res.status(201).json({message:"u can only other's bookmarks "});
     }
 
     let updatedUserData;
+    let bookmarkCnt=0;
     if (loggedInUser.bookmarks.includes(tweetId)) {
        updatedUserData = await User.findByIdAndUpdate(
         userId,
         { $pull: { bookmarks: tweetId } },
         { new: true }
       );
+      bookmarkCnt--;
+      if(bookmarkCnt<0){
+        bookmarkCnt=0;
+      }
 
       return res.json({
         message: " remove bookmarks successfully",
         updatedUserData,
+        bookmarkCnt
       });
     } else if(userId!==tweet.userId.toString()) {
       
@@ -168,10 +174,11 @@ export const bookmarksController = async (req, res) => {
         { $push: { bookmarks: tweetId } },
         { new: true }
       );
-
+      bookmarkCnt++;
       return res.json({
         message: " bookmarks successfully",
         updatedUserData,
+        bookmarkCnt
       });
     }
     else{
@@ -242,9 +249,9 @@ export const FollowingController = async (req, res) => {
       return res.json({ message: "user not found" });
     }
     const followers = user?.followers;
-
+      let updatedData;
     if (!following.includes(userId)) {
-      await User.findByIdAndUpdate(loggedInUserId, {
+       updatedData=await User.findByIdAndUpdate(loggedInUserId, {
         $push: { following: userId },
       }); // push the user userId into following{ARRAY} of LoggedInUser
       await User.findByIdAndUpdate(userId, {
@@ -253,6 +260,7 @@ export const FollowingController = async (req, res) => {
       return res.json({
         message: `You just follow ${user.firstName}`,
         success: true,
+        updatedData
       });
     }
     // else{
