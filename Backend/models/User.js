@@ -60,6 +60,10 @@ const userSchema=new mongoose.Schema({
     bio:{
         type:String,
         default:"Hey there! I'm new here"
+    },
+    profilePic:{
+        type:String,
+        default :""
     }
    
     

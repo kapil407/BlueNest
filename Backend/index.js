@@ -27,6 +27,8 @@ const corsOption = {
 };
 app.use(cors(corsOption));
 
+
+
 // Routes
 app.use("/", userRoutes);
 app.use("/", tweetRoutes);

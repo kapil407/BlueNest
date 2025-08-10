@@ -1,35 +1,89 @@
 import Tweet from "../models/Tweets.js";
 import User from "../models/User.js";
 
+// export const createTweetController = async (req, res) => {
+//   try {
+//     const { description } = req.body;
+//     const userId = req.userId;
+//     //  const user=req.user;
+
+//     // console.log("_id->"+userId);
+//     const user = await User.findById(userId).select("-password");
+//     // console.log("user->"+user)
+//     if (!description.length) {
+//       return res.status(400).json({ message: "write down tweet" });
+//     }
+//     const newTweet = new Tweet({
+//       description,
+//       userId: userId,
+//       userDetails: user,
+//     });
+
+//     const data = await newTweet.save();
+
+//     return res.json({
+//       message: `${user.firstName} your Tweet successfully created`,
+//       data,
+//       success: true,
+//     });
+//   } catch (error) {
+//     return res.status(401).json({ message: error.message });
+//   }
+// };
+
+
+import cloudinary from "../utils/Cloudinary.js";
+import streamifier from "streamifier";
+// import Tweet from "../models/tweetModel.js";
+
 export const createTweetController = async (req, res) => {
   try {
     const { description } = req.body;
+    console.log("des",description);
+
     const userId = req.userId;
-    //  const user=req.user;
 
-    // console.log("_id->"+userId);
-    const user = await User.findById(userId).select("-password");
-    // console.log("user->"+user)
-    if (!description.length) {
-      return res.status(400).json({ message: "write down tweet" });
+    const user=await User.findOne({_id:userId});
+
+    console.log("user->",user)
+    let imageUrl = null;
+    console.log("image",req.file);
+
+    if (req.file) {
+      const streamUpload = () => {
+        return new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: "tweets" },
+            (error, result) => {
+              if (result) {
+                resolve(result);
+              } else {
+                reject(error);
+              }
+            }
+          );
+          streamifier.createReadStream(req.file.buffer).pipe(stream);
+        });
+      };
+
+      const uploadResult = await streamUpload();
+      imageUrl = uploadResult.secure_url;
     }
-    const newTweet = new Tweet({
+
+    const tweet = await Tweet.create({
       description,
-      userId: userId,
-      userDetails: user,
+      image: imageUrl,
+      userId,
+       userDetails: user,
     });
 
-    const data = await newTweet.save();
-
-    return res.json({
-      message: `${user.firstName} your Tweet successfully created`,
-      data,
-      success: true,
-    });
+    res.status(201).json({ success: true, tweet });
   } catch (error) {
-    return res.status(401).json({ message: error.message });
+    console.log(error);
+    res.status(500).json({ success: false, message: "Server error kapil" });
   }
 };
+
 
 export const deleteTweetController = async (req, res) => {
   try {

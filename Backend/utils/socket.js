@@ -13,14 +13,14 @@ export const initSocket = (server) => {
 
   io.on("connection", (socket) => {
     const userId = socket.handshake.query.userId;
-    console.log("🔌 User connected: ", userId);
+    console.log( " User connected: ", userId);
 
     if (userId) {
       userSocketMap[userId] = socket.id;
     }
 
-    // Send online users to all
-    io.emit("getOnlineUser", Object.keys(userSocketMap));
+ 
+    // io.emit("getOnlineUser", Object.keys(userSocketMap));
 
     // Listen for sendMessage
     socket.on("sendMessage", ({ senderId, receiverId, message }) => {

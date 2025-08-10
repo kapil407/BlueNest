@@ -51,7 +51,7 @@ export const sendMessage = async (req, res) => {
     return res.status(201).json({ newMessage });
 
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.status(400).json( "error kapil inside create tweet" );
   }
 };
 
