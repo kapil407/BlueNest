@@ -47,13 +47,13 @@ export const Message = () => {
       );
 
       // console.log("res->", res.data.newMessage);
-      dispatch(setMessage([...message, res?.data?.newMessage]));
+      dispatch(setMessage( [...message, res?.data?.newMessage]));
       // After dispatch(setMessage(...))
       if (socket) {
         socket.emit("sendMessage", {
           senderId: userId,
           receiverId: targetUserId,
-          message: res?.data?.newMessage?.message, // assuming this is message text
+          message: res?.data?.newMessage?.message, 
         });
       }
 
@@ -128,21 +128,18 @@ export const Message = () => {
       </div>
 
       {/* Input Box */}
-      <div className="border rounded border-gray-400 h-[10%] p-2 bg-gray-200 text-center flex justify-between">
+      <div className="border rounded border-gray-400 h-[10%] p-2 items-center bg-gray-200 text-center flex justify-between">
 
-     
+        <div className="border w-15 h-8 hover:bg-gray-300 cursor-pointer rounded border-gray-500"> <input type="file" className=" w-13 text-center h-8 cursor-pointer" placeholder="photo"/></div>
         <input
           type="text"
           value={Message}
           onChange={(e) => setmessage(e.target.value)}
           placeholder="Write the message"
-          className="outline-none w-[80%]"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              sendmessages();
-            }
-          }}
+          className="outline-none w-[70%]"
+         
         />
+        <button onClick={()=> sendmessages()} className="mr-2 border border-gray-400 p-1 w-18 h-12 rounded   bg-gray-200 hover:bg-gray-300 cursor-pointer">send</button>
       </div>
     </div>
   );

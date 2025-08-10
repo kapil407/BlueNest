@@ -8,6 +8,8 @@ import { Navigate } from "react-router-dom";
 import {useDispatch} from 'react-redux'
 import { getUser } from "../redux/userSlice.js";
 
+
+
  
 const LoginSignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -92,9 +94,9 @@ const dispatch=useDispatch();
         <div className="flex justify-evenly w-[80%] items-center">
           <div>
             <img
-              className=" w-100 h-100 rounded-full border-4 border-gray-400 "
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHNnbQN9Yb8t5SY1IorY9ThhpMMOnjLTD-1g&s"
-              alt="twitter-logo"
+              className=" w-100 h-100 rounded-full border-4 border-gray-400"
+            src='logo.png'
+              alt=""
             />
           </div>
           <div className="  w-[50%] flex flex-col items-center justify-center pb-6 

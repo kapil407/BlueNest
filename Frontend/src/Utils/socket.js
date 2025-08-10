@@ -1,4 +1,4 @@
-// src/Utils/socket.js
+
 import { io } from "socket.io-client";
 
 let socket = null;
@@ -11,7 +11,7 @@ export const connectSocket = (userId) => {
       withCredentials: true,
     });
 
-    console.log("✅ Socket connected:", socket.id);
+    console.log("Socket connected:", socket.id);
   }
 };
 

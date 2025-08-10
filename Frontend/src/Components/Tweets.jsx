@@ -21,8 +21,18 @@ import useBookmarks from '../hooks/useBookmarks.js'
 
 const Tweets = ({ tweet }) => {
 
+    
+
   const {handleBookmark}=useBookmarks();
   const { userDetails } = tweet;
+  // const userDetail= Object?.values(userDetails);
+  // console.log("userdetils",userDetails);
+
+const firstUser = Array.isArray(tweet.userDetails) && tweet.userDetails.length > 0
+  ? tweet.userDetails[0]
+  : null;
+
+  console.log("userArray",firstUser?.firstName);
 
   const { user } = useSelector((store) => store.user);
 
@@ -75,7 +85,7 @@ const Tweets = ({ tweet }) => {
     }
   };
 
-  
+   
 
   return (
     <>
@@ -83,7 +93,8 @@ const Tweets = ({ tweet }) => {
         <div className="w-full">
           <div>
             <div className="ml-1 flex  items-center">
-              <Link to={`profile/${tweet?.userId}`}>
+           <div className="flex">
+               <Link to={`profile/${tweet?.userId}`}>
                 <Avatar
                   className="m-1 cursor-pointer"
                   src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
@@ -94,14 +105,18 @@ const Tweets = ({ tweet }) => {
               <div className="ml-2 w-full">
                 <div className="flex ml-2 items-center mt-4">
                   <h1 className="font-bold text-lg ml-1">
-                    {userDetails[0]?.firstName}
+                    {firstUser?.firstName}
                   </h1>
-                  <p className="ml-1">@{userDetails[0]?.userName} .1m</p>
+                  <p className="ml-1">@{firstUser?.userName} .1m</p>
                 </div>
                 <div>
-                  <p>{tweet?.description}</p>
+                  <p className="mt-2">{tweet?.description}</p>
+                 {
+                  tweet?.image &&  <img src={tweet?.image} className="m-2 rounded w-120 h-100" alt="image" />
+                 }
                 </div>
               </div>
+           </div>
             </div>
             <div>
               <div className="flex justify-between p-8">

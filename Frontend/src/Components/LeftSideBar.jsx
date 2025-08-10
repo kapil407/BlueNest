@@ -58,12 +58,12 @@ const LeftSideBar = () => {
         <div className="w-[18%] fixed">
           <Link
             to={"/"}
-            className="hover:bg-gray-200 hover:cursor-pointer rounded-full w-14 h-14 flex items-center justify-center transition delay-75 ease-in "
+            className="hover:bg-gray-200 hover:cursor-pointer rounded-full w-14 h-14 flex items-center justify-center transition delay-75 ease-in mt-2 mb-2 "
           >
             <img
-              className=" object-cover w-11 h-11 rounded-full "
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2xL9YcC2jKkxlbeGWZhJzL6xfcTphcZs6aZsagG0mol0P540IlaZo1uP_o3KWQchKLQU&usqp=CAU"
-              alt="twitter-logo"
+              className=" object-cover w-15 h-15  rounded-full "
+              src="logo.png" 
+              alt="logo"
             />
           </Link>
           <div className="flex flex-col justify-between">
