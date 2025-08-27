@@ -7,6 +7,7 @@ import userRoutes from "./routes/AuthRoute.js";
 import tweetRoutes from "./routes/TweetRoute.js";
 import MessageRouter from "./routes/MessageRoute.js";
 import { initSocket } from "./utils/socket.js";
+import OtpRouter from './routes/OtpRout.js'
 
 
 import cookieParser from "cookie-parser";
@@ -33,6 +34,7 @@ app.use(cors(corsOption));
 app.use("/", userRoutes);
 app.use("/", tweetRoutes);
 app.use("/", MessageRouter);
+app.use('/',OtpRouter);
 
 
 initSocket(server);
