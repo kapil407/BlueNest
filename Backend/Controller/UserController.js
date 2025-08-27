@@ -7,8 +7,27 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import Tweet from "../models/Tweets.js";
 import mongoose from "mongoose";
+import nodemailer from "nodemailer";
+import crypto from "crypto";
+import uploadCloudinary from "../Middleware/Cloudinary.js";
+
+import { tracingChannel } from "diagnostics_channel";
 
 dotenv.config();
+
+const generateOTP = () => crypto.randomInt(10000, 100000);
+
+console.log("generateOTP", generateOTP);
+
+// email transport
+
+const transport = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "kapilkeer1506@gmail.com",
+    pass: "kvkpdylbtubmaqgf",
+  },
+});
 
 export const signUpController = async (req, res) => {
   try {
@@ -23,6 +42,10 @@ export const signUpController = async (req, res) => {
 
     const hashPassword = await bcrypt.hash(password, 10);
 
+    const otp = generateOTP();
+    const now = new Date();
+    const ExpiryOtp = new Date(Date.now() + 60 * 1000 * 2);
+
     const newUser = new User({
       /// create a newUser by User Model
       firstName,
@@ -30,17 +53,114 @@ export const signUpController = async (req, res) => {
       emailId,
       userName,
       password: hashPassword,
+      otpVerified: false,
+      expiryOtp: ExpiryOtp,
+      verificationCode: otp,
+    });
+    const data = await newUser.save();
+
+    await transport.sendMail({
+      from: "kapilkeer1506@gmail.com",
+      to: emailId,
+      subject: "OTP Verification",
+      text: `Your OTP is : ${otp}`,
     });
 
-    const data = await newUser.save(); // save in database
-
-    return res.json({ message: "signUp Successfully", data });
+    return res.status(200).json({
+      message: "Register succesfully.Please verify OTP sent to your email",
+      success: true,
+      newUser,
+    });
   } catch (err) {
     // console.log("catch")
 
     return res.status(400).json({ error: err.message });
   }
 };
+
+export const verifyOTP = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const otp = req.body.otp;
+    console.log("backend", email);
+    console.log("otp from frontend", otp);
+
+    if (!email || !otp) {
+      return res.status(400).json("email is undefined");
+    }
+
+    const user = await User.findOne({ emailId: email });
+    console.log("otp in user data", user.verificationCode);
+
+    if (!user) {
+      return res.status(400).json({ message: "user not found" });
+    }
+    if (user.isVerified) {
+      return res
+        .status(400)
+        .json({ message: "user already verified", success: false });
+    }
+    console.log("user date", user?.expiryOtp);
+    console.log("time ", new Date());
+
+    if (user.verificationCode != otp || user.expiryOtp < new Date()) {
+      return res
+        .status(400)
+        .json({ message: "Invalid or exppired OTP", success: false });
+    }
+    user.otpVerified = true;
+    user.verificationCode = undefined;
+    user.expiryOtp = undefined;
+    await user.save();
+    return res.status(200).json({
+      message: "Email verified successfully .You can now log in",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: error.message });
+  }
+};
+
+export const resendOTP = async (req, res) => {
+  try {
+    const { email } = req.body;
+    console.log("email", email);
+    if (!email) {
+      return res.status(400).json({ message: "email is undefined" });
+    }
+    const user = await User.findOne({ emailId: email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "user not found", success: false });
+    }
+    if (user.isVerified) {
+      return res.status(400).json({ message: "user already verified" });
+    }
+    const otp = generateOTP();
+
+    user.verificationCode = otp;
+
+    const expires = new Date(Date.now() + 2 * 60 * 1000);
+    user.expiryOtp = expires;
+    await user.save();
+    await transport.sendMail({
+      from: "kapilkeer1506@gmail.com",
+      to: email,
+      subject: "OTP Verification",
+      text: `Your OTP is : ${otp}`,
+    });
+
+    return res
+      .status(200)
+      .json({ message: "OTP resent successfully", success: true });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: error.message });
+  }
+};
+
 export const LoginController = async (req, res) => {
   try {
     const { emailId, password } = req.body;
@@ -58,11 +178,14 @@ export const LoginController = async (req, res) => {
       return res.status(400).json({ message: "incorrect password" });
     }
 
+    if (!user.otpVerified) {
+      return res.status(400).json({
+        message: "Email is not verified .Please verify OTP",
+        success: false,
+      });
+    }
     // creating token for create cookie
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET); // process.env.JWT_SECRET, secret key
-
-    // send cookie as identity card
-    // res.cookie("token",token);
 
     return res
       .cookie("token", token, {
@@ -94,40 +217,45 @@ export const editProfileController = async (req, res) => {
     const loggedinUser = req.user;
     const allowedForEdit = ["firstName", "lastName", "userName", "bio"];
 
-    /*
-                    Object.keys() return an array of all keys of object 
-                    and .every(()=>{
-                        })
-
-                        it iterate all the element of array that return by object.keys(),
-                        and run a callback function on each element and if the callback condtion is satisfeid for all elements then it return true otherwise it return false even on one element condition false
-                    */
     const isValidUpdate = Object.keys(req.body).every((key) =>
       allowedForEdit.includes(key)
     );
     if (!isValidUpdate) {
-      return res.json({ message: "not permissable to edit" });
+      return res.json({ message: "Not permissible to edit" });
+    }
+
+    let imageUrl = null;
+
+    if (req.file) {
+      console.log("image in backend", req.file);
+
+      imageUrl = await uploadCloudinary(req.file.path);
+
+      loggedinUser.profilePic = imageUrl;
     }
 
     Object.keys(req.body).forEach(
       (field) => (loggedinUser[field] = req.body[field])
-    ); // update the fields of the loggInUser
+    );
+
     const updated = await loggedinUser.save();
+    console.log("updated", updated.profilePic);
 
     await Tweet.updateMany(
-      { userId: userId },
+      { userId },
       {
         $set: {
           "userDetails.0.firstName": updated.firstName,
           "userDetails.0.lastName": updated.lastName,
           "userDetails.0.userName": updated.userName,
           "userDetails.0.bio": updated.bio,
+          "userDetails.0.profilePic": updated.profilePic,
         },
       }
     );
 
     return res.json({
-      message: "Profile updated successfully ",
+      message: "Profile updated successfully",
       updated,
       success: true,
     });
@@ -143,32 +271,31 @@ export const bookmarksController = async (req, res) => {
     const tweetId = req.params.id; // find tweetId
     console.log(userId);
     const loggedInUser = await User.findById(userId);
-      const tweet = await Tweet.findById(tweetId);
-    console.log("tweet-> ",tweet?.userId);
-    if(userId===tweet.userId.toString()){
-          return res.status(201).json({message:"u can only other's bookmarks "});
+    const tweet = await Tweet.findById(tweetId);
+    console.log("tweet-> ", tweet?.userId);
+    if (userId === tweet.userId.toString()) {
+      return res.status(201).json({ message: "u can only other's bookmarks " });
     }
 
     let updatedUserData;
-    let bookmarkCnt=0;
+    let bookmarkCnt = 0;
     if (loggedInUser.bookmarks.includes(tweetId)) {
-       updatedUserData = await User.findByIdAndUpdate(
+      updatedUserData = await User.findByIdAndUpdate(
         userId,
         { $pull: { bookmarks: tweetId } },
         { new: true }
       );
       bookmarkCnt--;
-      if(bookmarkCnt<0){
-        bookmarkCnt=0;
+      if (bookmarkCnt < 0) {
+        bookmarkCnt = 0;
       }
 
       return res.json({
         message: " remove bookmarks successfully",
         updatedUserData,
-        bookmarkCnt
+        bookmarkCnt,
       });
-    } else if(userId!==tweet.userId.toString()) {
-      
+    } else if (userId !== tweet.userId.toString()) {
       updatedUserData = await User.findByIdAndUpdate(
         userId,
         { $push: { bookmarks: tweetId } },
@@ -178,13 +305,11 @@ export const bookmarksController = async (req, res) => {
       return res.json({
         message: " bookmarks successfully",
         updatedUserData,
-        bookmarkCnt
+        bookmarkCnt,
       });
+    } else {
+      return res.status(201).json({ message: "u can not bookmarks ur tweet " });
     }
-    else{
-      return res.status(201).json({message:"u can not bookmarks ur tweet "});
-    }
-  
   } catch (error) {
     return res.status(200).json({ message: error.message });
   }
@@ -200,7 +325,7 @@ export const getBookmarksTweetsController = async (req, res) => {
     // const id = "67f5491bb0b176b8142b7a1f";
     // const tweets = await Tweet.findById(id);
     const tweets = await Tweet.find({
-      _id: { $in: ids},
+      _id: { $in: ids },
     }).sort({ createdAt: -1 });
 
     console.log(tweets);
@@ -249,9 +374,9 @@ export const FollowingController = async (req, res) => {
       return res.json({ message: "user not found" });
     }
     const followers = user?.followers;
-      let updatedData;
+    let updatedData;
     if (!following.includes(userId)) {
-       updatedData=await User.findByIdAndUpdate(loggedInUserId, {
+      updatedData = await User.findByIdAndUpdate(loggedInUserId, {
         $push: { following: userId },
       }); // push the user userId into following{ARRAY} of LoggedInUser
       await User.findByIdAndUpdate(userId, {
@@ -260,7 +385,7 @@ export const FollowingController = async (req, res) => {
       return res.json({
         message: `You just follow ${user.firstName}`,
         success: true,
-        updatedData
+        updatedData,
       });
     }
     // else{
@@ -301,5 +426,29 @@ export const unFollowController = async (req, res) => {
     // return res.json({message:`${user.firstName} has not follwed yet`});
   } catch (error) {
     return res.status(400).json({ error: error.message });
+  }
+};
+
+export const changeBackgroundImage = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const user = await User.findOne({ _id: userId });
+    // console.log("usre->>>>", user);
+    let imageUrl = null;
+
+    if (req.file) {
+      // console.log("image in backend", req.file);
+
+      imageUrl = await uploadCloudinary(req.file.path);
+    }
+    user.backGroundImage = imageUrl;
+
+    await user.save();
+    return res
+      .status(200)
+      .json({ message: "BackGroundImage updated", user, success: true });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).json({ message: error, success: false });
   }
 };
