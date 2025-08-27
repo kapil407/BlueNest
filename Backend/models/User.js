@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
+import { type } from 'os';
+import { DefaultSerializer } from 'v8';
 import validator from 'validator';
+import { deflate } from 'zlib';
 
 
 const userSchema=new mongoose.Schema({
@@ -36,13 +39,7 @@ const userSchema=new mongoose.Schema({
     password:{
         type:String,
         required:true,
-        minLength:[6,"Passwors must be greater then 5 "],
-        validate(value){
-            if(!validator.isStrongPassword(value)){
-                throw new Error("Enter the strong password");
-                
-            }
-        }
+       
     },
     following:{
         type:Array, // store the all ids of those people , i follow
@@ -64,12 +61,19 @@ const userSchema=new mongoose.Schema({
     profilePic:{
         type:String,
         default :""
-    }
-   
-    
-
-
-
+    },
+    backGroundImage:{
+        type:String,
+        default:""
+    },
+    otpVerified:{
+        type:String,
+       Default:false
+    },
+    expiryOtp:{
+     type:Date
+    },
+    verificationCode:String
 },
 {
     timestamps:true
