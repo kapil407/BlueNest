@@ -29,12 +29,7 @@ export const SignUpValidation=(req,res,next)=>{
                 
                 
         }
-        else if(!validator.isStrongPassword(password)){
-                // console.log("password")
-                return res.status(400).json({message:"Enter the strong password"});
-           
-            
-        }
+       
         
         // console.log("end of signUp validate" )
         next();
