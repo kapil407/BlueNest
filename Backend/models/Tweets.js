@@ -23,6 +23,10 @@ const tweetSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+   videos:{
+      type:String,
+      default:""
+    },
   },
   {
     timestamps: true,
