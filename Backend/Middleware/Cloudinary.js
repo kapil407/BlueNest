@@ -10,8 +10,8 @@ const uploadCloudinary= async (filepath)=>{
 });
 try {
     const uploadtResult=await cloudinary.uploader.upload(filepath);
-    fs.unlinkSync(filepath);
-    return uploadtResult.secure_url;
+    fs.unlinkSync(filepath); // dlete file from local disk 
+    return uploadtResult.secure_url; // cloudinary return secure file link
 
 } catch (error) {
     fs.unlinkSync(filepath);
