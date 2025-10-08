@@ -1,7 +1,8 @@
 import express from "express";
 import { SignUpValidation } from "../utils/signUpValidation.js";
-// import loginValidation from "../utils/loginValidation.js";
+
 import isAuth from "../Middleware/Authentication.js";
+import upload from "../Middleware/multer.js";
 
 import {
   signUpController,
@@ -13,7 +14,9 @@ import {
   getOthersProfileController,
   FollowingController,
   unFollowController,
-  getBookmarksTweetsController
+  getBookmarksTweetsController,
+  changeBackgroundImage
+  
 } from "../Controller/UserController.js";
 
 const router = express.Router();
@@ -23,8 +26,10 @@ router.post("/signup", SignUpValidation, signUpController);
 router.post("/login",  LoginController);
 router.post("/logout", LogOutController);
 
-// Profile routes
-router.patch("/updateProfile", isAuth, editProfileController);
+
+
+router.patch('/changeBackCover',upload.single("image"), isAuth,changeBackgroundImage);
+router.patch("/updateProfile", upload.single("image"), isAuth, editProfileController);
 router.get("/getProfile/:id", isAuth, getProfileController);
 router.get("/getOthersProfile", isAuth, getOthersProfileController);
 

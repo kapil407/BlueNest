@@ -15,7 +15,7 @@ export const createTweetController = async (req, res) => {
     let imageUrl = null;
 
     if (req.file) {
-      console.log("image in backend", req.file);
+      // console.log("image in backend", req.file);
 
       imageUrl = await uploadCloudinary(req.file.path);
     }
