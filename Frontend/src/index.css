@@ -21,9 +21,11 @@
 }
 
 
-  body{
-    background-color: #f0f2f5;
-  }
+html, body {
+  background-color: #f0f2f5;
+    
+}
+
   .Selected{
     background-color: rgb(211, 211, 211);
   }

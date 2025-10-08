@@ -15,7 +15,7 @@ const Home = () => {
   useGetTweets();
   useEffect(()=>{
     if(!user){
-      navigate('/LoginSignup');
+      navigate('/login');
     }
   })
   

@@ -24,13 +24,7 @@ const userSlice = createSlice({
     getBookMarksIds: (state, action) => {
       state.bookmarksIds = action.payload;
     },
-      //  setAuthUser:(state,action)=>{
-      //       state.authUser = action.payload;
-      //   },
-      //     setOnlineUsers:(state,action)=>{
-      //       state.onlineUsers = action.payload;
-      //   },
-
+     
     followingUpdate: (state, action) => {
       if (state.user?.following?.includes(action.payload)) {
         state.user.following = state.user.following.filter((itemId) => {

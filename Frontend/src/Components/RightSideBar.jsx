@@ -3,45 +3,35 @@ import { IoSearch } from "react-icons/io5";
 import Avatar from "react-avatar";
 import { Link, useParams } from "react-router-dom";
 import { CgLayoutGrid } from "react-icons/cg";
-import { useDispatch } from "react-redux";
-import {getOtherUsers} from '../redux/userSlice'
+import { useDispatch, useSelector } from "react-redux";
+import { getOtherUsers } from "../redux/userSlice";
 import toast from "react-hot-toast";
 
 function RightSideBar({ otherUsers }) {
-  {/* convert othersUser into array */}
+  const {profile}=useSelector(store=>store.user);
+  const image=profile?.profilePic;
   let array;
-  if(otherUsers)
-  array=Object?.values(otherUsers);
-
-  // console.log("type",typeof array); 
-   const { id } = useParams();
+  if (otherUsers) array = Object?.values(otherUsers);
+  // console.log("othersUser",otherUsers);
+  const { id } = useParams();
   const dispatch = useDispatch();
   const [saerchName, setSearchName] = useState("");
-  // const [storeSearchName,setStoreSearchName]=useState("");
-
-
 
   const searchHandler = (e) => {
     e.preventDefault();
-   
+
     const SearchedUser = array?.find((other) =>
       other?.firstName.toLowerCase().includes(saerchName.toLowerCase())
     );
-          // console.log("search",typeof SearchedUser);
-    if(SearchedUser){
-      //  alert("kapil");
-      // setStoreSearchName(SearchedUser);
 
-    dispatch(getOtherUsers([SearchedUser]));
-    }else{
+    if (SearchedUser) {
+      dispatch(getOtherUsers([SearchedUser]));
+    } else {
       toast.success("User not found");
     }
-  
- 
 
-      setSearchName("");
+    setSearchName("");
   };
-
 
   return (
     <>
@@ -66,39 +56,53 @@ function RightSideBar({ otherUsers }) {
             </h1>
 
             <div className="flex justify-between flex-col ">
-               {array && array?.map((otherUser) => {
-                //map iterate over each user
+              { 
+                array &&
+                array?.map((otherUser) => {
+                  
+                 
+                  return (
+                    <>
+                      <div  className="flex justify-between border border-gray-200 mt-1.5 px-1 bg-gray-200 rounded items-center">
+                        <div
+                          key={otherUser?._id}
+                          className="ml-2 my-2 flex justify-center items-center"
+                        >
+                        {  !otherUser?.profilePic ?(
 
-                return (
-                  <>
-                    <div className="flex justify-between border border-gray-200 mt-1.5 px-1 bg-gray-200 rounded items-center">
-                      <div
-                        key={otherUser?._id}
-                        className="ml-2 my-2 flex justify-center items-center"
-                      >
-                        <Avatar
-                          className="m-1 cursor-pointer"
-                          src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
-                          size="50"
-                          round={true}
-                        />
-                        <div className="ml-2">
-                          <h1 className="font-bold">{otherUser?.firstName}</h1>
-                          <p>{`${otherUser?.userName}`}</p>
+                           <Avatar
+                            className="m-1 cursor-pointer"
+                            src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
+                            size="50"
+                            round={true}
+                          />
+                        ):(
+                          <img src={otherUser.profilePic} alt="image" className="w-15 object-cover h-15 rounded-full" />
+                        )
+                           
+                        }
+                          <div className="ml-2">
+                            <h1 className="font-bold">
+                              {otherUser?.firstName}
+                            </h1>
+                            <p>{`${otherUser?.userName}`}</p>
+                          </div>
                         </div>
-                      </div> 
-                      {/* redirect to otherUsers profile */}
-                     <Link to={`/profile/${otherUser?._id}`} className=" my-2">
-                        <div className='my-2 '>
-                        <button className="px-4 py-1.5 bg-black text-white rounded-full cursor-pointer">
-                          Profile
-                        </button>
-                        </div>
-                      </Link>
-                    </div>
-                  </>
-                );
-              })} 
+                        {/* redirect to otherUsers profile */}
+                        <Link
+                          to={`/profile/${otherUser?._id}`}
+                          className=" my-2"
+                        >
+                          <div className="my-2 ">
+                            <button className="px-4 py-1.5 bg-black text-white rounded-full cursor-pointer">
+                              Profile
+                            </button>
+                          </div>
+                        </Link>
+                      </div>
+                    </>
+                  );
+                })}
             </div>
           </div>
         </div>

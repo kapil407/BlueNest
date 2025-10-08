@@ -7,22 +7,16 @@ import { FaRegComment } from "react-icons/fa";
 import { BiLike } from "react-icons/bi";
 import { PiBookmarkSimpleBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
-import useBookmarks from '../hooks/useBookmarks.js'
+import useBookmarks from "../hooks/useBookmarks.js";
 
 export const Bookmarks = () => {
-  
- 
-  const {handleBookmark}=useBookmarks();
+  const { handleBookmark } = useBookmarks();
 
-  const { bookmarksIds } = useSelector((store) => store.user);
-
-
-  console.log("kapil-> ", bookmarksIds);
- 
+  const { bookmarksIds, otherUsers } = useSelector((store) => store.user);
 
   const [bookmarkedTweets, setBookmarkedTweets] = useState([]);
+
   useEffect(() => {
-    console.log(bookmarksIds?.length);
     if (bookmarksIds?.length > 0) {
       const fetchBookmarkedTweets = async () => {
         try {
@@ -48,54 +42,98 @@ export const Bookmarks = () => {
 
   return (
     <div className="w-[55%] mt-2 ">
-      {bookmarkedTweets.map((tweets) => {
-        return (
-          <>
-            <div
-              key={tweets?._id}
-              className="border border-gray-300 w-[100%] mt-2  rounded p-2 flex flex-col"
-            >
-              <div className="flex ">
-                <Link to={`/profile/${tweets?.userId}`}>
-                 
-                  <Avatar
-                  className="m-1 cursor-pointer"
-                    src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
-                    size="50"
-                    round={true}
-                  />
-                </Link>
-                <div className="flex flex-col">
-                  <div className="ml-2 flex">
-                    <h1 className="font-bold">
-                      {tweets?.userDetails[0]?.firstName}
-                    </h1>
-                    <p className="ml-2">@{tweets?.userDetails[0]?.userName}</p>
+      {!bookmarksIds?.length ? (
+        <div className="h-screen flex justify-center items-center">
+          <div
+            className="mb-15 w-[50%] h-[15%] font-bold text-lg rounded bg-green-100  border border-gray-400 text-center flex justify-center items-center"
+            style={{
+              boxShadow: "4px 8px 57px 3px rgba(83,241,238,0.72)",
+              WebkitBoxShadow: "4px 8px 57px 3px rgba(83,241,238,0.72)",
+              MozBoxShadow: "4px 8px 57px 3px rgba(83,241,238,0.72)",
+            }}
+          >
+            No bookmarks
+          </div>
+        </div>
+      ) : (
+        <>
+          {bookmarkedTweets.map((tweets) => {
+            return (
+              <>
+                <div
+                  key={tweets?._id}
+                  className="border border-gray-300 w-[90%] mt-2   rounded p-2 flex flex-col"
+                  style={{
+                    boxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
+                    WebkitBoxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
+                    MozBoxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
+                  }}
+                >
+                  <div className="flex ">
+                    <Link to={`/profile/${tweets?.userId}`}>
+                      {!tweets.userDetails[0].profilePic ? (
+                        <Avatar
+                          className="m-1 cursor-pointer"
+                          src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
+                          size="50"
+                          round={true}
+                        />
+                      ) : (
+                        <img
+                          src={tweets.userDetails[0].profilePic}
+                          className="w-15 h-15 object-cover rounded-full"
+                          alt=""
+                        />
+                      )}
+                    </Link>
+                    <div className="flex flex-col">
+                      <div className="ml-2 flex">
+                        <h1 className="font-bold">
+                          {tweets?.userDetails[0]?.firstName}
+                        </h1>
+                        <p className="ml-2">
+                          @{tweets?.userDetails[0]?.userName}
+                        </p>
+                      </div>
+                      <div>
+                        {!tweets?.image ? (
+                          <h1 className="ml-6 mt-2">{tweets?.description}</h1>
+                        ) : (
+                          <>
+                            <h1 className="ml-6 mt-2">{tweets?.description}</h1>
+                            <img
+                              src={tweets?.image}
+                              alt="image"
+                              className="mt-6 ml-4 object-cover rounded w-120 h-120"
+                            />
+                          </>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h1 className="ml-6 mt-2">{tweets?.description}</h1>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 mb-2 flex justify-around">
-                <div className="flex  hover:bg-green-200 p-2 rounded-full cursor-pointer">
-                  <FaRegComment size={23} />
-                  <p className="ml-2">0</p>
-                </div>
-                <div className="flex hover:bg-pink-200 p-2 rounded-full cursor-pointer">
-                  <BiLike size={25} />
+                  <div className="mt-4 mb-2 flex justify-around">
+                    <div className="flex  hover:bg-green-200 p-2 rounded-full cursor-pointer">
+                      <FaRegComment size={23} />
+                      <p className="ml-2">0</p>
+                    </div>
+                    <div className="flex hover:bg-pink-200 p-2 rounded-full cursor-pointer">
+                      <BiLike size={25} />
 
-                  <p className="ml-2">{`${tweets.likes.length}`}</p>
+                      <p className="ml-2">{`${tweets.likes.length}`}</p>
+                    </div>
+                    <div
+                      onClick={() => handleBookmark(tweets?._id)}
+                      className="flex hover:bg-yellow-200 p-2 rounded-full cursor-pointer"
+                    >
+                      <PiBookmarkSimpleBold size={25} />
+                    </div>
+                  </div>
                 </div>
-                <div onClick={()=>handleBookmark(tweets?._id)} className="flex hover:bg-yellow-200 p-2 rounded-full cursor-pointer">
-                  <PiBookmarkSimpleBold size={25}/>
-                
-                </div>
-              </div>
-            </div>
-          </>
-        );
-      })}
+              </>
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };

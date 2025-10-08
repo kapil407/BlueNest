@@ -31,11 +31,12 @@ const LeftSideBar = () => {
         withCredentials: true,
       });
       // console.log("logout->", res);
+       
       dispatch(getMyTweets(null));
       dispatch(getUser(null));
       dispatch(getMyProfile(null));
       dispatch(getOtherUsers(null));
-      navigate("/LoginSignup");
+    
       if (res?.data?.success) {
         toast.success(res?.data?.message);
       }
@@ -62,7 +63,7 @@ const LeftSideBar = () => {
           >
             <img
               className=" object-cover w-15 h-15  rounded-full "
-              src="logo.png" 
+              src="/logo.png" 
               alt="logo"
             />
           </Link>

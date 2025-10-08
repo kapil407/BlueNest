@@ -3,14 +3,15 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./Home";
 import Feed from "./Feed";
 import Profile from "./Profile";
-import LoginSignUp from "./SignUpLogin.jsx";
+import Signup from "./Signup.jsx";
 
 import EditeProfile from "./Editeprofile.jsx";
 import { Message } from "./Message.jsx";
 import { ChatRoom } from "./ChatRoom.jsx";
 
 import { Bookmarks } from "./Bookmarks.jsx";
-
+import Login from "./Login.jsx";
+import OtpVerify from "./OtpVerify.jsx";
 const Body = () => {
   const appRouter = createBrowserRouter([
     {
@@ -25,18 +26,12 @@ const Body = () => {
           path: "/profile/:id",
           element: <Profile />,
         },
-        //    {
-        //     path:"/Logout",
-        //     element:<Logout/>
-        //    },
+       
         {
           path: "/EditeProfile",
           element: <EditeProfile />,
         },
-        // {
-        //   path: "/Message",
-        //   element: <Message />,
-        // },
+      
         {
           path: "/Message/:targetUserId",
           element: <Message />,
@@ -48,9 +43,17 @@ const Body = () => {
       ],
     },
     {
-      path: "/LoginSignup",
-      element: <LoginSignUp />,
+      path: "/Signup",
+      element: <Signup />,
     },
+    {
+      path:"/login",
+      element:<Login/>
+    },
+    {
+      path:"/otpVerify",
+      element:<OtpVerify/>
+    }
   ]);
   return (
     <>

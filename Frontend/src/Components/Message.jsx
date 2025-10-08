@@ -7,7 +7,7 @@ import { USER_API_END_POINT } from "../Utils/constant";
 import { setMessage } from "../redux/messageSlice";
 import useGetMessages from "../hooks/usegetmessage";
 import { useRef } from "react";
-// import {getSocket} from "../Utils/socket.js";
+
 import useSocket from "../hooks/useSocket.js";
 import { FormateMessageTime } from "../Utils/setTime.js";
 
@@ -22,9 +22,17 @@ export const Message = () => {
 
   const dispatch = useDispatch();
   const { targetUserId } = useParams();
-  const { user } = useSelector((store) => store?.user);
+  const { user , otherUsers } = useSelector((store) => store?.user);
   const { message } = useSelector((store) => store.message);
 
+  let targetUser;
+  otherUsers?.forEach(element => {
+    if(element._id==targetUser);
+      targetUser=element;
+      
+  });
+  
+    
   const userId = user?._id;
 
   useEffect(() => {
@@ -48,7 +56,7 @@ export const Message = () => {
 
       // console.log("res->", res.data.newMessage);
       dispatch(setMessage( [...message, res?.data?.newMessage]));
-      // After dispatch(setMessage(...))
+    
       if (socket) {
         socket.emit("sendMessage", {
           senderId: userId,
@@ -57,7 +65,7 @@ export const Message = () => {
         });
       }
 
-      setmessage(""); // ✅ clear input
+      setmessage(""); 
     } catch (error) {
       console.error("error", error);
     }
@@ -97,9 +105,10 @@ export const Message = () => {
   return (
     <div className="w-[40%] mt-1 border-l border-r border-gray-300 rounded h-screen fixed mx-75">
       {/* Header */}
-      <div className="border p-3 rounded flex bg-gray-200 border-gray-400">
-       <Link to='/'> <IoMdArrowRoundBack  size={22} className="cursor-pointer" /></Link>
-        <h1 className="ml-5 text-xl font-semibold">{user?.firstName} {user?.lastName}</h1>
+      <div className="border p-3 rounded flex  items-center bg-gray-200 border-gray-400">
+       <Link to='/' > <IoMdArrowRoundBack  size={22} className="cursor-pointer" /></Link>
+          <img src={targetUser?.profilePic} alt="" className="w-14 h-14 rounded-full ml-2 object-cover" />
+        <h1 className="ml-5 text-xl font-semibold">{targetUser?.firstName} {targetUser?.lastName}</h1>
       </div>
 
       {/* Chat Messages */}
@@ -130,7 +139,7 @@ export const Message = () => {
       {/* Input Box */}
       <div className="border rounded border-gray-400 h-[10%] p-2 items-center bg-gray-200 text-center flex justify-between">
 
-        <div className="border w-15 h-8 hover:bg-gray-300 cursor-pointer rounded border-gray-500"> <input type="file" className=" w-13 text-center h-8 cursor-pointer" placeholder="photo"/></div>
+       
         <input
           type="text"
           value={Message}

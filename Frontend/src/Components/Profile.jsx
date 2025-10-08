@@ -9,6 +9,7 @@ import axios from "axios";
 import { USER_API_END_POINT } from "../Utils/constant.js";
 import toast from "react-hot-toast";
 import { getRefresh } from "../redux/tweetSlice.js";
+import { FaEdit } from "react-icons/fa";
 import {
   followingUpdate,
   getMyProfile,
@@ -20,12 +21,29 @@ import { Navigate } from "react-router-dom";
 function Profile() {
   const { id } = useParams();
   useGetProfile(id);
+  const { tweet } = useSelector((store) => store?.tweet);
+  // console.log("first",tweet);
 
   const dispatch = useDispatch();
 
   const { profile, otherUsers, user } = useSelector((store) => store.user);
-  console.log("profile->",profile);
-  console.log("user->",user);
+  const image =profile?.profilePic;
+  const [backImage,setBackImage]=useState(null);
+  
+  const changeBackgroundImage=async()=>{
+        try {
+          const formdata=new FormData();
+          if(backImage){
+            formdata.append("backImage",backImage);
+          }
+            const res=await axios.patch(`${USER_API_END_POINT}/changeBackCover`,formdata) ;
+            console.log("res->>>>",res); 
+        } 
+        catch (error) {
+          console.log("error",error); 
+        }
+  }
+
 
   const followAndUnfollowHandler = async () => {
     if (user?.following?.includes(id?.toString())) {
@@ -66,7 +84,7 @@ function Profile() {
           toast.success(res?.data?.message);
         }
 
-        console.log("follow res->",res);
+        console.log("follow res->", res);
       } catch (error) {
         console.error(error);
       }
@@ -75,7 +93,12 @@ function Profile() {
 
   return (
     <>
-      <div className="w-[50%] border-l border-r border-gray-200 fixed left-[22%]">
+      <div className="w-[50%] mt-2 border-l border-r border-gray-200 fixed left-[22%]" style={{
+        boxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
+        WebkitBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
+        MozBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
+      
+      }}>
         <div className="border-b border-gray-200">
           <div className="flex my-2 ml-2">
             <Link to="/" className="flex items-center  ">
@@ -86,22 +109,37 @@ function Profile() {
             </Link>
             <div className="flex flex-col ml-4">
               <h1 className="font-bold text-lg ">{profile?.firstName}</h1>
-              <p className="text-gray-600">10 Post</p>
+              <p className="text-gray-600">{tweet.length} post</p>
             </div>
           </div>
-
-          <img
+              
+       <div>
+           <img
             className="h-52 w-full"
             src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGNvZGV8ZW58MHx8MHx8fDA%3D"
-            alt="Banner"
-          />
-          <div className=" cursor-pointer absolute border-4 border-black top-56 translate-x-2/10 rounded-full">
-            <Avatar
-              src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
-              size="102"
-              round={true}
-            />
+            alt="Banner" 
+          /> 
+           <input type="file" accept="image/*" onChange={changeBackgroundImage} />
+      
+    
+         
+       </div>
+          <div className="cursor-pointer absolute border-4 border-black top-56 translate-x-2/10 rounded-full">
+            {!image ? (
+              <Avatar
+                src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
+                size="102"
+                round={true}
+              />
+            ) : (
+              <img
+                src={profile?.profilePic}
+                alt="profileimage"
+                className="rounded-full w-[102px] h-[102px] object-cover"
+              />
+            )}
           </div>
+
           <div className="text-right my-4">
             {profile?._id === user?._id ? (
               <>

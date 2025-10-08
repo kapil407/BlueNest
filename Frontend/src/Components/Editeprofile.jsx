@@ -5,65 +5,63 @@ import { useState } from "react";
 import { getRefresh } from "../redux/tweetSlice";
 import { USER_API_END_POINT } from "../Utils/constant.js";
 import toast from "react-hot-toast";
+import { FaImage } from "react-icons/fa";
 
 const EditeProfile = () => {
-  const {tweet} =useSelector(store=>store?.tweet);
-  // console.log("first",tweet);
+  const { tweet } = useSelector((store) => store?.tweet);
+
   const dispatch = useDispatch();
-  const { profile,user } = useSelector((store) => store.user);
-          console.log("first->",user);
- const [firstName, setFirstName] = useState(profile?.firstName || "");
-                                /*React render hone se pehle   profile  undefined ho sakta hai.
+  const { profile, user } = useSelector((store) => store.user);
 
-                                Us waqt useState(profile?.firstName) → becomes undefined.
-                                
-                                Aur fir jab hum input me value={firstName} denge:
+  const [firstName, setFirstName] = useState(user?.firstName || "");
+  const [image, setImage] = useState(null);
 
-                                <input value={firstName} />
-                                ...React bolega:
-                                Warning: A component is changing an uncontrolled input to be controlled.*/
+  const [lastName, setLastName] = useState(user?.lastName || "");
 
- const [lastName, setLastName] = useState(profile?.lastName || "");
+  const [userName, setUserName] = useState(user?.userName || "");
 
-  const [userName, setUserName] = useState(profile?.userName || "");
-
-const [bio, setBio] = useState(profile?.bio || "");
+  const [bio, setBio] = useState(user?.bio || "");
   const EditeHandler = async () => {
     try {
+      const formdata = new FormData();
+      if (image) {
+        formdata.append("image", image);
+      }
+      formdata.append("firstName", firstName);
+      formdata.append("lastName", lastName);
+      formdata.append("userName", userName);
+      formdata.append("bio", bio);
       const res = await axios.patch(
         `${USER_API_END_POINT}/updateProfile`,
+        formdata,
         {
-          firstName,
-          userName,
-          lastName,
-          bio
-      
-        },
-        {
-          headers:{
-               "content-type":"application/json" // tells the server that the data that is coming to u is json type 
-          },  
-       
           withCredentials: true,
         }
       );
-     
-      if(res?.data?.success){
+
+      if (res?.data?.success) {
         toast.success(res.data.message);
       }
-     
+
       dispatch(getRefresh());
-     
     } catch (error) {
       console.error(error);
     }
-    
   };
 
   return (
     <div>
-      <div className="flex-1 border border-gray-300 justify-center items-center m-8 rounded-2xl w-[80%] bg-gray-100">
-        <h1 className="text-center p-2 font-bold text-2xl border-b border-gray-300">Edit your profile</h1>
+      <div
+        className="flex-1 ml-[12%] mt-10 border border-gray-300 justify-center items-center  rounded-2xl w-[80%] bg-gray-100"
+        style={{
+          boxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
+          WebkitBoxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
+          MozBoxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
+        }}
+      >
+        <h1 className="text-center p-2 font-bold text-2xl border-b border-gray-300">
+          Edit your profile
+        </h1>
         <div className="m-8 w-[80%] p-2">
           <input
             type="text"
@@ -72,14 +70,14 @@ const [bio, setBio] = useState(profile?.bio || "");
             onChange={(e) => setFirstName(e.target.value)}
             className="border border-gray-600 outline-blue-400 w-full p-2 rounded-full my-2"
           />
-           <input
+          <input
             type="text"
             placeholder="Enter lastName"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             className="border border-gray-600 outline-blue-400 w-full p-2 rounded-full my-2"
           />
-         
+
           <input
             type="text"
             placeholder="Enter userName"
@@ -87,20 +85,36 @@ const [bio, setBio] = useState(profile?.bio || "");
             onChange={(e) => setUserName(e.target.value)}
             className="border border-gray-600 outline-blue-400 w-full p-2 rounded-full my-2"
           />
-           <input
+          <input
             type="text"
             placeholder="Enter Bio"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             className="border border-gray-600 outline-blue-400 w-full p-2 rounded-full my-2"
           />
-          
+          <input
+            type="file"
+            accept="image/*"
+            id="gallaryUpload"
+            onChange={(e) => setImage(e.target.files[0])}
+            className="border-2 cursor-pointer p-1 rounded-xl mt-2 w-[15%]"
+            style={{ display: "none" }}
+          />
+          <label
+            htmlFor="gallaryUpload"
+            className="cursor-pointer text-3xl text-blue-500 hover:text-blue-700"
+          >
+            <FaImage />
+          </label>
         </div>
-        <div>
-          <Link onClick={EditeHandler} to={"/"}>
-            <button className="bg-[#1D9BF0] hover:bg-blue-400 mb-4 font-semibold text-white p-2 w-[50%] ml-28 rounded-3xl flex justify-center items-center cursor-pointer">
-              Save
-            </button>
+
+        <div className="w-[100%] flex justify-center items-center">
+          <Link
+            onClick={EditeHandler}
+            to={"/"}
+            className="flex bg-[#1D9BF0]  hover:bg-blue-400 items-center justify-center  mb-4 rounded text-white w-[25%] p-2 "
+          >
+            <button>Save</button>
           </Link>
         </div>
       </div>
