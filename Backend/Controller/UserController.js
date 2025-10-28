@@ -435,10 +435,8 @@ export const changeBackgroundImage = async (req, res) => {
     const user = await User.findOne({ _id: userId });
     // console.log("usre->>>>", user);
     let imageUrl = null;
-
+    console.log("image in backend", req.file);
     if (req.file) {
-      // console.log("image in backend", req.file);
-
       imageUrl = await uploadCloudinary(req.file.path);
     }
     user.backGroundImage = imageUrl;
