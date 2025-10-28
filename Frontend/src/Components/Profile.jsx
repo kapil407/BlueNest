@@ -10,6 +10,7 @@ import { USER_API_END_POINT } from "../Utils/constant.js";
 import toast from "react-hot-toast";
 import { getRefresh } from "../redux/tweetSlice.js";
 import { FaEdit } from "react-icons/fa";
+import { FaImage } from "react-icons/fa";
 import {
   followingUpdate,
   getMyProfile,
@@ -27,23 +28,28 @@ function Profile() {
   const dispatch = useDispatch();
 
   const { profile, otherUsers, user } = useSelector((store) => store.user);
-  const image =profile?.profilePic;
-  const [backImage,setBackImage]=useState(null);
-  
-  const changeBackgroundImage=async()=>{
-        try {
-          const formdata=new FormData();
-          if(backImage){
-            formdata.append("backImage",backImage);
-          }
-            const res=await axios.patch(`${USER_API_END_POINT}/changeBackCover`,formdata) ;
-            console.log("res->>>>",res); 
-        } 
-        catch (error) {
-          console.log("error",error); 
-        }
-  }
 
+  const [image, setimage] = useState(null);
+
+  const changeBackgroundImage = async () => {
+    try {
+      const formdata = new FormData();
+      if (image) {
+        console.log("image ", image);
+        formdata.append("image", image);
+      }
+      const res = await axios.patch(
+        `${USER_API_END_POINT}/changeBackCover`,
+        formdata,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("res->>>>", res);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   const followAndUnfollowHandler = async () => {
     if (user?.following?.includes(id?.toString())) {
@@ -93,12 +99,14 @@ function Profile() {
 
   return (
     <>
-      <div className="w-[50%] mt-2 border-l border-r border-gray-200 fixed left-[22%]" style={{
-        boxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
-        WebkitBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
-        MozBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
-      
-      }}>
+      <div
+        className="w-[50%] mt-2 border-l border-r border-gray-200 fixed left-[22%]"
+        style={{
+          boxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
+          WebkitBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
+          MozBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
+        }}
+      >
         <div className="border-b border-gray-200">
           <div className="flex my-2 ml-2">
             <Link to="/" className="flex items-center  ">
@@ -112,20 +120,41 @@ function Profile() {
               <p className="text-gray-600">{tweet.length} post</p>
             </div>
           </div>
-              
-       <div>
-           <img
-            className="h-52 w-full"
-            src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGNvZGV8ZW58MHx8MHx8fDA%3D"
-            alt="Banner" 
-          /> 
-           <input type="file" accept="image/*" onChange={changeBackgroundImage} />
-      
-    
-         
-       </div>
-          <div className="cursor-pointer absolute border-4 border-black top-56 translate-x-2/10 rounded-full">
-            {!image ? (
+
+          <div>
+            {!profile?.backGroundImage ? (
+              <img
+                className="h-52 w-full"
+                src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGNvZGV8ZW58MHx8MHx8fDA%3D"
+                alt="Banner"
+              />
+            ) : (
+              <img
+                src={profile?.backGroundImage}
+                alt="backcoverImage"
+                className="h-70 w-255 object-cover"
+              />
+            )}
+
+            <input
+              id="backCover"
+              className="hidden"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setimage(e.target.files[0])}
+            />
+            <label htmlFor="backCover">
+              <FaImage className="ml-165 cursor-pointer text-blue-600 size-9" />
+            </label>
+            <button
+              onClick={changeBackgroundImage}
+              className="w-20 rounded p-2 h-10 ml-165 mt-5 text-white bg-green-400 cursor-pointer"
+            >
+              Change
+            </button>
+          </div>
+          <div className="cursor-pointer absolute border-4 border-black top-72 translate-x-2/10 rounded-full">
+            {!profile?.profilePic ? (
               <Avatar
                 src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
                 size="102"
