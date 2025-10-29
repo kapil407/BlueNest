@@ -22,33 +22,33 @@ const Signup = () => {
 
   const submittedHandler = async (e) => {
     e.preventDefault();
-     try {
-          const res = await axios.post(
-            `${USER_API_END_POINT}/signUp`,
-            { firstName, lastName, userName, emailId, password },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-              withCredentials: true,
-            }
-          );
-            console.log("sign",res);
-          if (res.request.status) {
-           
-            console.log(res.data.message);
-              dispatch(getUser(res?.data?.newUser));
-            toast.success(res.data.message);
-             navigate("/otpVerify");
-          }
-        } catch (error) {
-          toast.success(error.response.data.message);
-          console.log(error);
+    try {
+      const res = await axios.post(
+        `${USER_API_END_POINT}/signUp`,
+        { firstName, lastName, userName, emailId, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
         }
-      };
-    
-   
-   
+      );
+      console.log("sign", res);
+      if (res.request.status) {
+        console.log(res.data.message);
+        dispatch(getUser(res?.data?.newUser));
+        toast.success(res.data.message);
+        if (res.data.message === "User already exists") {
+          navigate("/login");
+          toast.success("Please Login");
+        } else navigate("/otpVerify");
+      }
+    } catch (error) {
+      toast.success(error.response.data.message);
+      console.log(error);
+    }
+  };
+
   const LoginHandler = () => {
     navigate("/login");
   };
