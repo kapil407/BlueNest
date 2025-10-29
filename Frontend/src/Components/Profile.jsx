@@ -117,14 +117,14 @@ function Profile() {
             </Link>
             <div className="flex flex-col ml-4">
               <h1 className="font-bold text-lg ">{profile?.firstName}</h1>
-              <p className="text-gray-600">{tweet.length} post</p>
+              <p className="text-gray-600">{tweet?.length} post</p>
             </div>
           </div>
 
           <div>
             {!profile?.backGroundImage ? (
               <img
-                className="h-52 w-full"
+                className="h-70 w-full  "
                 src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGNvZGV8ZW58MHx8MHx8fDA%3D"
                 alt="Banner"
               />
@@ -211,11 +211,11 @@ function Profile() {
             <div className="flex ml-4 py-2 ">
               <button className="cursor-pointer   text-gray-700 font-semibold">
                 {" "}
-                {profile?.following.length} Following
+                {profile?.following?.length} Following
               </button>
 
               <button className="cursor-pointer   text-gray-700 font-semibold ml-2">
-                {profile?.followers.length} Followers
+                {profile?.followers?.length} Followers
               </button>
             </div>
           </div>

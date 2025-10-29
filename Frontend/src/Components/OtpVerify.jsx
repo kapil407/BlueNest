@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 function OtpVerify() {
   const [otp, setOtp] = useState("");
-  const [timer, setTimer] = useState(120); 
+  const [timer, setTimer] = useState(120);
   const { user } = useSelector((store) => store.user);
   const email = user?.emailId;
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   // Start countdown on mount or resend
   useEffect(() => {
@@ -37,7 +37,7 @@ function OtpVerify() {
       console.log("verify otp", res);
       if (res?.data?.success) {
         toast.success(res.data.message);
-        navigate('/login');
+        navigate("/login");
       }
     } catch (error) {
       console.log("error", error);
@@ -52,20 +52,23 @@ function OtpVerify() {
         { withCredentials: true }
       );
       console.log("resend otp", res);
-      setTimer(120); 
+      setTimer(120);
       setOtp("");
       toast.success("OTP resent successfully!");
     } catch (error) {
-      console.log("error", error);
+      console.log("error->", error);
     }
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center" style={{
-    boxShadow: "17px 7px 112px 17px rgba(0,0,0,0.63)",
-    WebkitBoxShadow: "17px 7px 112px 17px rgba(0,0,0,0.63)",
-    MozBoxShadow: "17px 7px 112px 17px rgba(0,0,0,0.63)",
-  }}>
+    <div
+      className="w-screen h-screen flex flex-col justify-center items-center"
+      style={{
+        boxShadow: "17px 7px 112px 17px rgba(0,0,0,0.63)",
+        WebkitBoxShadow: "17px 7px 112px 17px rgba(0,0,0,0.63)",
+        MozBoxShadow: "17px 7px 112px 17px rgba(0,0,0,0.63)",
+      }}
+    >
       <h1 className="mb-4 font-bold text-lg">Verify OTP</h1>
       <div className="bg-gray-200 rounded-xl h-[40%] w-[40%] flex flex-col justify-center items-center shadow-lg hover:border hover:border-gray-400">
         <div className="border w-[90%] p-2 rounded">
