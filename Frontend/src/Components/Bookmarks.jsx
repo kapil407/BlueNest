@@ -30,6 +30,7 @@ export const Bookmarks = () => {
               },
             }
           );
+
           console.log("res-> ", res?.data?.tweets);
           setBookmarkedTweets(res?.data?.tweets);
         } catch (error) {
@@ -42,7 +43,7 @@ export const Bookmarks = () => {
 
   return (
     <div className="w-[55%] mt-2 ">
-      {!bookmarksIds?.length ? (
+      {bookmarksIds?.length == 0 ? (
         <div className="h-screen flex justify-center items-center">
           <div
             className="mb-15 w-[50%] h-[15%] font-bold text-lg rounded bg-green-100  border border-gray-400 text-center flex justify-center items-center"
@@ -70,7 +71,7 @@ export const Bookmarks = () => {
                   }}
                 >
                   <div className="flex ">
-                    <Link to={`/profile/${tweets?.userId}`}>
+                    <div>
                       {!tweets.userDetails[0].profilePic ? (
                         <Avatar
                           className="m-1 cursor-pointer"
@@ -85,7 +86,7 @@ export const Bookmarks = () => {
                           alt=""
                         />
                       )}
-                    </Link>
+                    </div>
                     <div className="flex flex-col">
                       <div className="ml-2 flex">
                         <h1 className="font-bold">

@@ -8,41 +8,40 @@ import { useDispatch } from "react-redux";
 import { getUser } from "../redux/userSlice";
 
 function Login() {
-        const navigate=useNavigate();
-        const dispatch=useDispatch();
-       
-        const [emailId,setEmailId]=useState("");
-        const [password,setPassword]=useState(""); 
-        const [show,setshow]=useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
+  const [show, setshow] = useState(false);
 
   const submittedHandler = async (e) => {
-     e.preventDefault();
-                 try {
-                      const res = await axios.post(
-                        `${USER_API_END_POINT}/login`,
-                        { emailId, password },
-                        {
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                          withCredentials: true,
-                        }
-                      );
-                      console.log("login->", res);
-                      dispatch(getUser(res?.data?.user)); 
-              
-                      if (res?.data?.success) {
-                        navigate("/");
-              
-                        toast.success(res?.data?.message);
-                      }
-                    } catch (error) {
-                      toast.success(error.response.data.message);
-                      console.log(error);
-                    }
-                  
-                };
-              
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        `${USER_API_END_POINT}/login`,
+        { emailId, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      // console.log("login->", res);
+      dispatch(getUser(res?.data?.user));
+
+      if (res?.data?.success) {
+        navigate("/");
+
+        toast.success(res?.data?.message);
+      }
+    } catch (error) {
+      toast.success(error.response.data.message);
+      console.log(error);
+    }
+  };
+
   const registerHandler = () => {
     navigate("/Signup");
   };
@@ -71,10 +70,6 @@ function Login() {
 
             <div className=" h-[60%] w-[70%]  ">
               <form onSubmit={submittedHandler} className="flex flex-col ">
-              
-               
-               
-
                 <input
                   type="text"
                   placeholder="Enter email"
@@ -99,20 +94,21 @@ function Login() {
                   type="submit"
                   className="px-3 py-3 bg-[#1D9BF0] w-[100%] my-2 rounded-full cursor-pointer hover:bg-blue-400 text-white font-bold"
                 >
-                 Login
+                  Login
                 </button>
-                    
+
                 <h1 className="text-center">
-                {
+                  {
                     <>
-                         Don't have account 
-                  
-                        <span  className="text-blue-600 cursor-pointer ml-1"  onClick={registerHandler}>register</span>
-                    
+                      Don't have account
+                      <span
+                        className="text-blue-600 cursor-pointer ml-1"
+                        onClick={registerHandler}
+                      >
+                        register
+                      </span>
                     </>
-                    }
-                 
-                 
+                  }
                 </h1>
               </form>
             </div>

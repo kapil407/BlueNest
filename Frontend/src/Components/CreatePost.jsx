@@ -8,13 +8,13 @@ import { toast } from "react-hot-toast";
 import { getRefresh, getIsActive } from "../redux/tweetSlice.js";
 import { FaImage } from "react-icons/fa";
 const CreatePost = () => {
-  const { user,profile } = useSelector((store) => store.user);
+  const { user, profile } = useSelector((store) => store.user);
   const { isActive } = useSelector((store) => store.tweet);
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null); 
+  const [image, setImage] = useState(null);
   const dispatch = useDispatch();
-      const profileImage=profile?.profilePic;
-     
+  const profileImage = profile?.profilePic;
+
   const submitHandler = async () => {
     if (!description && !image) {
       toast.error("Please write something or add an image");
@@ -26,11 +26,11 @@ const CreatePost = () => {
       formData.append("description", description);
       formData.append("id", user?._id);
       if (image) {
-        formData.append("image", image); 
+        formData.append("image", image);
       }
 
       const res = await axios.post(
-        `${TWEET_API_END_POINT}/createTweet`, 
+        `${TWEET_API_END_POINT}/createTweet`,
         formData,
         {
           headers: {
@@ -40,16 +40,14 @@ const CreatePost = () => {
         }
       );
 
-      console.log("create post ",res);
+      // console.log("create post ",res);
 
       dispatch(getRefresh());
 
       if (res?.data?.success) {
         toast.success(res?.data?.message);
-       
       }
       setDescription("");
-      
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong!");
@@ -92,26 +90,22 @@ const CreatePost = () => {
 
         <div>
           <div className="flex m-2">
-          
-              <Link to={`/profile/${user?._id}`} >
-               
-                {
-                  !profileImage ?(
-                  
-                       <Avatar
+            <Link to={`/profile/${user?._id}`}>
+              {!profileImage ? (
+                <Avatar
                   src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
                   size="55"
                   round={true}
                 />
-                    
-                  ):(
-                   <img src={profileImage} alt="profilePhoto" className="rounded-full border-2 border-gray-400 w-[83px] h-[75px] object-cover" />
-                  ) 
+              ) : (
+                <img
+                  src={profileImage}
+                  alt="profilePhoto"
+                  className="rounded-full border-2 border-gray-400 w-[83px] h-[75px] object-cover"
+                />
+              )}
+            </Link>
 
-                  
-                }
-              </Link>
-           
             <input
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -123,22 +117,19 @@ const CreatePost = () => {
         </div>
 
         <div className="flex justify-between p-8 border-b border-gray-300 items-center">
-        
           <input
             type="file"
             accept="image/*"
-             id="galleryUpload"
+            id="galleryUpload"
             onChange={(e) => setImage(e.target.files[0])}
-          
-            style={{display:"none"}}
+            style={{ display: "none" }}
           />
-      <label
-        htmlFor="galleryUpload"
-        className="cursor-pointer text-3xl text-blue-500 hover:text-blue-700"
-      >
-        <FaImage />
-      </label>
-         
+          <label
+            htmlFor="galleryUpload"
+            className="cursor-pointer text-3xl text-blue-500 hover:text-blue-700"
+          >
+            <FaImage />
+          </label>
 
           <button
             onClick={submitHandler}

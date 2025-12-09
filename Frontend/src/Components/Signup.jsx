@@ -33,9 +33,9 @@ const Signup = () => {
           withCredentials: true,
         }
       );
-      console.log("sign", res);
+      // console.log("sign", res);
       if (res.request.status) {
-        console.log(res.data.message);
+        // console.log(res.data.message);
         dispatch(getUser(res?.data?.newUser));
         toast.success(res.data.message);
         if (res.data.message === "User already exists") {
