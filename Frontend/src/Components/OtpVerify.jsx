@@ -34,7 +34,7 @@ function OtpVerify() {
         { withCredentials: true }
       );
 
-      console.log("verify otp", res);
+      // console.log("verify otp", res);
       if (res?.data?.success) {
         toast.success(res.data.message);
         navigate("/login");
@@ -51,7 +51,7 @@ function OtpVerify() {
         { email },
         { withCredentials: true }
       );
-      console.log("resend otp", res);
+      // console.log("resend otp", res);
       setTimer(120);
       setOtp("");
       toast.success("OTP resent successfully!");

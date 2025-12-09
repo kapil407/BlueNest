@@ -16,6 +16,7 @@ import {
   getMyProfile,
   getOtherUsers,
   getUser,
+  resetProfile,
 } from "../redux/userSlice.js";
 import { Navigate } from "react-router-dom";
 
@@ -28,12 +29,15 @@ function Profile() {
   const dispatch = useDispatch();
 
   const { profile, otherUsers, user } = useSelector((store) => store.user);
-
+  // console.log("User", otherUsers);
   const [image, setimage] = useState(null);
+  console.log("user->>>", user);
+  console.log("id", profile);
 
   const changeBackgroundImage = async () => {
     try {
       const formdata = new FormData();
+
       if (image) {
         console.log("image ", image);
         formdata.append("image", image);
@@ -45,7 +49,15 @@ function Profile() {
           withCredentials: true,
         }
       );
-      console.log("res->>>>", res);
+      // console.log("re>>>>>", res);
+
+      // console.log("profile", profile);
+      if (res.data.success) {
+        // 1. toast
+        toast.success(res.data.message);
+        dispatch(getMyProfile(res.data.updated));
+      }
+      // console.log("res->>>>", res);
     } catch (error) {
       console.log("error", error);
     }
@@ -83,14 +95,14 @@ function Profile() {
             withCredentials: true,
           }
         );
-        console.log(dispatch(followingUpdate(id)));
-        console.log(dispatch(getRefresh(id)));
+        dispatch(followingUpdate(id));
+        dispatch(getRefresh(id));
 
         if (res?.data?.success) {
           toast.success(res?.data?.message);
         }
 
-        console.log("follow res->", res);
+        // console.log("follow res->", res);
       } catch (error) {
         console.error(error);
       }
@@ -109,7 +121,11 @@ function Profile() {
       >
         <div className="border-b border-gray-200">
           <div className="flex my-2 ml-2">
-            <Link to="/" className="flex items-center  ">
+            <Link
+              to="/"
+              onClick={() => dispatch(resetProfile())}
+              className="flex items-center  "
+            >
               <IoMdArrowRoundBack
                 size={28}
                 className="rounded-full hover:bg-gray-200 "
@@ -130,28 +146,33 @@ function Profile() {
               />
             ) : (
               <img
-                src={profile?.backGroundImage}
+                src={`${profile?.backGroundImage}?v=${profile?.updatedAt}`}
                 alt="backcoverImage"
                 className="h-70 w-255 object-cover"
               />
             )}
-
-            <input
-              id="backCover"
-              className="hidden"
-              type="file"
-              accept="image/*"
-              onChange={(e) => setimage(e.target.files[0])}
-            />
-            <label htmlFor="backCover">
-              <FaImage className="ml-165 cursor-pointer text-blue-600 size-9" />
-            </label>
-            <button
-              onClick={changeBackgroundImage}
-              className="w-20 rounded p-2 h-10 ml-165 mt-5 text-white bg-green-400 cursor-pointer"
-            >
-              Change
-            </button>
+            {profile._id === user._id ? (
+              <>
+                <input
+                  id="backCover"
+                  className="hidden"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setimage(e.target.files[0])}
+                />
+                <label htmlFor="backCover">
+                  <FaImage className="ml-165 cursor-pointer text-blue-600 size-9" />
+                </label>
+                <button
+                  onClick={changeBackgroundImage}
+                  className="w-20 rounded p-2 h-10 ml-165 mt-5 text-white bg-green-400 cursor-pointer"
+                >
+                  Change
+                </button>
+              </>
+            ) : (
+              ""
+            )}
           </div>
           <div className="cursor-pointer absolute border-4 border-black top-72 translate-x-2/10 rounded-full">
             {!profile?.profilePic ? (

@@ -22,7 +22,9 @@ import useBookmarks from "../hooks/useBookmarks.js";
 
 const Tweets = ({ tweet }) => {
   const { profile } = useSelector((store) => store.user);
-  const image = profile?.profilePic;
+  // console.log("profile->", otherUsers);
+  console.log("tweet", tweet);
+
   const { handleBookmark } = useBookmarks();
   const { userDetails } = tweet;
 
@@ -34,7 +36,9 @@ const Tweets = ({ tweet }) => {
   // console.log("userArray", firstUser?.firstName);
 
   const { user } = useSelector((store) => store.user);
-
+  console.log("user->", user);
+  const image = tweet.userDetails[0].profilePic;
+  // console.log("tweet", tweet.userDetails[0].profilePic);
   const dispatch = useDispatch();
 
   const likeDisLikeHandler = async (id) => {
@@ -59,6 +63,11 @@ const Tweets = ({ tweet }) => {
     } catch (error) {
       console.error(error);
     }
+  };
+  const [flag, setflag] = useState(false);
+  const likehandler = () => {
+    likeDisLikeHandler(tweet._id);
+    setflag(!flag);
   };
 
   const DeleteTweetHandler = async (tweetId) => {
@@ -119,22 +128,20 @@ const Tweets = ({ tweet }) => {
 
                 <div className=" w-[100%] flex justify-center items-center ">
                   <div>
-                   {!tweet?.image ?(
-                        <p className="">{tweet?.description}</p>
-                   ):(
-                    <>
-                     <p className="mb-4 ml-17  ">{tweet?.description}</p>
-                    {tweet?.image && (
-                      <img
-                        src={tweet?.image}
-                        className="ml-26 rounded object-cover w-125 h-125"
-                        alt="image"
-                      />
+                    {!tweet?.image ? (
+                      <p className="">{tweet?.description}</p>
+                    ) : (
+                      <>
+                        <p className="mb-4 ml-17  ">{tweet?.description}</p>
+                        {tweet?.image && (
+                          <img
+                            src={tweet?.image}
+                            className="ml-26 rounded object-cover w-125 h-125"
+                            alt="image"
+                          />
+                        )}
+                      </>
                     )}
-                    </>
-                   )
-                    
-                   }
                   </div>
                 </div>
               </div>
@@ -146,18 +153,27 @@ const Tweets = ({ tweet }) => {
                   <p className="ml-2">0</p>
                 </div>
                 <div className="flex hover:bg-pink-200 p-2 rounded-full cursor-pointer">
-                  <Link onClick={() => likeDisLikeHandler(tweet?._id)} className="flex">
-                    <BiLike size={25} />
-                     <p className="ml-2">{`${tweet.likes.length}`}</p>
+                  <Link
+                    onClick={() => likehandler(tweet?._id)}
+                    className="flex"
+                  >
+                    <BiLike
+                      size={25}
+                      className={flag === false ? "flex" : "flex text-red-600"}
+                    />
+                    <p className="ml-2">{`${tweet.likes.length}`}</p>
                   </Link>
-                 
                 </div>
-                <div
-                  onClick={() => handleBookmark(tweet?._id)}
-                  className="flex hover:bg-yellow-200 p-2 rounded-full cursor-pointer"
-                >
-                  <PiBookmarkSimpleBold size={25} />
-                </div>
+                {profile?._id !== tweet.userDetails[0]?._id ? (
+                  <div
+                    onClick={() => handleBookmark(tweet?._id)}
+                    className="flex hover:bg-yellow-200 p-2 rounded-full cursor-pointer"
+                  >
+                    <PiBookmarkSimpleBold size={25} />
+                  </div>
+                ) : (
+                  ""
+                )}
                 <div className="flex items-center hover:bg-red-500  rounded-3xl p-2">
                   {user?._id === tweet.userId && (
                     <>

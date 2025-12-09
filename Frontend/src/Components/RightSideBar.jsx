@@ -8,8 +8,8 @@ import { getOtherUsers } from "../redux/userSlice";
 import toast from "react-hot-toast";
 
 function RightSideBar({ otherUsers }) {
-  const {profile}=useSelector(store=>store.user);
-  const image=profile?.profilePic;
+  const { profile } = useSelector((store) => store.user);
+  const image = profile?.profilePic;
   let array;
   if (otherUsers) array = Object?.values(otherUsers);
   // console.log("othersUser",otherUsers);
@@ -56,31 +56,29 @@ function RightSideBar({ otherUsers }) {
             </h1>
 
             <div className="flex justify-between flex-col ">
-              { 
-                array &&
+              {array &&
                 array?.map((otherUser) => {
-                  
-                 
                   return (
                     <>
-                      <div  className="flex justify-between border border-gray-200 mt-1.5 px-1 bg-gray-200 rounded items-center">
+                      <div className="flex justify-between border border-gray-200 mt-1.5 px-1 bg-gray-200 rounded items-center">
                         <div
                           key={otherUser?._id}
                           className="ml-2 my-2 flex justify-center items-center"
                         >
-                        {  !otherUser?.profilePic ?(
-
-                           <Avatar
-                            className="m-1 cursor-pointer"
-                            src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
-                            size="50"
-                            round={true}
-                          />
-                        ):(
-                          <img src={otherUser.profilePic} alt="image" className="w-15 object-cover h-15 rounded-full" />
-                        )
-                           
-                        }
+                          {!otherUser?.profilePic ? (
+                            <Avatar
+                              className="m-1 cursor-pointer"
+                              src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
+                              size="50"
+                              round={true}
+                            />
+                          ) : (
+                            <img
+                              src={otherUser.profilePic}
+                              alt="image"
+                              className="w-15 object-cover h-15 rounded-full"
+                            />
+                          )}
                           <div className="ml-2">
                             <h1 className="font-bold">
                               {otherUser?.firstName}

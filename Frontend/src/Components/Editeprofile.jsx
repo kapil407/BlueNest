@@ -7,6 +7,7 @@ import { USER_API_END_POINT } from "../Utils/constant.js";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa";
 
+import { getMyProfile } from "../redux/userSlice.js";
 const EditeProfile = () => {
   const { tweet } = useSelector((store) => store?.tweet);
 
@@ -38,9 +39,11 @@ const EditeProfile = () => {
           withCredentials: true,
         }
       );
+      console.log(res);
 
       if (res?.data?.success) {
         toast.success(res.data.message);
+        dispatch(getMyProfile(res?.data?.updated));
       }
 
       dispatch(getRefresh());
