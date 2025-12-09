@@ -17,7 +17,7 @@ dotenv.config();
 
 const generateOTP = () => crypto.randomInt(10000, 100000);
 
-console.log("generateOTP", generateOTP);
+// console.log("generateOTP", generateOTP);
 
 // email transport
 
@@ -82,15 +82,15 @@ export const verifyOTP = async (req, res) => {
   try {
     const email = req.body.email;
     const otp = req.body.otp;
-    console.log("backend", email);
-    console.log("otp from frontend", otp);
+    // console.log("backend", email);
+    // console.log("otp from frontend", otp);
 
     if (!email || !otp) {
       return res.status(400).json("email is undefined");
     }
 
     const user = await User.findOne({ emailId: email });
-    console.log("otp in user data", user.verificationCode);
+    // console.log("otp in user data", user.verificationCode);
 
     if (!user) {
       return res.status(400).json({ message: "user not found" });
@@ -100,8 +100,8 @@ export const verifyOTP = async (req, res) => {
         .status(400)
         .json({ message: "user already verified", success: false });
     }
-    console.log("user date", user?.expiryOtp);
-    console.log("time ", new Date());
+    // console.log("user date", user?.expiryOtp);
+    // console.log("time ", new Date());
 
     if (user.verificationCode != otp || user.expiryOtp < new Date()) {
       return res
@@ -125,7 +125,7 @@ export const verifyOTP = async (req, res) => {
 export const resendOTP = async (req, res) => {
   try {
     const { email } = req.body;
-    console.log("email", email);
+    // console.log("email", email);
     if (!email) {
       return res.status(400).json({ message: "email is undefined" });
     }
@@ -239,7 +239,7 @@ export const editProfileController = async (req, res) => {
     );
 
     const updated = await loggedinUser.save();
-    console.log("updated", updated.profilePic);
+    // console.log("updated", updated.profilePic);
 
     await Tweet.updateMany(
       { userId },
@@ -269,10 +269,10 @@ export const bookmarksController = async (req, res) => {
     const userId = req.userId;
     // console.log(userId);
     const tweetId = req.params.id; // find tweetId
-    console.log(userId);
+    // console.log(userId);
     const loggedInUser = await User.findById(userId);
     const tweet = await Tweet.findById(tweetId);
-    console.log("tweet-> ", tweet?.userId);
+    // console.log("tweet-> ", tweet?.userId);
     if (userId === tweet.userId.toString()) {
       return res.status(201).json({ message: "u can only other's bookmarks " });
     }
@@ -328,7 +328,7 @@ export const getBookmarksTweetsController = async (req, res) => {
       _id: { $in: ids },
     }).sort({ createdAt: -1 });
 
-    console.log(tweets);
+    // console.log(tweets);
     return res.json({ tweets });
   } catch (error) {
     return res.status(401).json({ message: error.message });
@@ -435,16 +435,18 @@ export const changeBackgroundImage = async (req, res) => {
     const user = await User.findOne({ _id: userId });
     // console.log("usre->>>>", user);
     let imageUrl = null;
-    console.log("image in backend", req.file);
+    // console.log("image in backend", req.file);
     if (req.file) {
       imageUrl = await uploadCloudinary(req.file.path);
     }
     user.backGroundImage = imageUrl;
 
-    await user.save();
-    return res
-      .status(200)
-      .json({ message: "BackGroundImage updated", user, success: true });
+    const updated = await user.save();
+    return res.status(200).json({
+      message: "BackGroundImage updated",
+      updated,
+      success: true,
+    });
   } catch (error) {
     console.log("error", error);
     return res.status(400).json({ message: error, success: false });
