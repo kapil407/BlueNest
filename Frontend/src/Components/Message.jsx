@@ -9,7 +9,7 @@ import useGetMessages from "../hooks/usegetmessage";
 import { useRef } from "react";
 
 import useSocket from "../hooks/useSocket.js";
-import { FormateMessageTime } from "../Utils/setTime.js";
+import { formatMessageTime } from "../Utils/setTime.js";
 
 export const Message = () => {
   useGetMessages();
@@ -89,7 +89,6 @@ export const Message = () => {
 
     return () => socket.off("receiveMessage");
   }, [socket, message]);
-  console.log("mesg kapil", message);
 
   let array = [];
 
@@ -131,7 +130,7 @@ export const Message = () => {
                 <div className="text-center inline-block max-w-[70%] mr-4 mt-4 bg-gray-200 px-3 py-1 rounded-xl break-words whitespace-pre-wrap overflow-hidden l">
                   <div>{msg?.message}</div>
                   <span className="text-[10px] font-sm">
-                    {FormateMessageTime(msg.createdAt)}
+                    {formatMessageTime(msg.createdAt)}
                   </span>
                 </div>
               </div>

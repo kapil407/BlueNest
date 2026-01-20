@@ -12,7 +12,7 @@ import { getRefresh } from "../redux/tweetSlice";
 import { toast } from "react-hot-toast";
 import { MdOutlineDelete } from "react-icons/md";
 import { USER_API_END_POINT } from "../Utils/constant";
-import { FormateMessageTime } from "../Utils/setTime.js";
+import { formatMessageTime } from "../Utils/setTime.js";
 
 import { isAction } from "@reduxjs/toolkit";
 
@@ -48,7 +48,7 @@ const Tweets = ({ tweet }) => {
         { id: user?._id },
         {
           withCredentials: true,
-        }
+        },
       );
       dispatch(getRefresh());
 
@@ -76,7 +76,7 @@ const Tweets = ({ tweet }) => {
         `${TWEET_API_END_POINT}/deleteTweet/${tweetId}`,
         {
           withCredentials: true,
-        }
+        },
       );
       dispatch(getRefresh());
       if (res?.data?.success) {
@@ -121,7 +121,7 @@ const Tweets = ({ tweet }) => {
                     </h1>
                     <p className="ml-1">
                       @{firstUser?.userName}{" "}
-                      {FormateMessageTime(tweet.createdAt)}
+                      {formatMessageTime(tweet.createdAt)}
                     </p>
                   </div>
                 </div>
