@@ -80,6 +80,7 @@ export const Message = () => {
               senderId: data.senderId,
               receiverId: data.receiverId,
               message: data.message,
+              createdAt: new Date(),
             },
           ]),
         );
@@ -88,6 +89,7 @@ export const Message = () => {
 
     return () => socket.off("receiveMessage");
   }, [socket, message]);
+  console.log("mesg kapil", message);
 
   let array = [];
 
