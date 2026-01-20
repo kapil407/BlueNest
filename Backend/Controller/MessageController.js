@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Conversation } from "../models/Conversation.js";
 import { Message } from "../models/Message.js";
-import { io, userSocketMap } from '../utils/socket.js';
+import { io, userSocketMap } from "../utils/socket.js";
 
 export const sendMessage = async (req, res) => {
   try {
@@ -12,9 +12,9 @@ export const sendMessage = async (req, res) => {
     if (!message || message.trim() === "") {
       return res.status(400).json({ message: "Message cannot be empty" });
     }
-     if (!message || !receiverId || !senderId) {
-    return res.status(400).json({ error: "Missing fields" });
-  }
+    if (!message || !receiverId || !senderId) {
+      return res.status(400).json({ error: "Missing fields" });
+    }
 
     let gotConversation = await Conversation.findOne({
       participants: { $all: [senderId, receiverId] },
@@ -38,20 +38,9 @@ export const sendMessage = async (req, res) => {
 
     await gotConversation.save();
 
-    //  SOCKET.IO EMIT PART START
-    const receiverSocketId = userSocketMap[receiverId];
-    if(receiverSocketId){
-    
-        io.to(receiverSocketId).emit('newMessage',message);
-      console.log("mesg Controller");
-      }
-
-    
-
     return res.status(201).json({ newMessage });
-
   } catch (error) {
-    return res.status(400).json( "error kapil inside create tweet" );
+    return res.status(500).json({ error: "Error while sending message" });
   }
 };
 
@@ -64,8 +53,11 @@ export const getMessage = async (req, res) => {
       participants: { $all: [senderId, receiverId] },
     }).populate("messageId");
 
-    return res.status(200).json({ message: "receivedMessage", conversation });
+    if (!conversation) {
+      return res.status(200).json({ conversation: { messageId: [] } });
+    }
 
+    return res.status(200).json({ message: "receivedMessage", conversation });
   } catch (error) {
     return res.status(401).json({ message: error.message });
   }
