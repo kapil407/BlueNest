@@ -13,13 +13,12 @@ export const initSocket = (server) => {
 
   io.on("connection", (socket) => {
     const userId = socket.handshake.query.userId;
-    console.log( " User connected: ", userId);
+    console.log(" User connected: ", userId);
 
     if (userId) {
       userSocketMap[userId] = socket.id;
     }
 
- 
     // io.emit("getOnlineUser", Object.keys(userSocketMap));
 
     // Listen for sendMessage
@@ -31,6 +30,7 @@ export const initSocket = (server) => {
           senderId,
           receiverId,
           message,
+          createdAt: new Date(),
         });
       }
     });
