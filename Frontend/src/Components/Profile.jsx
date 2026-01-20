@@ -47,7 +47,7 @@ function Profile() {
         formdata,
         {
           withCredentials: true,
-        }
+        },
       );
       // console.log("re>>>>>", res);
 
@@ -72,7 +72,7 @@ function Profile() {
           {},
           {
             withCredentials: true,
-          }
+          },
         );
 
         dispatch(followingUpdate(id));
@@ -93,7 +93,7 @@ function Profile() {
           {},
           {
             withCredentials: true,
-          }
+          },
         );
         dispatch(followingUpdate(id));
         dispatch(getRefresh(id));
@@ -151,7 +151,7 @@ function Profile() {
                 className="h-70 w-255 object-cover"
               />
             )}
-            {profile._id === user._id ? (
+            {profile?._id === user?._id ? (
               <>
                 <input
                   id="backCover"
