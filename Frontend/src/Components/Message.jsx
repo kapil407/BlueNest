@@ -25,8 +25,7 @@ export const Message = () => {
 
   let targetUser;
   otherUsers?.forEach((element) => {
-    if (element._id == targetUserId);
-    targetUser = element;
+    if (element._id == targetUserId) targetUser = element;
   });
 
   const userId = user?._id;
@@ -47,7 +46,7 @@ export const Message = () => {
             "Content-Type": "application/json",
           },
           withCredentials: true,
-        }
+        },
       );
 
       // console.log("res->", res.data.newMessage);
@@ -82,7 +81,7 @@ export const Message = () => {
               receiverId: data.receiverId,
               message: data.message,
             },
-          ])
+          ]),
         );
       }
     });
