@@ -21,7 +21,7 @@ function RightSideBar({ otherUsers }) {
     e.preventDefault();
 
     const SearchedUser = array?.find((other) =>
-      other?.firstName.toLowerCase().includes(saerchName.toLowerCase())
+      other?.firstName.toLowerCase().includes(saerchName.toLowerCase()),
     );
 
     if (SearchedUser) {

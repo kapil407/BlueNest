@@ -23,7 +23,7 @@ import useBookmarks from "../hooks/useBookmarks.js";
 const Tweets = ({ tweet }) => {
   const { profile } = useSelector((store) => store.user);
   // console.log("profile->", otherUsers);
-  console.log("tweet", tweet);
+  // console.log("tweet", tweet);
 
   const { handleBookmark } = useBookmarks();
   const { userDetails } = tweet;
@@ -36,7 +36,7 @@ const Tweets = ({ tweet }) => {
   // console.log("userArray", firstUser?.firstName);
 
   const { user } = useSelector((store) => store.user);
-  console.log("user->", user);
+  // console.log("user->", user);
   const image = tweet.userDetails[0].profilePic;
   // console.log("tweet", tweet.userDetails[0].profilePic);
   const dispatch = useDispatch();
@@ -64,11 +64,8 @@ const Tweets = ({ tweet }) => {
       console.error(error);
     }
   };
-  const [flag, setflag] = useState(false);
-  const likehandler = () => {
-    likeDisLikeHandler(tweet._id);
-    setflag(!flag);
-  };
+
+  const isLiked = tweet.likes.includes(user?._id);
 
   const DeleteTweetHandler = async (tweetId) => {
     try {
@@ -146,43 +143,55 @@ const Tweets = ({ tweet }) => {
                 </div>
               </div>
             </div>
-            <div>
-              <div className="flex justify-between p-8">
-                <div className="flex  hover:bg-green-200 p-2 rounded-full cursor-pointer">
-                  <FaRegComment size={23} />
-                  <p className="ml-2">0</p>
-                </div>
-                <div className="flex hover:bg-pink-200 p-2 rounded-full cursor-pointer">
-                  <Link
-                    onClick={() => likehandler(tweet?._id)}
-                    className="flex"
-                  >
-                    <BiLike
-                      size={25}
-                      className={flag === false ? "flex" : "flex text-red-600"}
-                    />
-                    <p className="ml-2">{`${tweet.likes.length}`}</p>
-                  </Link>
-                </div>
-                {profile?._id !== tweet.userDetails[0]?._id ? (
-                  <div
-                    onClick={() => handleBookmark(tweet?._id)}
-                    className="flex hover:bg-yellow-200 p-2 rounded-full cursor-pointer"
-                  >
-                    <PiBookmarkSimpleBold size={25} />
-                  </div>
+
+            <div className="flex justify-between p-8">
+              <div className="flex   p-2 rounded-full cursor-pointer">
+                <FaRegComment
+                  size={23}
+                  className=" text-gray-600 hover:text-green-600"
+                />
+                <p className="ml-2">0</p>
+              </div>
+              <div className="flex hover:bg-pink-200 p-2 rounded-full cursor-pointer">
+                <Link
+                  onClick={() => likeDisLikeHandler(tweet?._id)}
+                  className="flex"
+                >
+                  <BiLike
+                    size={25}
+                    className={
+                      isLiked ? "flex text-red-600" : "flex text-gray-600"
+                    }
+                  />
+                  <p className="ml-2">{`${tweet.likes.length}`}</p>
+                </Link>
+              </div>
+              <div>
+                {user?._id !== tweet.userId ? (
+                  <>
+                    <Link
+                      onClick={() => handleBookmark(tweet?._id)}
+                      className="flex  hover:bg-yellow-200 p-2 rounded-full  cursor-pointer"
+                    >
+                      <PiBookmarkSimpleBold
+                        size={25}
+                        className=" text-gray-600"
+                      />
+                    </Link>
+                  </>
                 ) : (
-                  ""
+                  <>
+                    <Link
+                      onClick={() => DeleteTweetHandler(tweet?._id)}
+                      className=" flex items-center   rounded-3xl p-2"
+                    >
+                      <MdOutlineDelete
+                        size={25}
+                        className=" text-gray-600 hover:text-red-600"
+                      />
+                    </Link>
+                  </>
                 )}
-                <div className="flex items-center hover:bg-red-500  rounded-3xl p-2">
-                  {user?._id === tweet.userId && (
-                    <>
-                      <Link onClick={() => DeleteTweetHandler(tweet?._id)}>
-                        <MdOutlineDelete size={25} />
-                      </Link>
-                    </>
-                  )}
-                </div>
               </div>
             </div>
           </div>

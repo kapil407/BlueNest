@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import LeftSideBar from "./LeftSideBar.jsx";
 import RightSideBar from "./RightSideBar.jsx";
-// import Feed from "./Feed.jsx"
 import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useOtherUsers from "../hooks/useOtherUsers.js";
