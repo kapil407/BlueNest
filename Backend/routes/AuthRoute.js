@@ -15,21 +15,28 @@ import {
   FollowingController,
   unFollowController,
   getBookmarksTweetsController,
-  changeBackgroundImage
-  
+  changeBackgroundImage,
 } from "../Controller/UserController.js";
 
 const router = express.Router();
 
 // Auth routes
 router.post("/signup", SignUpValidation, signUpController);
-router.post("/login",  LoginController);
+router.post("/login", LoginController);
 router.post("/logout", LogOutController);
 
-
-
-router.patch('/changeBackCover',upload.single("image"), isAuth,changeBackgroundImage);
-router.patch("/updateProfile", upload.single("image"), isAuth, editProfileController);
+router.patch(
+  "/changeBackCover",
+  upload.single("image"),
+  isAuth,
+  changeBackgroundImage,
+);
+router.patch(
+  "/updateProfile",
+  upload.single("image"),
+  isAuth,
+  editProfileController,
+);
 router.get("/getProfile/:id", isAuth, getProfileController);
 router.get("/getOthersProfile", isAuth, getOthersProfileController);
 

@@ -1,7 +1,6 @@
 import Tweet from "../models/Tweets.js";
 import User from "../models/User.js";
 
-
 import uploadCloudinary from "../Middleware/Cloudinary.js";
 
 export const createTweetController = async (req, res) => {
@@ -13,11 +12,25 @@ export const createTweetController = async (req, res) => {
     const user = await User.findOne({ _id: userId });
 
     let imageUrl = null;
+    let videoUrl = null;
 
     if (req.file) {
-      // console.log("image in backend", req.file);
+      if (req.file.mimetype.startsWith("image/")) {
+        const result = await uploadCloudinary(req.file.path, "image");
 
-      imageUrl = await uploadCloudinary(req.file.path);
+        imageUrl = {
+          url: result.url,
+          publicId: result.publicId,
+        };
+      } else if (req.file.mimetype.startsWith("video/")) {
+        const result = await uploadCloudinary(req.file.path, "video");
+
+        videoUrl = {
+          url: result.url,
+          publicId: result.publicId,
+          duration: result.duration,
+        };
+      }
     }
 
     const tweet = await Tweet.create({
@@ -25,6 +38,7 @@ export const createTweetController = async (req, res) => {
       image: imageUrl,
       userId,
       userDetails: user,
+      video: videoUrl,
     });
 
     res
@@ -41,10 +55,9 @@ export const deleteTweetController = async (req, res) => {
     const { id } = req.params;
     const tweet = await Tweet.findById(id);
     const TweetuserId = tweet.userId;
-    // console.log("TweetUserId-> ",TweetuserId)
+
     const loggedInUserId = req.userId;
 
-    // console.log("loggedInUserId",loggedInUserId);
     if (!id) {
       return res
         .status(400)
@@ -96,7 +109,7 @@ export const likeOrDisLikeController = async (req, res) => {
       updatedTweets = await Tweet.findByIdAndUpdate(
         Tweetid,
         { $pull: { likes: userId } },
-        { new: true }
+        { new: true },
       );
 
       return res.json({
@@ -108,7 +121,7 @@ export const likeOrDisLikeController = async (req, res) => {
       updatedTweets = await Tweet.findByIdAndUpdate(
         Tweetid,
         { $push: { likes: userId } },
-        { new: true }
+        { new: true },
       );
 
       return res.json({
@@ -138,9 +151,11 @@ export const getAllTweetsController = async (req, res) => {
       .select("-password");
 
     if (!alltweet) {
-      return res.status(400).json({ message: "Create tweet " });
+      return res
+        .status(400)
+        .json({ message: " No tweet ,Please Create tweet " });
     }
-    return res.status(200).json({ message: "allTweets", alltweet });
+    return res.status(200).json({ message: "AllTweets", alltweet });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
