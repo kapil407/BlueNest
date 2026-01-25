@@ -15,13 +15,12 @@ const useBookmarks = () => {
         {},
         {
           withCredentials: true,
-        }
+        },
       );
-      // console.log("Bookmark Updated", res?.data?.updatedUserData?.bookmarks);// bookmarksIDs 
+      console.log("Bookmark Updated", res); // bookmarksIDs
       toast.success(res?.data?.message);
-     
+      dispatch(getRefresh());
       dispatch(getBookMarksIds(res?.data?.updatedUserData?.bookmarks));
-       dispatch(getRefresh());
     } catch (error) {
       console.log("Bookmark Error", error);
     }

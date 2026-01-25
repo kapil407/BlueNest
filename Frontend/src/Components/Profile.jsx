@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { getRefresh } from "../redux/tweetSlice.js";
 import { FaEdit } from "react-icons/fa";
 import { FaImage } from "react-icons/fa";
+import ClipLoader from "react-spinners/ClipLoader.js";
 import {
   followingUpdate,
   getMyProfile,
@@ -21,27 +22,25 @@ import {
 import { Navigate } from "react-router-dom";
 
 function Profile() {
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
   useGetProfile(id);
   const { tweet } = useSelector((store) => store?.tweet);
-  // console.log("first",tweet);
 
   const dispatch = useDispatch();
 
   const { profile, otherUsers, user } = useSelector((store) => store.user);
-  // console.log("User", otherUsers);
+
   const [image, setimage] = useState(null);
-  console.log("user->>>", user);
-  console.log("id", profile);
 
   const changeBackgroundImage = async () => {
     try {
       const formdata = new FormData();
 
       if (image) {
-        console.log("image ", image);
         formdata.append("image", image);
       }
+      setLoading(true);
       const res = await axios.patch(
         `${USER_API_END_POINT}/changeBackCover`,
         formdata,
@@ -49,17 +48,16 @@ function Profile() {
           withCredentials: true,
         },
       );
-      // console.log("re>>>>>", res);
 
-      // console.log("profile", profile);
       if (res.data.success) {
-        // 1. toast
         toast.success(res.data.message);
         dispatch(getMyProfile(res.data.updated));
+        setimage(null);
       }
-      // console.log("res->>>>", res);
     } catch (error) {
       console.log("error", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,9 +72,9 @@ function Profile() {
             withCredentials: true,
           },
         );
+        dispatch(getRefresh(id));
 
         dispatch(followingUpdate(id));
-        dispatch(getRefresh(id));
 
         // console.log("unfollow res->",res);
         if (res?.data?.success) {
@@ -95,8 +93,8 @@ function Profile() {
             withCredentials: true,
           },
         );
-        dispatch(followingUpdate(id));
         dispatch(getRefresh(id));
+        dispatch(followingUpdate(id));
 
         if (res?.data?.success) {
           toast.success(res?.data?.message);
@@ -112,7 +110,7 @@ function Profile() {
   return (
     <>
       <div
-        className="w-[50%] mt-2 border-l border-r border-gray-200 fixed left-[22%]"
+        className="w-[61%] mt-2 border-l border-r border-gray-200 fixed ml-50"
         style={{
           boxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
           WebkitBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
@@ -138,21 +136,21 @@ function Profile() {
           </div>
 
           <div>
-            {!profile?.backGroundImage ? (
+            {!profile?.backGroundImage?.url ? (
               <img
-                className="h-70 w-full  "
+                className="h-100 w-full  "
                 src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGNvZGV8ZW58MHx8MHx8fDA%3D"
                 alt="Banner"
               />
             ) : (
               <img
-                src={`${profile?.backGroundImage}?v=${profile?.updatedAt}`}
+                src={`${profile?.backGroundImage?.url}?v=${profile?.updatedAt}`}
                 alt="backcoverImage"
-                className="h-70 w-255 object-cover"
+                className="h-100 w-255 object-cover"
               />
             )}
             {profile?._id === user?._id ? (
-              <>
+              <div className="flex justify-between flex-col">
                 <input
                   id="backCover"
                   className="hidden"
@@ -161,21 +159,34 @@ function Profile() {
                   onChange={(e) => setimage(e.target.files[0])}
                 />
                 <label htmlFor="backCover">
-                  <FaImage className="ml-165 cursor-pointer text-blue-600 size-9" />
+                  <FaImage className="ml-232 w-22 cursor-pointer text-blue-600 size-10" />
                 </label>
                 <button
                   onClick={changeBackgroundImage}
-                  className="w-20 rounded p-2 h-10 ml-165 mt-5 text-white bg-green-400 cursor-pointer"
+                  disabled={!image || loading}
+                  className={`w-22 rounded p-2 h-10 ml-232 mt-5 
+                  ${
+                    !image || loading
+                      ? "bg-gray-400 cursor-not-allowed text-black"
+                      : "bg-green-400 cursor-pointer text-white "
+                  }
+                `}
                 >
-                  Change
+                  {loading ? (
+                    <>
+                      <ClipLoader size={18} />
+                    </>
+                  ) : (
+                    "Update"
+                  )}
                 </button>
-              </>
+              </div>
             ) : (
               ""
             )}
           </div>
-          <div className="cursor-pointer absolute border-4 border-black top-72 translate-x-2/10 rounded-full">
-            {!profile?.profilePic ? (
+          <div className="cursor-pointer absolute border-4 border-black top-102 translate-x-2/10 rounded-full">
+            {!profile?.profilePic?.url ? (
               <Avatar
                 src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
                 size="102"
@@ -183,7 +194,7 @@ function Profile() {
               />
             ) : (
               <img
-                src={profile?.profilePic}
+                src={profile?.profilePic?.url}
                 alt="profileimage"
                 className="rounded-full w-[102px] h-[102px] object-cover"
               />
@@ -212,7 +223,7 @@ function Profile() {
                 {/* message btn*/}
                 {user?.following.includes(id?.toString()) && (
                   <Link to={`/Message/${id}`}>
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-3xl cursor-pointer">
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-3xl cursor-pointer mr-2">
                       Message
                     </button>
                   </Link>

@@ -7,28 +7,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { getRefresh, getIsActive } from "../redux/tweetSlice.js";
 import { FaImage } from "react-icons/fa";
+import ClipLoader from "react-spinners/ClipLoader";
 const CreatePost = () => {
   const { user, profile } = useSelector((store) => store.user);
   const { isActive } = useSelector((store) => store.tweet);
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
+  const [media, setMedia] = useState(null);
   const dispatch = useDispatch();
-  const profileImage = profile?.profilePic;
+  // console.log("progile", profile);
+  let profileImage = profile?.profilePic?.url;
+  console.log("profileimahge", profileImage);
+  const [loading, setLoading] = useState(false);
 
   const submitHandler = async () => {
-    if (!description && !image) {
+    if (!description && !media) {
       toast.error("Please write something or add an image");
       return;
     }
 
     try {
       const formData = new FormData();
+      // formData.append("description", description);
+
+      if (media) {
+        formData.append("media", media);
+      }
       formData.append("description", description);
       formData.append("id", user?._id);
-      if (image) {
-        formData.append("image", image);
-      }
 
+      setLoading(true);
       const res = await axios.post(
         `${TWEET_API_END_POINT}/createTweet`,
         formData,
@@ -37,20 +44,23 @@ const CreatePost = () => {
             "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
-        }
+        },
       );
 
-      // console.log("create post ",res);
+      // console.log("create post ", res.data.tweet.image.url);
 
       dispatch(getRefresh());
 
       if (res?.data?.success) {
         toast.success(res?.data?.message);
+        setMedia(null);
       }
       setDescription("");
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -119,9 +129,9 @@ const CreatePost = () => {
         <div className="flex justify-between p-8 border-b border-gray-300 items-center">
           <input
             type="file"
-            accept="image/*"
+            accept="image/*,video/*"
             id="galleryUpload"
-            onChange={(e) => setImage(e.target.files[0])}
+            onChange={(e) => setMedia(e.target.files[0])}
             style={{ display: "none" }}
           />
           <label
@@ -133,9 +143,17 @@ const CreatePost = () => {
 
           <button
             onClick={submitHandler}
-            className="bg-[#1D9BF0] p-3 rounded-full cursor-pointer border-none w-20 font-bold text-white hover:bg-blue-400"
+            disabled={(!media && !description.trim()) || loading}
+            className={` p-3 rounded-full  border-none w-24 font-bold text-white flex items-center justify-center gap-2 disabled:opacity-70 ${(!media && !description.trim()) || loading ? "cursor-not-allowed bg-gray-600 text-black" : "cursor-pointer bg-[#1D9BF0]  hover:bg-blue-400"}`}
           >
-            Post
+            {loading ? (
+              <>
+                <ClipLoader size={18} color="#fff" />
+                Posting...
+              </>
+            ) : (
+              "Post"
+            )}
           </button>
         </div>
       </div>

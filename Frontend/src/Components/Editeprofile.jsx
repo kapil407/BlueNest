@@ -37,7 +37,7 @@ const EditeProfile = () => {
         formdata,
         {
           withCredentials: true,
-        }
+        },
       );
       console.log(res);
 
@@ -55,7 +55,7 @@ const EditeProfile = () => {
   return (
     <div>
       <div
-        className="flex-1 ml-[12%] mt-10 border border-gray-300 justify-center items-center  rounded-2xl w-[80%] bg-gray-100"
+        className="flex-1 ml-[8%] mt-10  border-gray-300 justify-center items-center  rounded-2xl w-[100%] bg-gray-100"
         style={{
           boxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
           WebkitBoxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",

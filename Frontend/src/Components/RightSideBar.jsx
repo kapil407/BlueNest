@@ -35,7 +35,7 @@ function RightSideBar({ otherUsers }) {
 
   return (
     <>
-      <div className="w-[22%] mt-1 h-auto ml-2 ">
+      <div className="w-[22%] mt-1 h-auto ">
         <div>
           <div className="bg-gray-100 flex p-3 rounded-full  border-1 border-gray-300">
             <IoSearch size={25} />
@@ -74,7 +74,7 @@ function RightSideBar({ otherUsers }) {
                             />
                           ) : (
                             <img
-                              src={otherUser.profilePic}
+                              src={otherUser.profilePic?.url}
                               alt="image"
                               className="w-15 object-cover h-15 rounded-full"
                             />
