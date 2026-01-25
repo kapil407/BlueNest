@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="flex justify-between  w-[90%] mx-auto relative ">
+      <div className="flex justify-between  w-[95%] mx-auto relative ">
         <LeftSideBar />
         <Outlet />
         <RightSideBar otherUsers={otherUsers} />{" "}

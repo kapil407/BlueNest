@@ -21,9 +21,12 @@ import { getBookMarksIds } from "../redux/userSlice.js";
 import useBookmarks from "../hooks/useBookmarks.js";
 
 const Tweets = ({ tweet }) => {
-  const { profile } = useSelector((store) => store.user);
-  // console.log("profile->", otherUsers);
-  // console.log("tweet", tweet);
+  const { profile, bookmarksIds } = useSelector((store) => store.user);
+
+  const isBookmarked = bookmarksIds?.some(
+    (id) => id.toString() === tweet?._id?.toString(),
+  );
+  console.log("image and video", tweet?.image?.url);
 
   const { handleBookmark } = useBookmarks();
   const { userDetails } = tweet;
@@ -33,12 +36,10 @@ const Tweets = ({ tweet }) => {
       ? tweet.userDetails[0]
       : null;
 
-  // console.log("userArray", firstUser?.firstName);
-
   const { user } = useSelector((store) => store.user);
-  // console.log("user->", user);
+
   const image = tweet.userDetails[0].profilePic;
-  // console.log("tweet", tweet.userDetails[0].profilePic);
+
   const dispatch = useDispatch();
 
   const likeDisLikeHandler = async (id) => {
@@ -52,10 +53,7 @@ const Tweets = ({ tweet }) => {
       );
       dispatch(getRefresh());
 
-      // console.log("likes res->", res);
-
       if (res?.data?.success) {
-        // console.log(res.data);
         toast.success(res?.data?.message);
       } else {
         toast.success(res?.data?.message);
@@ -65,7 +63,7 @@ const Tweets = ({ tweet }) => {
     }
   };
 
-  const isLiked = tweet.likes.includes(user?._id);
+  const isLiked = tweet?.likes?.includes(user?._id);
 
   const DeleteTweetHandler = async (tweetId) => {
     try {
@@ -81,7 +79,6 @@ const Tweets = ({ tweet }) => {
       } else {
         toast.success(res?.data?.message);
       }
-      // console.log("res inside DeleteHandler-> ", res);
     } catch (error) {
       toast.success(error.response.data.message);
       console.error(error);
@@ -97,7 +94,7 @@ const Tweets = ({ tweet }) => {
               <div className="">
                 <div className="flex">
                   <Link to={`profile/${tweet?.userId}`} className="m-1  ">
-                    {!image ? (
+                    {!image?.url ? (
                       <Avatar
                         className="m-1 cursor-pointer"
                         src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
@@ -106,7 +103,7 @@ const Tweets = ({ tweet }) => {
                       />
                     ) : (
                       <img
-                        src={image}
+                        src={image?.url}
                         alt="photo"
                         className="w-13 h-13 rounded-full border-2 object-cover border-gray-400 "
                       />
@@ -123,20 +120,35 @@ const Tweets = ({ tweet }) => {
                   </div>
                 </div>
 
-                <div className=" w-[100%] flex justify-center items-center ">
+                <div className=" w-[100%] flex justify-center items-center ml-6 ">
                   <div>
-                    {!tweet?.image ? (
-                      <p className="">{tweet?.description}</p>
+                    <p className="mb-2  mt-3  font-semibold  rounded ">
+                      {tweet?.description}
+                    </p>
+
+                    {!tweet?.image?.url ? (
+                      <video
+                        src={tweet?.video?.url}
+                        controls
+                        preload="metadata"
+                        className={
+                          tweet?.description
+                            ? " rounded object-cover w-238 h-140 "
+                            : " rounded object-cover w-238 h-140 mt-12"
+                        }
+                        playsInline
+                      />
                     ) : (
                       <>
-                        <p className="mb-4 ml-17  ">{tweet?.description}</p>
-                        {tweet?.image && (
-                          <img
-                            src={tweet?.image}
-                            className="ml-26 rounded object-cover w-125 h-125"
-                            alt="image"
-                          />
-                        )}
+                        <img
+                          src={tweet?.image?.url}
+                          alt="image"
+                          className={
+                            tweet?.description
+                              ? " rounded object-cover w-238 h-140 "
+                              : " rounded object-cover w-238 h-140 mt-12"
+                          }
+                        />
                       </>
                     )}
                   </div>
@@ -152,7 +164,7 @@ const Tweets = ({ tweet }) => {
                 />
                 <p className="ml-2">0</p>
               </div>
-              <div className="flex hover:bg-pink-200 p-2 rounded-full cursor-pointer">
+              <div className="flex  p-2 rounded-full cursor-pointer">
                 <Link
                   onClick={() => likeDisLikeHandler(tweet?._id)}
                   className="flex"
@@ -160,7 +172,9 @@ const Tweets = ({ tweet }) => {
                   <BiLike
                     size={25}
                     className={
-                      isLiked ? "flex text-red-600" : "flex text-gray-600"
+                      isLiked
+                        ? "flex text-pink-600"
+                        : "flex text-gray-600 hover:text-pink-600"
                     }
                   />
                   <p className="ml-2">{`${tweet.likes.length}`}</p>
@@ -171,11 +185,15 @@ const Tweets = ({ tweet }) => {
                   <>
                     <Link
                       onClick={() => handleBookmark(tweet?._id)}
-                      className="flex  hover:bg-yellow-200 p-2 rounded-full  cursor-pointer"
+                      className="flex   p-2 rounded-full  cursor-pointer"
                     >
                       <PiBookmarkSimpleBold
                         size={25}
-                        className=" text-gray-600"
+                        className={
+                          isBookmarked
+                            ? "text-yellow-500"
+                            : "text-gray-600 hover:text-yellow-600"
+                        }
                       />
                     </Link>
                   </>

@@ -4,7 +4,10 @@ export const formatMessageTime = (createdAt) => {
   const d = new Date(createdAt);
   if (isNaN(d.getTime())) return "";
 
-  return d.toLocaleTimeString("en-US", {
+  return d.toLocaleString("en-US", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
     hour12: true,

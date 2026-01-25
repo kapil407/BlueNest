@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
 /* Thin scrollbar style */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
@@ -20,12 +19,15 @@
   background: #555;
 }
 
-
-html, body {
+html,
+body {
   background-color: #f0f2f5;
-    
 }
 
-  .Selected{
-    background-color: rgb(211, 211, 211);
-  }
+.Selected {
+  background-color: rgb(211, 211, 211);
+}
+/* body,
+html {
+  background-color: black;
+} */
