@@ -12,7 +12,7 @@ Secure signup with OTP verification
 JWT-based authentication for login and session handling
 📝 Create & Manage Posts
 Upload and share text, images, and media
-Integrated Cloudinary for image hosting
+Integrated Cloudinary for image and videos hosting
 💬 Real-time Chat
 One-on-one live chat using Socket.IO
 Online user tracking and instant message delivery
