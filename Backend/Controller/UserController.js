@@ -11,8 +11,6 @@ import nodemailer from "nodemailer";
 import crypto from "crypto";
 import uploadCloudinary from "../Middleware/Cloudinary.js";
 
-import { tracingChannel } from "diagnostics_channel";
-
 dotenv.config();
 
 const generateOTP = () => crypto.randomInt(10000, 100000);
@@ -106,7 +104,7 @@ export const verifyOTP = async (req, res) => {
     if (user.verificationCode != otp || user.expiryOtp < new Date()) {
       return res
         .status(400)
-        .json({ message: "Invalid or exppired OTP", success: false });
+        .json({ message: "Invalid or expired OTP", success: false });
     }
     user.otpVerified = true;
     user.verificationCode = undefined;
@@ -218,7 +216,7 @@ export const editProfileController = async (req, res) => {
     const allowedForEdit = ["firstName", "lastName", "userName", "bio"];
 
     const isValidUpdate = Object.keys(req.body).every((key) =>
-      allowedForEdit.includes(key)
+      allowedForEdit.includes(key),
     );
     if (!isValidUpdate) {
       return res.json({ message: "Not permissible to edit" });
@@ -235,7 +233,7 @@ export const editProfileController = async (req, res) => {
     }
 
     Object.keys(req.body).forEach(
-      (field) => (loggedinUser[field] = req.body[field])
+      (field) => (loggedinUser[field] = req.body[field]),
     );
 
     const updated = await loggedinUser.save();
@@ -251,7 +249,7 @@ export const editProfileController = async (req, res) => {
           "userDetails.0.bio": updated.bio,
           "userDetails.0.profilePic": updated.profilePic,
         },
-      }
+      },
     );
 
     return res.json({
@@ -267,15 +265,11 @@ export const editProfileController = async (req, res) => {
 export const bookmarksController = async (req, res) => {
   try {
     const userId = req.userId;
-    // console.log(userId);
-    const tweetId = req.params.id; // find tweetId
-    // console.log(userId);
+
+    const tweetId = req.params.id;
+
     const loggedInUser = await User.findById(userId);
     const tweet = await Tweet.findById(tweetId);
-    // console.log("tweet-> ", tweet?.userId);
-    if (userId === tweet.userId.toString()) {
-      return res.status(201).json({ message: "u can only other's bookmarks " });
-    }
 
     let updatedUserData;
     let bookmarkCnt = 0;
@@ -283,7 +277,7 @@ export const bookmarksController = async (req, res) => {
       updatedUserData = await User.findByIdAndUpdate(
         userId,
         { $pull: { bookmarks: tweetId } },
-        { new: true }
+        { new: true },
       );
       bookmarkCnt--;
       if (bookmarkCnt < 0) {
@@ -295,11 +289,11 @@ export const bookmarksController = async (req, res) => {
         updatedUserData,
         bookmarkCnt,
       });
-    } else if (userId !== tweet.userId.toString()) {
+    } else {
       updatedUserData = await User.findByIdAndUpdate(
         userId,
         { $push: { bookmarks: tweetId } },
-        { new: true }
+        { new: true },
       );
       bookmarkCnt++;
       return res.json({
@@ -307,8 +301,6 @@ export const bookmarksController = async (req, res) => {
         updatedUserData,
         bookmarkCnt,
       });
-    } else {
-      return res.status(201).json({ message: "u can not bookmarks ur tweet " });
     }
   } catch (error) {
     return res.status(200).json({ message: error.message });
@@ -316,24 +308,26 @@ export const bookmarksController = async (req, res) => {
 };
 export const getBookmarksTweetsController = async (req, res) => {
   try {
-    const { ids } = req.body;
-    // const loggedInUser=req.body.params;
+    const userId = req.userId;
 
-    if (ids?.length === 0) {
-      return res.status(401).json({ message: "empty ids Array" });
+    // 1️⃣ Logged-in user ke bookmarks lao
+    const user = await User.findById(userId).select("bookmarks");
+
+    if (!user || user.bookmarks.length === 0) {
+      return res.status(200).json({ tweets: [] });
     }
-    // const id = "67f5491bb0b176b8142b7a1f";
-    // const tweets = await Tweet.findById(id);
+
+    // 2️⃣ Sirf wahi tweets lao jo user ke bookmarks me hain
     const tweets = await Tweet.find({
-      _id: { $in: ids },
+      _id: { $in: user.bookmarks },
     }).sort({ createdAt: -1 });
 
-    // console.log(tweets);
-    return res.json({ tweets });
+    return res.status(200).json({ tweets });
   } catch (error) {
-    return res.status(401).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
+
 export const getProfileController = async (req, res) => {
   try {
     //   const user=req?.user;
@@ -350,7 +344,7 @@ export const getOthersProfileController = async (req, res) => {
     const userId = req.userId;
 
     const otherUsers = await User.find({ _id: { $ne: userId } }).select(
-      "-password"
+      "-password",
     );
     if (!otherUsers) {
       return res.status(400).json({ message: "there is not User" });
@@ -367,31 +361,33 @@ export const FollowingController = async (req, res) => {
     const loggedInUserId = req.userId;
     const following = loggedInUser?.following;
 
-    const userId = req.params.id;
+    const targetUserId = req.params.id;
 
-    const user = await User.findById(userId); // the person , i follow
-    if (!user) {
+    const targetUser = await User.findById(targetUserId); // the person , i follow
+    if (!targetUser) {
       return res.json({ message: "user not found" });
     }
-    const followers = user?.followers;
+    const followers = targetUser?.followers;
     let updatedData;
-    if (!following.includes(userId)) {
-      updatedData = await User.findByIdAndUpdate(loggedInUserId, {
-        $push: { following: userId },
-      }); // push the user userId into following{ARRAY} of LoggedInUser
-      await User.findByIdAndUpdate(userId, {
-        $push: { followers: loggedInUserId },
-      }); // push the loggedInUserId of loggedInUser into followers{ARRAY} of user
+    if (!following.includes(targetUserId)) {
+      updatedData = await User.findByIdAndUpdate(
+        loggedInUserId,
+        {
+          $push: { following: targetUserId },
+        },
+        { new: true },
+      ); // push the user's userId into following{ARRAY} of LoggedInUser
+      await User.findByIdAndUpdate(
+        targetUserId,
+        { $push: { followers: loggedInUserId } },
+        { new: true },
+      ); // push the loggedInUserId of loggedInUser into followers{ARRAY} of user
       return res.json({
-        message: `You just follow ${user.firstName}`,
+        message: `You just follow ${targetUser.firstName}`,
         success: true,
         updatedData,
       });
     }
-    // else{
-
-    //     return res.json({message:`You already follow  ${user.firstName}`});
-    // }
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -402,23 +398,23 @@ export const unFollowController = async (req, res) => {
     const loggedInUserId = req.userId;
     const following = loggedInUser?.following;
 
-    const userId = req.params.id;
+    const targetUserId = req.params.id;
 
-    const user = await User.findById(userId);
-    if (!user) {
+    const targetUser = await User.findById(targetUserId);
+    if (!targetUser) {
       return res.json({ message: "user not found" });
     }
-    const followers = user?.followers;
+    const followers = targetUser?.followers;
 
-    if (following.includes(userId)) {
+    if (following.includes(targetUserId)) {
       await User.findByIdAndUpdate(loggedInUserId, {
-        $pull: { following: userId },
+        $pull: { following: targetUserId },
       }); // pull the user userId from following{ARRAY} of LoggedInUser
-      await User.findByIdAndUpdate(userId, {
+      await User.findByIdAndUpdate(targetUserId, {
         $pull: { followers: loggedInUserId },
       }); // pull the loggedInUserId of loggedInUser from followers{ARRAY} of user
       return res.json({
-        message: `You unfollow  ${user.firstName}`,
+        message: `You unfollow  ${targetUser.firstName}`,
         success: true,
       });
     }
@@ -433,9 +429,9 @@ export const changeBackgroundImage = async (req, res) => {
   try {
     const userId = req.userId;
     const user = await User.findOne({ _id: userId });
-    // console.log("usre->>>>", user);
+
     let imageUrl = null;
-    // console.log("image in backend", req.file);
+
     if (req.file) {
       imageUrl = await uploadCloudinary(req.file.path);
     }

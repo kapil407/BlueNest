@@ -1,83 +1,84 @@
-import mongoose from 'mongoose';
-import { type } from 'os';
-import { DefaultSerializer } from 'v8';
-import validator from 'validator';
-import { deflate } from 'zlib';
+import mongoose from "mongoose";
 
+import validator from "validator";
 
-const userSchema=new mongoose.Schema({
-    firstName:{
-        type:String,
-        required:true,
-        minLength:[4,"firstName should be greater than 4"]
-
+const userSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+      minLength: [4, "firstName should be greater than 4"],
     },
-    lastName:{
-        type:String,
-        required:true,
-        minLength:[4,"firstName should be greater than 4"]
+    lastName: {
+      type: String,
+      required: true,
+      minLength: [4, "LastName should be greater than 4"],
     },
-    emailId:{
-        type:String,
-        unique:true,
-        required:true,
-        lowercase:true,
-        
-        validate(value){
-            if(!validator.isEmail(value)){
-                throw new Error("Enter valid emailId");
-                
-            }
+    emailId: {
+      type: String,
+      unique: true,
+      required: true,
+      lowercase: true,
+
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Enter valid emailId");
         }
+      },
+    },
+    userName: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    following: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
 
-    },
-    userName:{
-        type:String,
-        required:true,
-       
-    },
-    password:{
-        type:String,
-        required:true,
-       
-    },
-    following:{
-        type:Array, // store the all ids of those people , i follow
-        default:[]
-    },
-    followers:{
-        type:Array,  // store the all ids of those users who follow me 
-        default:[]
-    },
-    bookmarks:{
-        type:Array,   //to store of all userid who save this tweet 
-       default:[]  
+    followers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
 
+    bookmarks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tweet",
+      },
+    ],
+
+    bio: {
+      type: String,
+      default: "Hey there! I'm new here",
     },
-    bio:{
-        type:String,
-        default:"Hey there! I'm new here"
+    profilePic: {
+      url: String,
+      publicId: String,
     },
-    profilePic:{
-        type:String,
-        default :""
+    backGroundImage: {
+      url: String,
+      publicId: String,
     },
-    backGroundImage:{
-        type:String,
-        default:""
+    otpVerified: {
+      type: Boolean,
+      Default: false,
     },
-    otpVerified:{
-        type:String,
-       Default:false
+    expiryOtp: {
+      type: Date,
     },
-    expiryOtp:{
-     type:Date
-    },
-    verificationCode:String
-},
-{
-    timestamps:true
-}
-)
- const User=mongoose.model("User",userSchema);  // User id model   
- export default User;
+    verificationCode: String,
+  },
+  {
+    timestamps: true,
+  },
+);
+const User = mongoose.model("User", userSchema); // User id model
+export default User;

@@ -1,20 +1,41 @@
+// COUDINARY_api_SECRET;
+
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
-import { config } from "dotenv";
-config();
-const uploadCloudinary = async (filepath) => {
-  cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.COUDINARY_api_SECRET,
-  });
+import dotenv from "dotenv";
+dotenv.config();
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.CLOUDINARY_api_SECRET,
+});
+
+/*  (image OR video) */
+const uploadCloudinary = async (filepath, type = "image") => {
   try {
-    const uploadtResult = await cloudinary.uploader.upload(filepath);
-    fs.unlinkSync(filepath); // dlete file from local disk
-    return uploadtResult.secure_url; // cloudinary return secure file link
-  } catch (error) {
+    console.log("Uploading file:", filepath);
+    console.log("Type:", type);
+    const normalizedPath = filepath.replace(/\\/g, "/");
+    const result = await cloudinary.uploader.upload(normalizedPath, {
+      resource_type: type, // "image" | "video"
+      folder: type === "video" ? "tweets/videos" : "tweets/images",
+    });
+
     fs.unlinkSync(filepath);
-    return resizeBy.status(400).json({ message: "cloudinary error" });
+
+    return {
+      url: result.secure_url,
+      publicId: result.public_id,
+      duration: result.duration, // only for video
+      format: result.format,
+    };
+  } catch (error) {
+    //  cleanup even on failure
+    console.error("🔥 REAL CLOUDINARY ERROR:", error);
+    if (fs.existsSync(filepath)) {
+      fs.unlinkSync(filepath);
+    }
+    throw new Error("Cloudinary upload failed");
   }
 };
 

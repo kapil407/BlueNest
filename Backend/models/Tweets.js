@@ -1,14 +1,16 @@
 import mongoose from "mongoose";
-
+import User from "./User.js";
 const tweetSchema = new mongoose.Schema(
   {
-    likes: {
-      type: Array, //to store likes and return the length of array
-      default: [],
-    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
 
     userId: {
-      type: mongoose.Schema.ObjectId, // userid of that person wwho create new tweet
+      type: mongoose.Schema.Types.ObjectId, // userid of that person wwho create new tweet
       ref: "User", // refer the model of that person
     },
     userDetails: {
@@ -17,20 +19,21 @@ const tweetSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      maxLength: [120, "not more than 120"],
+      maxLength: [400, "not more than 120"],
     },
     image: {
-      type: String,
-      default: "",
+      url: String,
+      publicId: String,
     },
-   videos:{
-      type:String,
-      default:""
+    video: {
+      url: String,
+      publicId: String,
+      duration: Number,
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 const Tweet = mongoose.model("Tweet", tweetSchema); // tweet model
 export default Tweet;

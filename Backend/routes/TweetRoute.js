@@ -1,27 +1,29 @@
-import isAuthentication from '../Middleware/Authentication.js'
+import isAuthentication from "../Middleware/Authentication.js";
 import express from "express";
-import upload from '../Middleware/multer.js';
+import upload from "../Middleware/multer.js";
 
 import { createTweetController } from "../Controller/TweetController.js";
-import {deleteTweetController} from '../Controller/TweetController.js'
+import { deleteTweetController } from "../Controller/TweetController.js";
 import { likeOrDisLikeController } from "../Controller/TweetController.js";
 import { getAllTweetsController } from "../Controller/TweetController.js";
-import {getfollowTweetsController} from '../Controller/TweetController.js'
+import { getfollowTweetsController } from "../Controller/TweetController.js";
 
-const router=express.Router();
+const router = express.Router();
 
+router.post(
+  "/createTweet",
+  upload.single("media"),
+  isAuthentication,
+  createTweetController,
+);
 
+router.delete("/deleteTweet/:id", isAuthentication, deleteTweetController);
+router.put(
+  "/tweetLikeOrDisLike/:id",
+  isAuthentication,
+  likeOrDisLikeController,
+);
+router.get("/allTweets", isAuthentication, getAllTweetsController);
+router.get("/followTweets/:id", getfollowTweetsController);
 
-
-
-router.post("/createTweet", upload.single("image"),isAuthentication, createTweetController);
-
-
-
-router.delete('/deleteTweet/:id',isAuthentication,deleteTweetController);
-router.put('/tweetLikeOrDisLike/:id',isAuthentication,likeOrDisLikeController);
-router.get('/allTweets',isAuthentication,getAllTweetsController);
-router.get('/followTweets/:id',getfollowTweetsController)
-
-
-export  default router;
+export default router;
