@@ -45,7 +45,8 @@ Responsive, elegant design with Tailwind CSS
 <img width="1918" height="863" alt="Screenshot 2025-10-28 170324" src="https://github.com/user-attachments/assets/fab70205-b99c-48b1-8d0f-c4c6fcd2c23a" />
 <img width="1887" height="844" alt="Screenshot 2025-10-28 141533" src="https://github.com/user-attachments/assets/8947866e-3dca-49d4-a2b6-4892f7b2e9aa" />
 <img width="1872" height="859" alt="Screenshot 2025-10-28 141355" src="https://github.com/user-attachments/assets/cc41cfd3-a533-4ff1-ae9a-70179e04871f" />
-<img width="1920" height="1020" alt="Screenshot 2026-01-29 223939" src="https://github.com/user-attachments/assets/73484af4-3d11-41b2-9da8-bc51f497a30c" />
+<img width="1914" height="870" alt="Screenshot 2026-01-29 225552" src="https://github.com/user-attachments/assets/4f7315b8-1edc-48f4-85d1-02ee30dce66c" />
+
 
 <img width="1919" height="865" alt="Screenshot 2025-10-28 171626" src="https://github.com/user-attachments/assets/5e66fd70-54eb-4b2b-84ed-41c45f9aee5c" />
 
