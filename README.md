@@ -34,6 +34,7 @@ Designed a responsive Tailwind CSS UI
 Responsive, elegant design with Tailwind CSS
 
 
+<img width="1911" height="864" alt="Screenshot 2026-01-29 230625" src="https://github.com/user-attachments/assets/3077493f-5c3d-4cb2-ab04-bd2bdade1a4b" />
 
 
 <video src="https://github.com/user-attachments/assets/3283842a-0510-43f3-aadf-4a1ab491b3d3
