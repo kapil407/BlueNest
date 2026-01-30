@@ -56,7 +56,8 @@ Responsive, elegant design with Tailwind CSS
 
 <img width="1917" height="869" alt="Screenshot 2025-10-28 121014" src="https://github.com/user-attachments/assets/945323bd-c16c-437d-b16f-c128d66151d0" />
 <img width="1918" height="863" alt="Screenshot 2025-10-28 170324" src="https://github.com/user-attachments/assets/fab70205-b99c-48b1-8d0f-c4c6fcd2c23a" />
-<img width="1887" height="844" alt="Screenshot 2025-10-28 141533" src="https://github.com/user-attachments/assets/8947866e-3dca-49d4-a2b6-4892f7b2e9aa" />
+<img width="1902" height="861" alt="Screenshot 2026-01-30 225658" src="https://github.com/user-attachments/assets/a6f5b9f6-bb5d-4f17-95db-fa39bae61f9e" />
+
 <video src="https://github.com/user-attachments/assets/e6e7158e-5ef9-4f6e-81e5-2ccdb4ef7066
 "/>
 
@@ -69,7 +70,7 @@ Responsive, elegant design with Tailwind CSS
 
 
 
-<img width="1919" height="865" alt="Screenshot 2025-10-28 171626" src="https://github.com/user-attachments/assets/5e66fd70-54eb-4b2b-84ed-41c45f9aee5c" />
+
 
 
 
