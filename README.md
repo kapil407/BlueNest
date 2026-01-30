@@ -40,8 +40,12 @@ Responsive, elegant design with Tailwind CSS
 
 
 
-<video src="https://github.com/user-attachments/assets/3283842a-0510-43f3-aadf-4a1ab491b3d3
+<video src="https://github.com/user-attachments/assets/1abcd5f4-74c5-433d-8883-aaab6829adc7
 "/>
+
+
+
+
 
 
 
