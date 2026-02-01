@@ -2,13 +2,13 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-/* ✅ Ensure upload folder exists */
+/*  Ensure upload folder exists */
 const uploadDir = "./public";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-/* ✅ Disk storage */
+/* Disk storage */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadDir);
@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
   },
 });
 
-/* ✅ File filter (image OR video only) */
+/* File filter (image OR video only) */
 const fileFilter = (req, file, cb) => {
   const allowedMimeTypes = [
     "image/jpeg",
@@ -42,7 +42,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-/* ✅ Multer instance */
+/* Multer instance */
 const upload = multer({
   storage,
   fileFilter,
