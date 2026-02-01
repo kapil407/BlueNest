@@ -20,25 +20,25 @@ const Body = () => {
       children: [
         {
           path: "/",
-          element: <Feed/>,
+          element: <Feed />,
         },
         {
           path: "/profile/:id",
           element: <Profile />,
         },
-       
+
         {
           path: "/EditeProfile",
           element: <EditeProfile />,
         },
-      
+
         {
           path: "/Message/:targetUserId",
           element: <Message />,
         },
         {
           path: "/bookmarks/:id",
-          element: <Bookmarks/>,
+          element: <Bookmarks />,
         },
       ],
     },
@@ -47,13 +47,13 @@ const Body = () => {
       element: <Signup />,
     },
     {
-      path:"/login",
-      element:<Login/>
+      path: "/login",
+      element: <Login />,
     },
     {
-      path:"/otpVerify",
-      element:<OtpVerify/>
-    }
+      path: "/otpVerify",
+      element: <OtpVerify />,
+    },
   ]);
   return (
     <>

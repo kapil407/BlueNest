@@ -5,10 +5,12 @@ import { USER_API_END_POINT } from "../Utils/constant.js";
 import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../redux/userSlice.js";
+import store from "../redux/store.js";
 
 const Signup = () => {
+  const theme = useSelector((store) => store.theme.theme);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
@@ -31,7 +33,7 @@ const Signup = () => {
             "Content-Type": "application/json",
           },
           withCredentials: true,
-        }
+        },
       );
       // console.log("sign", res);
       if (res.request.status) {
@@ -68,10 +70,10 @@ const Signup = () => {
             />
           </div>
           <div
-            className="  w-[50%] flex flex-col items-center justify-center pb-6 
+            className={` w-[50%] flex flex-col items-center justify-center pb-6 
           bg-white/10 backdrop-blur-md backdrop-saturate-150 
           rounded-2xl shadow-xl border border-white/50 
-             p-6 text-black "
+             p-6  ${theme == "light" ? "text-black" : "text-gray-400"} `}
           >
             <h1 className="font-bold text-2xl mt-6 mb-4">Register</h1>
 

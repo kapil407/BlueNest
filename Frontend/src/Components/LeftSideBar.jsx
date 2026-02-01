@@ -16,11 +16,13 @@ import { getMyProfile, getUser, getOtherUsers } from "../redux/userSlice.js";
 import { useDispatch } from "react-redux";
 import { getMyTweets } from "../redux/tweetSlice.js";
 import { Message } from "./Message.jsx";
+import ThemeToggle from "./Theme.jsx";
 const LeftSideBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.user); // user is loggedInUser
   const { tweet } = useSelector((store) => store.tweet);
+  const theme = useSelector((store) => store.theme.theme);
 
   const logoutHandler = async () => {
     try {
@@ -54,7 +56,7 @@ const LeftSideBar = () => {
   const SelecetedPage = "Selected";
   return (
     <>
-      <div className="w-[10%] relative">
+      <div className="w-[10%] relative h-screen ">
         <Link
           to={"/"}
           className="hover:bg-gray-300 hover:cursor-pointer rounded-full w-16 h-16 flex items-center justify-center transition delay-75 ease-in mt-2 mb-2 border border-gray-400 "
@@ -65,13 +67,13 @@ const LeftSideBar = () => {
             alt="logo"
           />
         </Link>
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-between mr-4">
           <Link
             to="/"
             className={
               selectedMenu === 0
-                ? `${SelecetedPage} flex items-center justify-between font-bold text-2xl w-32  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : " flex items-center justify-between font-bold text-2xl w-32  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300"
+                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-between font-bold text-2xl w-32  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-between font-bold text-2xl w-32  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
             }
             onClick={() => {
               clickHandler(0);
@@ -86,8 +88,8 @@ const LeftSideBar = () => {
             to={`/profile/${user?._id}`}
             className={
               selectedMenu === 1
-                ? `${SelecetedPage} flex items-center justify-between font-bold text-2xl w-35  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : " flex items-center justify-between font-bold text-2xl w-35  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300"
+                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-between font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-between font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
             }
             onClick={() => {
               clickHandler(1);
@@ -100,8 +102,8 @@ const LeftSideBar = () => {
             to={`/bookmarks/${user?._id}`}
             className={
               selectedMenu === 2
-                ? `${SelecetedPage} flex items-center justify-between font-bold text-2xl w-45  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : " flex items-center justify-between font-bold text-2xl w-48  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300"
+                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-between font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-between font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
             }
             onClick={() => {
               clickHandler(2);
@@ -110,11 +112,12 @@ const LeftSideBar = () => {
             <PiBookmarkSimple size={30} />
             <h1>Bookmarks</h1>
           </Link>
+
           <div
             className={
               selectedMenu === 3
-                ? `${SelecetedPage} flex items-center justify-between font-bold text-2xl w-35  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : " flex items-center justify-between font-bold text-2xl w-35  mt-4 py-2 px-3 hover:bg-gray-200 hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300"
+                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-between font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-between font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
             }
             onClick={() => {
               clickHandlers(3);
