@@ -13,8 +13,8 @@ cloudinary.config({
 /*  (image OR video) */
 const uploadCloudinary = async (filepath, type = "image") => {
   try {
-    console.log("Uploading file:", filepath);
-    console.log("Type:", type);
+    // console.log("Uploading file:", filepath);
+    // console.log("Type:", type);
     const normalizedPath = filepath.replace(/\\/g, "/");
     const result = await cloudinary.uploader.upload(normalizedPath, {
       resource_type: type, // "image" | "video"
@@ -31,7 +31,7 @@ const uploadCloudinary = async (filepath, type = "image") => {
     };
   } catch (error) {
     //  cleanup even on failure
-    console.error("🔥 REAL CLOUDINARY ERROR:", error);
+    console.error(" REAL CLOUDINARY ERROR:", error);
     if (fs.existsSync(filepath)) {
       fs.unlinkSync(filepath);
     }
