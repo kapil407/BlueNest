@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import Avatar from "react-avatar";
 import { Link, useParams } from "react-router-dom";
@@ -8,6 +8,9 @@ import { getOtherUsers } from "../redux/userSlice";
 import toast from "react-hot-toast";
 
 function RightSideBar({ otherUsers }) {
+  const theme = useSelector((store) => store.theme.theme);
+  // console.log("right side", theme);
+
   const { profile } = useSelector((store) => store.user);
   const image = profile?.profilePic;
   let array;
@@ -35,9 +38,11 @@ function RightSideBar({ otherUsers }) {
 
   return (
     <>
-      <div className="w-[22%] mt-1 h-auto ">
+      <div className="w-[18%] mt-1  min-w-[250px] h-screen">
         <div>
-          <div className="bg-gray-100 flex p-3 rounded-full  border-1 border-gray-300">
+          <div
+            className={` flex p-3 rounded-full  border-1  ${theme == "light" ? "bg-gray-100 border-gray-300 " : "bg-black border-gray-400 "}`}
+          >
             <IoSearch size={25} />
             <input
               type="text"
@@ -47,10 +52,12 @@ function RightSideBar({ otherUsers }) {
                 if (e.key === "Enter") searchHandler(e);
               }}
               placeholder="Search"
-              className="ml-2 outline-none "
+              className={`ml-2 outline-none ${theme == "light" ? "text-black placeholder-gray-400" : "text-white placeholder-gray-500"} `}
             />
           </div>
-          <div className="bg-gray-100 mt-3 rounded-2xl p-1.5 border border-gray-300">
+          <div
+            className={` mt-3 rounded-2xl p-1.5 border border-gray-300 ${theme == "light" ? "bg-gray-100" : "bg-black"}`}
+          >
             <h1 className="font-bold text-lg mb-2 mt-2 mr-1 text-center">
               Who to follow
             </h1>
@@ -60,7 +67,9 @@ function RightSideBar({ otherUsers }) {
                 array?.map((otherUser) => {
                   return (
                     <>
-                      <div className="flex justify-between border border-gray-200 mt-1.5 px-1 bg-gray-200 rounded items-center">
+                      <div
+                        className={`flex justify-between  mt-1.5 px-1 rounded-lg items-center ${theme == "light" ? "bg-gray-100 border border-gray-200 " : "bg-black border border-gray-100 "}`}
+                      >
                         <div
                           key={otherUser?._id}
                           className="ml-2 my-2 flex justify-center items-center"
@@ -92,7 +101,9 @@ function RightSideBar({ otherUsers }) {
                           className=" my-2"
                         >
                           <div className="my-2 ">
-                            <button className="px-4 py-1.5 bg-black text-white rounded-full cursor-pointer">
+                            <button
+                              className={`px-4 py-1.5  rounded-full cursor-pointer ${theme == "light" ? "bg-black text-white" : "bg-gray-400 text-white"}`}
+                            >
                               Profile
                             </button>
                           </div>

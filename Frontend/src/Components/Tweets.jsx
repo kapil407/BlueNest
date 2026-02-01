@@ -92,7 +92,7 @@ const Tweets = ({ tweet }) => {
           <div>
             <div className="ml-1 flex  items-center">
               <div className="">
-                <div className="flex">
+                <div className="flex ml-6">
                   <Link to={`profile/${tweet?.userId}`} className="m-1  ">
                     {!image?.url ? (
                       <Avatar
@@ -133,8 +133,8 @@ const Tweets = ({ tweet }) => {
                         preload="metadata"
                         className={
                           tweet?.description
-                            ? " rounded object-cover w-238 h-140 "
-                            : " rounded object-cover w-238 h-140 mt-12"
+                            ? " rounded object-cover w-251 h-140 "
+                            : " rounded object-cover w-251 h-140 mt-12"
                         }
                         playsInline
                       />
@@ -145,8 +145,8 @@ const Tweets = ({ tweet }) => {
                           alt="image"
                           className={
                             tweet?.description
-                              ? " rounded object-cover w-238 h-140 "
-                              : " rounded object-cover w-238 h-140 mt-12"
+                              ? " rounded object-cover w-251 h-140 "
+                              : " rounded object-cover w-251 h-140 mt-12"
                           }
                         />
                       </>

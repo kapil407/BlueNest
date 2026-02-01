@@ -8,7 +8,9 @@ import { toast } from "react-hot-toast";
 import { getRefresh, getIsActive } from "../redux/tweetSlice.js";
 import { FaImage } from "react-icons/fa";
 import ClipLoader from "react-spinners/ClipLoader";
+
 const CreatePost = () => {
+  const theme = useSelector((store) => store.theme);
   const { user, profile } = useSelector((store) => store.user);
   const { isActive } = useSelector((store) => store.tweet);
   const [description, setDescription] = useState("");
@@ -119,9 +121,9 @@ const CreatePost = () => {
             <input
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="text-lg ml-4 mt-1 outline-none border-none w-full"
               type="text"
               placeholder="What's happening?"
+              className={`text-lg ml-4 mt-1 outline-none border-none w-full ${theme == "light" ? "placeholder-gray-400" : "placeholder-gray-500"}`}
             />
           </div>
         </div>

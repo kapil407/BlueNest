@@ -4,11 +4,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { USER_API_END_POINT } from "../Utils/constant";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../redux/userSlice";
 
 function Login() {
   const navigate = useNavigate();
+  const theme = useSelector((store) => store.theme.theme);
   const dispatch = useDispatch();
 
   const [emailId, setEmailId] = useState("");
@@ -26,7 +27,7 @@ function Login() {
             "Content-Type": "application/json",
           },
           withCredentials: true,
-        }
+        },
       );
       // console.log("login->", res);
       dispatch(getUser(res?.data?.user));
@@ -61,10 +62,10 @@ function Login() {
             />
           </div>
           <div
-            className="  w-[50%] flex flex-col items-center justify-center pb-6 
+            className={`  w-[50%] flex flex-col items-center justify-center pb-6 
           bg-white/10 backdrop-blur-md backdrop-saturate-150 
           rounded-2xl shadow-xl border border-white/50 
-             p-6 text-black "
+             p-6  ${theme == "light" ? "text-black" : "text-gray-400"} `}
           >
             <h1 className="font-bold text-2xl mt-6 mb-4">Login</h1>
 

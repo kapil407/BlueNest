@@ -7,17 +7,17 @@ import { Provider } from "react-redux";
 import store from "./redux/store.js";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
-
+import { BrowserRouter } from "react-router-dom";
 let persistor = persistStore(store);
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
   // wrap the whole app to provide data from main bhandar(strore)
+
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <App className="bg-black" />
+      <App />
     </PersistGate>
   </Provider>,
-
   // </StrictMode>,
 );

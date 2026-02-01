@@ -4,8 +4,10 @@ import { USER_API_END_POINT } from "../Utils/constant.js";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import ThemeToggle from "./Theme.jsx";
 
 function OtpVerify() {
+  const theme = useSelector((store) => store.theme.theme);
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(120);
   const { user } = useSelector((store) => store.user);
@@ -31,7 +33,7 @@ function OtpVerify() {
       const res = await axios.post(
         `${USER_API_END_POINT}/verifyOtp`,
         { email, otp },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       // console.log("verify otp", res);
@@ -49,7 +51,7 @@ function OtpVerify() {
       const res = await axios.post(
         `${USER_API_END_POINT}/sendOtp`,
         { email },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       // console.log("resend otp", res);
       setTimer(120);
@@ -62,20 +64,18 @@ function OtpVerify() {
 
   return (
     <div
-      className="w-screen h-screen flex flex-col justify-center items-center"
-      style={{
-        boxShadow: "17px 7px 112px 17px rgba(0,0,0,0.63)",
-        WebkitBoxShadow: "17px 7px 112px 17px rgba(0,0,0,0.63)",
-        MozBoxShadow: "17px 7px 112px 17px rgba(0,0,0,0.63)",
-      }}
+      className={`w-screen h-screen flex flex-col justify-center items-center ${theme == "light" ? " bg-gray-200" : " text-gray-600"}`}
     >
+      <ThemeToggle />
       <h1 className="mb-4 font-bold text-lg">Verify OTP</h1>
-      <div className="bg-gray-200 rounded-xl h-[40%] w-[40%] flex flex-col justify-center items-center shadow-lg hover:border hover:border-gray-400">
+      <div
+        className={` rounded-xl h-[40%] w-[40%] flex flex-col justify-center items-center shadow-lg border border-gray-400 ${theme == "light" ? "text-black" : "bg-black text-gray-600"}`}
+      >
         <div className="border w-[90%] p-2 rounded">
           <input
             type="number"
-            className="outline-none border-none w-full"
             placeholder="Enter OTP"
+            className={`outline-none border-none w-full ${theme == "light" ? "placeholder-black" : "placeholder-gray-600"}`}
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
           />
@@ -92,7 +92,7 @@ function OtpVerify() {
           <div
             className={`border p-2 rounded cursor-pointer ${
               timer <= 0
-                ? "bg-gray-400 cursor-not-allowed"
+                ? `" cursor-not-allowed ${theme == "light" ? "bg-gray-400" : "bg-gray-600 text-gray-400"}`
                 : "hover:bg-gray-300"
             }`}
             onClick={EmailverifyHandler}
@@ -100,7 +100,7 @@ function OtpVerify() {
             Verify OTP
           </div>
           <div
-            className="border p-2 rounded cursor-pointer hover:bg-gray-300"
+            className={`border p-2 rounded cursor-pointer  ${theme == "light" ? "hover:bg-gray-300" : "hover:bg-gray-600 text-gray-400"}`}
             onClick={resendOtpHandler}
           >
             Resend OTP

@@ -10,8 +10,10 @@ import { useRef } from "react";
 
 import useSocket from "../hooks/useSocket.js";
 import { formatMessageTime } from "../Utils/setTime.js";
+import store from "../redux/store.js";
 
 export const Message = () => {
+  const theme = useSelector((store) => store.theme.theme);
   useGetMessages();
   const socket = useSocket();
 
@@ -99,15 +101,17 @@ export const Message = () => {
   }
 
   return (
-    <div className="w-[40%] mt-1 border-l border-r border-gray-300 rounded h-screen fixed mx-75">
+    <div className="w-[65%] mt-1 border-l border-r border-gray-300 rounded h-screen fixed mx-[12%]">
       {/* Header */}
-      <div className="border p-3 rounded flex  items-center bg-gray-200 border-gray-400">
+      <div
+        className={`border p-3 rounded flex  items-center  border-gray-400 ${theme == "light" ? "bg-gray-200" : "bg-black"}`}
+      >
         <Link to="/">
           {" "}
           <IoMdArrowRoundBack size={22} className="cursor-pointer" />
         </Link>
         <img
-          src={targetUser?.profilePic}
+          src={targetUser?.profilePic?.url}
           alt=""
           className="w-14 h-14 rounded-full ml-2 object-cover"
         />
@@ -127,7 +131,9 @@ export const Message = () => {
                   msg?.senderId === userId ? "text-right" : "text-left"
                 }`}
               >
-                <div className="text-center inline-block max-w-[70%] mr-4 mt-4 bg-gray-200 px-3 py-1 rounded-xl break-words whitespace-pre-wrap overflow-hidden l">
+                <div
+                  className={`text-center inline-block max-w-[70%] mr-4 mt-4  px-3 py-1 rounded-xl break-words whitespace-pre-wrap overflow-hidden ${theme == "light" ? "bg-gray-200" : "bg-gray-600"}`}
+                >
                   <div>{msg?.message}</div>
                   <span className="text-[10px] font-sm">
                     {formatMessageTime(msg.createdAt)}
@@ -140,7 +146,9 @@ export const Message = () => {
       </div>
 
       {/* Input Box */}
-      <div className="border rounded border-gray-400 h-[10%] p-2 items-center bg-gray-200 text-center flex justify-between">
+      <div
+        className={` border-b border-t rounded border-gray-400 h-[14%] p-2 items-center text-center flex justify-between ${theme == "light" ? "bg-gray-200" : "bg-black"}`}
+      >
         <input
           type="text"
           value={Message}
@@ -150,7 +158,7 @@ export const Message = () => {
         />
         <button
           onClick={() => sendmessages()}
-          className="mr-2 border border-gray-400 p-1 w-18 h-12 rounded   bg-gray-200 hover:bg-gray-300 cursor-pointer"
+          className={`mr-2 border border-gray-400 p-1 w-28 h-12 rounded     cursor-pointer ${theme == "light" ? "bg-gray-200 hover:bg-gray-300" : "bg-black hover:bg-gray-600"}`}
         >
           send
         </button>

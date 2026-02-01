@@ -23,6 +23,7 @@ import { Navigate } from "react-router-dom";
 
 function Profile() {
   const [loading, setLoading] = useState(false);
+  const theme = useSelector((store) => store.theme.theme);
   const { id } = useParams();
   useGetProfile(id);
   const { tweet } = useSelector((store) => store?.tweet);
@@ -110,14 +111,14 @@ function Profile() {
   return (
     <>
       <div
-        className="w-[61%] mt-2 border-l border-r border-gray-200 fixed ml-50"
+        className="w-[68%] mt-1 border-l border-r border-gray-200 sticky ml-8 h-screen"
         style={{
           boxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
           WebkitBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
           MozBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
         }}
       >
-        <div className="border-b border-gray-200">
+        <div className=" border-gray-200">
           <div className="flex my-2 ml-2">
             <Link
               to="/"
@@ -126,7 +127,7 @@ function Profile() {
             >
               <IoMdArrowRoundBack
                 size={28}
-                className="rounded-full hover:bg-gray-200 "
+                className={`rounded-full   ${theme == "light" ? "hover:bg-gray-200" : "hover:bg-gray-400"}`}
               />
             </Link>
             <div className="flex flex-col ml-4">
@@ -146,11 +147,11 @@ function Profile() {
               <img
                 src={`${profile?.backGroundImage?.url}?v=${profile?.updatedAt}`}
                 alt="backcoverImage"
-                className="h-100 w-255 object-cover"
+                className="h-100 w-full object-cover"
               />
             )}
-            {profile?._id === user?._id ? (
-              <div className="flex justify-between flex-col">
+            {profile?._id === user?._id && (
+              <div className="flex items-center gap-5 justify-end mt-2 mr-4">
                 <input
                   id="backCover"
                   className="hidden"
@@ -159,12 +160,12 @@ function Profile() {
                   onChange={(e) => setimage(e.target.files[0])}
                 />
                 <label htmlFor="backCover">
-                  <FaImage className="ml-232 w-22 cursor-pointer text-blue-600 size-10" />
+                  <FaImage className=" cursor-pointer text-blue-600 size-13 mt-1" />
                 </label>
                 <button
                   onClick={changeBackgroundImage}
                   disabled={!image || loading}
-                  className={`w-22 rounded p-2 h-10 ml-232 mt-5 
+                  className={` rounded p-1 h-10  mt-2 px-2
                   ${
                     !image || loading
                       ? "bg-gray-400 cursor-not-allowed text-black"
@@ -181,8 +182,6 @@ function Profile() {
                   )}
                 </button>
               </div>
-            ) : (
-              ""
             )}
           </div>
           <div className="cursor-pointer absolute border-4 border-black top-102 translate-x-2/10 rounded-full">
@@ -205,7 +204,7 @@ function Profile() {
             {profile?._id === user?._id ? (
               <>
                 <Link to={"/EditeProfile"}>
-                  <button className="bg-blue-500 text-white px-4 py-2 mr-2 rounded-3xl cursor-pointer">
+                  <button className="bg-blue-500 text-white px-9 py-2 mr-2 rounded-3xl cursor-pointer">
                     Edit Profile
                   </button>
                 </Link>
@@ -214,7 +213,7 @@ function Profile() {
               <>
                 <button
                   onClick={followAndUnfollowHandler}
-                  className="bg-black text-white px-4 py-2 mr-2 rounded-3xl  cursor-pointer"
+                  className={` px-4 py-2 mr-2 rounded-3xl  cursor-pointer ${theme == "light" ? "bg-black text-white" : "bg-gray-400 text-black"}`}
                 >
                   {user?.following?.includes(id.toString())
                     ? "following"
