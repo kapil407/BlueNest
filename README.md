@@ -5,7 +5,7 @@ It enables users to authenticate securely, share posts, and engage in real-time 
 The app provides a seamless and responsive user experience with Tailwind CSS, 
 while Redux Toolkit and Socket.IO ensure smooth state management and instant communication.
 
-🚀 Features
+🚀 Features --
 
 🚀 Lazy Loading
 
@@ -16,6 +16,7 @@ This reduces the initial bundle size, speeds up the first render, and ensures ef
 A spinner-based fallback loader is displayed during component loading to maintain a smooth and responsive user experience.
 
 🔐 User Authentication
+
 Secure signup with OTP verification
 JWT-based authentication for login and session handling
 📝 Create & Manage Posts
