@@ -15,7 +15,7 @@ import { toast } from "react-hot-toast";
 import { getMyProfile, getUser, getOtherUsers } from "../redux/userSlice.js";
 import { useDispatch } from "react-redux";
 import { getMyTweets } from "../redux/tweetSlice.js";
-import { Message } from "./Message.jsx";
+import Message from "./Message.jsx";
 import ThemeToggle from "./Theme.jsx";
 const LeftSideBar = () => {
   const dispatch = useDispatch();

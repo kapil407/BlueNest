@@ -12,8 +12,7 @@ import { getRefresh } from "../redux/tweetSlice.js";
 import { useDispatch } from "react-redux";
 import { formatMessageTime } from "../Utils/setTime.js";
 import ClipLoader from "react-spinners/ClipLoader";
-
-export const Bookmarks = () => {
+const Bookmarks = () => {
   const { handleBookmark } = useBookmarks();
   const [loading, setLoading] = useState(false);
 
@@ -74,9 +73,9 @@ export const Bookmarks = () => {
         </div>
       ) : (
         <>
-          {bookmarkedTweets.map((tweets) => {
+          {bookmarkedTweets?.map((tweets) => {
             const isLiked = tweets?.likes?.includes(user?._id);
-            const isBookmarks = bookmarksIds.includes(tweets?._id);
+            const isBookmarks = bookmarksIds?.includes(tweets?._id);
             return (
               <>
                 <div
@@ -90,7 +89,7 @@ export const Bookmarks = () => {
                 >
                   <div className="flex w-[100%]">
                     <div>
-                      {!tweets.userDetails[0].profilePic ? (
+                      {!tweets?.userDetails[0]?.profilePic ? (
                         <Avatar
                           className="m-1 cursor-pointer"
                           src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
@@ -193,3 +192,4 @@ export const Bookmarks = () => {
     </div>
   );
 };
+export default Bookmarks;
