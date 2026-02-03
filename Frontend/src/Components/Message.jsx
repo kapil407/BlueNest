@@ -12,7 +12,7 @@ import useSocket from "../hooks/useSocket.js";
 import { formatMessageTime } from "../Utils/setTime.js";
 import store from "../redux/store.js";
 
-export const Message = () => {
+const Message = () => {
   const theme = useSelector((store) => store.theme.theme);
   useGetMessages();
   const socket = useSocket();
@@ -166,3 +166,4 @@ export const Message = () => {
     </div>
   );
 };
+export default Message;

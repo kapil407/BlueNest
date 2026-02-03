@@ -10,6 +10,7 @@ import { FaImage } from "react-icons/fa";
 import { getMyProfile } from "../redux/userSlice.js";
 const EditeProfile = () => {
   const { tweet } = useSelector((store) => store?.tweet);
+  const theme = useSelector((store) => store.theme.theme);
 
   const dispatch = useDispatch();
   const { profile, user } = useSelector((store) => store.user);
@@ -55,7 +56,7 @@ const EditeProfile = () => {
   return (
     <div>
       <div
-        className="flex-1 ml-[8%] mt-10  border-gray-300 justify-center items-center  rounded-2xl w-[100%] bg-gray-100"
+        className={`flex-1 ml-[8%] mt-10 border  justify-center items-center  rounded-2xl w-[100%] ${theme == "light" ? "bg-gray-100  border-gray-300" : "bg-black border-gray-600"}`}
         style={{
           boxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
           WebkitBoxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
