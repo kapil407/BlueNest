@@ -7,6 +7,14 @@ while Redux Toolkit and Socket.IO ensure smooth state management and instant com
 
 🚀 Features
 
+🚀 Lazy Loading
+
+BlueNest leverages React Lazy Loading to improve performance by loading components only
+when they are required. Using React.lazy() and Suspense, major pages such as Home, Feed, 
+Profile, Signup, Edit Profile, Messages, Bookmarks, Login, and OTP Verification are dynamically imported. 
+This reduces the initial bundle size, speeds up the first render, and ensures efficient resource utilization.
+A spinner-based fallback loader is displayed during component loading to maintain a smooth and responsive user experience.
+
 🔐 User Authentication
 Secure signup with OTP verification
 JWT-based authentication for login and session handling
