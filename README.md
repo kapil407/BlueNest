@@ -20,7 +20,7 @@ A spinner-based fallback loader is displayed during component loading to maintai
 Secure signup with OTP verification
 JWT-based authentication for login and session handling
 📝 Create & Manage Posts
-Upload and share text, images, media and can be do comments on post 
+Upload and share text, images, media and can be do comments on post ,
 Integrated Cloudinary for image and videos hosting
 💬 Real-time Chat
 One-on-one live chat using Socket.IO
