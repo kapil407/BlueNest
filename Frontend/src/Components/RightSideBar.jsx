@@ -24,7 +24,7 @@ function RightSideBar({ otherUsers }) {
     e.preventDefault();
 
     const SearchedUser = array?.find((other) =>
-      other?.firstName.toLowerCase().includes(saerchName.toLowerCase()),
+      other?.firstName.toLowerCase().includes(saerchName.toLowerCase())
     );
 
     if (SearchedUser) {
@@ -38,7 +38,7 @@ function RightSideBar({ otherUsers }) {
 
   return (
     <>
-      <div className="w-[18%] mt-1  min-w-[250px] h-screen">
+      <div className="w-[18%]   min-w-[250px] h-screen">
         <div>
           <div
             className={` flex p-3 rounded-full  border-1  ${theme == "light" ? "bg-gray-100 border-gray-300 " : "bg-black border-gray-400 "}`}
@@ -59,7 +59,7 @@ function RightSideBar({ otherUsers }) {
             className={` mt-3 rounded-2xl p-1.5 border border-gray-300 ${theme == "light" ? "bg-gray-100" : "bg-black"}`}
           >
             <h1 className="font-bold text-lg mb-2 mt-2 mr-1 text-center">
-              Who to follow
+              Who to follow 
             </h1>
 
             <div className="flex justify-between flex-col ">
@@ -102,7 +102,7 @@ function RightSideBar({ otherUsers }) {
                         >
                           <div className="my-2 ">
                             <button
-                              className={`px-4 py-1.5  rounded-full cursor-pointer ${theme == "light" ? "bg-black text-white" : "bg-gray-400 text-white"}`}
+                              className={`px-4 py-1.5  rounded-full cursor-pointer ${theme == "light" ? "bg-black text-white" : "bg-gray-600 text-white"}`}
                             >
                               Profile
                             </button>

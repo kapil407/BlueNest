@@ -59,7 +59,7 @@ const LeftSideBar = () => {
       <div className="w-[10%] relative h-screen ">
         <Link
           to={"/"}
-          className="hover:bg-gray-300 hover:cursor-pointer rounded-full w-16 h-16 flex items-center justify-center transition delay-75 ease-in mt-2 mb-2 border border-gray-400 "
+          className="hover:bg-gray-300 hover:cursor-pointer rounded-full w-16 h-16 flex items-center justify-center transition delay-75 ease-in mt-1 mb-2 border border-gray-400 "
         >
           <img
             className=" object-cover w-15 h-15  rounded-full "

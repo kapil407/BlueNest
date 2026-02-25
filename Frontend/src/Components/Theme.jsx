@@ -19,7 +19,7 @@ const ThemeToggle = () => {
     }
 
     localStorage.setItem("theme", localTheme);
-    dispatch(setTheme(localTheme)); // ✅ plain value
+    dispatch(setTheme(localTheme)); //  plain value
   }, [localTheme, dispatch]);
 
   const toggleTheme = () => {

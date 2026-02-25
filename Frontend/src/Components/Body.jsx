@@ -17,10 +17,10 @@ const OtpVerify = lazy(() => import("./OtpVerify.jsx"));
 // import Signup from "./Signup.jsx";
 
 // import EditeProfile from "./Editeprofile.jsx";
-// import { Message } from "./Message.jsx";
-// import { ChatRoom } from "./ChatRoom.jsx";
+// import  Message  from "./Message.jsx";
+// import  ChatRoom  from "./ChatRoom.jsx";
 
-// import { Bookmarks } from "./Bookmarks.jsx";
+// import Bookmarks  from "./Bookmarks.jsx";
 // import Login from "./Login.jsx";
 // import OtpVerify from "./OtpVerify.jsx";
 // import ClipLoader from "react-spinners/ClipLoader.js";

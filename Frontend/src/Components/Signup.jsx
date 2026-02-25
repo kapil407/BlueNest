@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { BiSolidShow } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom";
+// import { BiSolidShow } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import { USER_API_END_POINT } from "../Utils/constant.js";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../redux/userSlice.js";
 import store from "../redux/store.js";
@@ -25,6 +25,7 @@ const Signup = () => {
   const submittedHandler = async (e) => {
     e.preventDefault();
     try {
+      console.log("kapil->>>");
       const res = await axios.post(
         `${USER_API_END_POINT}/signUp`,
         { firstName, lastName, userName, emailId, password },
@@ -35,18 +36,19 @@ const Signup = () => {
           withCredentials: true,
         },
       );
-      // console.log("sign", res);
-      if (res.request.status) {
-        // console.log(res.data.message);
-        dispatch(getUser(res?.data?.newUser));
+      console.log("sign", res);
+      if (res.status === 200) {
+        dispatch(getUser(res.data.newUser));
         toast.success(res.data.message);
+
         if (res.data.message === "User already exists") {
           navigate("/login");
-          toast.success("Please Login");
-        } else navigate("/otpVerify");
+        } else {
+          navigate("/otpVerify");
+        }
       }
     } catch (error) {
-      toast.success(error.response.data.message);
+      toast.error(error?.response?.data?.message || "Server error");
       console.log(error);
     }
   };
@@ -64,16 +66,16 @@ const Signup = () => {
         <div className="flex justify-evenly w-[80%] items-center">
           <div>
             <img
-              className=" w-100 h-100 rounded-full border-4 border-gray-400"
-              src="logo.png"
+              className=" w-100 h-100 rounded-full border-4 border-gray-400 object-cover"
+              src={`${theme=="dark"?"logo_Dark.png":"logo.png"}`}
               alt=""
             />
           </div>
           <div
             className={` w-[50%] flex flex-col items-center justify-center pb-6 
-          bg-white/10 backdrop-blur-md backdrop-saturate-150 
+          backdrop-blur-md backdrop-saturate-150 
           rounded-2xl shadow-xl border border-white/50 
-             p-6  ${theme == "light" ? "text-black" : "text-gray-400"} `}
+             p-6  ${theme == "light" ? "text-black  bg-white/10" : "text-gray-400 bg-gray-900 "} `}
           >
             <h1 className="font-bold text-2xl mt-6 mb-4">Register</h1>
 
@@ -102,7 +104,7 @@ const Signup = () => {
                 />
 
                 <input
-                  type="text"
+                  type="email"
                   placeholder="Enter email"
                   value={emailId}
                   onChange={(e) => setEmailId(e.target.value)}

@@ -25,7 +25,7 @@ const Home = () => {
         <LeftSideBar />
         <Outlet />
         <RightSideBar otherUsers={otherUsers} />
-        {/* pass the otherUsers as props */}
+       
       </div>
     </>
   );

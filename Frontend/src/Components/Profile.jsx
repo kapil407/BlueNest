@@ -111,7 +111,7 @@ function Profile() {
   return (
     <>
       <div
-        className="w-[68%] mt-1 border-l border-r border-gray-200 sticky ml-8 h-screen"
+        className="w-[55%]  border-l border-r border-t border-gray-200 sticky ml-22 h-screen"
         style={{
           boxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
           WebkitBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
@@ -241,7 +241,7 @@ function Profile() {
             </div>
             <div className="flex ml-4 py-2 ">
               <button className="cursor-pointer   text-gray-700 font-semibold">
-                {" "}
+               
                 {profile?.following?.length} Following
               </button>
 
@@ -253,7 +253,7 @@ function Profile() {
         </div>
       </div>
     </>
-  );
+  )
 }
 
 export default Profile;

@@ -1,9 +1,9 @@
 @import "tailwindcss";
-@plugin "daisyui";
+/* @plugin "daisyui"; */
 
 /* Thin scrollbar style */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 2px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -12,7 +12,7 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 10px;
+  border-radius: 2px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {

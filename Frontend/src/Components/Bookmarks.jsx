@@ -50,7 +50,7 @@ const Bookmarks = () => {
   }, [bookmarksIds]);
 
   return (
-    <div className="w-[65%] mt-2 ml-6 ">
+    <div className="w-[55%] mt-2 ml-22 ">
       {bookmarkedTweets?.length == 0 ? (
         <div className="h-screen flex justify-center items-center">
           <div

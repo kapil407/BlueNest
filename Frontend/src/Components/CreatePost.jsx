@@ -136,12 +136,23 @@ const CreatePost = () => {
             onChange={(e) => setMedia(e.target.files[0])}
             style={{ display: "none" }}
           />
-          <label
-            htmlFor="galleryUpload"
-            className="cursor-pointer text-3xl text-blue-500 hover:text-blue-700"
-          >
-            <FaImage />
-          </label>
+          <div className="relative group inline-block">
+            <label
+              htmlFor="galleryUpload"
+              className="cursor-pointer text-3xl text-blue-500 hover:text-blue-700"
+            >
+              <FaImage />
+            </label>
+
+            <span
+              className={`absolute -top-8 left-15 -translate-x-1/2 
+                   opacity-0 group-hover:opacity-100 
+                   transition-opacity duration-200 
+                   bg-black  text-xs px-2 py-1 rounded ${theme == "light" ? "text-white" : "text-gray-400"}`}
+            >
+              Upload Image
+            </span>
+          </div>
 
           <button
             onClick={submitHandler}

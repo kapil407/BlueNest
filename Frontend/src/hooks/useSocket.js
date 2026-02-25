@@ -10,7 +10,7 @@ const useSocket = () => {
   useEffect(() => {
     if (!user?._id) return;
 
-    const newSocket = io("http://localhost:4660", {   // socket initilization 
+    const newSocket = io("http://localhost:4660", {   
       query: { userId: user._id },
       withCredentials: true,
     });

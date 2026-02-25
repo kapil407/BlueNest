@@ -6,6 +6,7 @@ import { USER_API_END_POINT } from "../Utils/constant";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../redux/userSlice";
+// import MagicBento from './MagicBento'
 
 function Login() {
   const navigate = useNavigate();
@@ -29,13 +30,14 @@ function Login() {
           withCredentials: true,
         },
       );
-      // console.log("login->", res);
+      // console.log("login->", res?.data?.user?.firstName);
+
       dispatch(getUser(res?.data?.user));
 
       if (res?.data?.success) {
         navigate("/");
 
-        toast.success(res?.data?.message);
+        toast.success(`Welcome Back ${res?.data?.user?.firstName}`);
       }
     } catch (error) {
       toast.success(error.response.data.message);
@@ -52,21 +54,28 @@ function Login() {
 
   return (
     <>
-      <div className="h-screen w-screen flex justify-center items-center ">
-        <div className="flex justify-evenly w-[80%] items-center">
+      <div
+        className={`h-screen w-screen flex flex-col justify-center items-center ${theme == "light" ? "bg-white/10" : "bg-black"} `}
+      >
+        {/* <div> */}
+          {/* <h1 className=" ">Welcome Back </h1> */}
+        {/* </div> */}
+
+        <div className="flex justify-evenly w-[90%] items-center">
           <div>
             <img
-              className=" w-100 h-100 rounded-full border-4 border-gray-400"
-              src="logo.png"
+              className=" w-100 h-100 rounded-full border-4 border-gray-400 object-cover"
+              src={`${theme == "light" ? "logo.png" : "logo_Dark.png"}`}
               alt=""
             />
           </div>
+
           <div
             className={`  w-[50%] flex flex-col items-center justify-center pb-6 
-          bg-white/10 backdrop-blur-md backdrop-saturate-150 
-          rounded-2xl shadow-xl border border-white/50 
-             p-6  ${theme == "light" ? "text-black" : "text-gray-400"} `}
+          
+             p-6  ${theme == "light" ? "text-black bg-white/10 backdrop-blur-md backdrop-saturate-150  rounded-2xl shadow-xl border border-gray-200" : "text-gray-400  bg-gray-900  backdrop-blur-md backdrop-saturate-150 rounded-2xl shadow-xl border border-gray-100 "} `}
           >
+            {console.log("theme->", theme)}
             <h1 className="font-bold text-2xl mt-6 mb-4">Login</h1>
 
             <div className=" h-[60%] w-[70%]  ">

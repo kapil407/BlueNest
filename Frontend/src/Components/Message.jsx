@@ -101,7 +101,7 @@ const Message = () => {
   }
 
   return (
-    <div className="w-[65%] mt-1 border-l border-r border-gray-300 rounded h-screen fixed mx-[12%]">
+    <div className="w-[55%]  border-l border-r  border-gray-300 rounded h-screen fixed mx-[16%]">
       {/* Header */}
       <div
         className={`border p-3 rounded flex  items-center  border-gray-400 ${theme == "light" ? "bg-gray-200" : "bg-black"}`}
@@ -147,7 +147,7 @@ const Message = () => {
 
       {/* Input Box */}
       <div
-        className={` border-b border-t rounded border-gray-400 h-[14%] p-2 items-center text-center flex justify-between ${theme == "light" ? "bg-gray-200" : "bg-black"}`}
+        className={` border-b border-t rounded border-gray-400 h-[14%]  px-2 items-center text-center flex justify-between ${theme == "light" ? "bg-gray-200" : "bg-black"}`}
       >
         <input
           type="text"

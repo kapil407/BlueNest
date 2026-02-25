@@ -12,6 +12,7 @@ import { getRefresh } from "../redux/tweetSlice";
 import { toast } from "react-hot-toast";
 import { MdOutlineDelete } from "react-icons/md";
 import { USER_API_END_POINT } from "../Utils/constant";
+import GetComment from "./ShowComments.jsx";
 import { formatMessageTime } from "../Utils/setTime.js";
 
 import { isAction } from "@reduxjs/toolkit";
@@ -19,9 +20,17 @@ import { isAction } from "@reduxjs/toolkit";
 import { getBookMarksIds } from "../redux/userSlice.js";
 
 import useBookmarks from "../hooks/useBookmarks.js";
+import { useEffect } from "react";
+import { setComment } from "../redux/commentSlice.js";
 
 const Tweets = ({ tweet }) => {
+  const [showComment, setShowComment] = useState(false);
+  const [addComment, setAddComment] = useState();
+  const [selectedId, setSelectedId] = useState(null);
+const [commentLength,setCommentLength]=useState(0);
+  
   const { profile, bookmarksIds } = useSelector((store) => store.user);
+  const {refresh}=useSelector(store=>store.tweet);
 
   const isBookmarked = bookmarksIds?.some(
     (id) => id.toString() === tweet?._id?.toString(),
@@ -85,11 +94,53 @@ const Tweets = ({ tweet }) => {
     }
   };
 
+  const HandleGetComment = (id) => {
+    setSelectedId(id);
+    setShowComment(!showComment);
+  };
+  //   useEffect(()=>{
+
+  //  },[])
+  const openBox = () => {
+    setShowComment(!showComment);
+  };
+
+      useEffect(()=>{
+          const fetchCommentLength=async()=>{
+            const res= await axios.get(`${TWEET_API_END_POINT}/${tweet?._id}`,{
+              withCredentials:true
+            });
+            console.log("res->>lenght,res",res?.data?.comments?.length);
+            setCommentLength(res?.data?.comments?.length);
+          }
+          fetchCommentLength()
+      },[tweet?._id,refresh])
+  const handleCommentSubmit = async (id) => {
+    try {
+      const res = await axios.post(
+        `${TWEET_API_END_POINT}/add/${id}`,
+        { addComment },
+        {
+          withCredentials: true,
+        },
+      );
+      console.log("res->>", res?.data?.comment?.text);
+      if (!res?.data?.comment?.text) {
+        toast.success("Write something");
+        return;
+      }
+      toast.success("Comment add successfully");
+      dispatch(getRefresh());
+      setAddComment("");
+    } catch (error) {
+      toast.success(error.response.data.message);
+    }
+  };
   return (
     <>
       <div className="border-b border-gray-200">
         <div className="w-full">
-          <div>
+          <div className="flex flex-col">
             <div className="ml-1 flex  items-center">
               <div className="">
                 <div className="flex ml-6">
@@ -133,8 +184,8 @@ const Tweets = ({ tweet }) => {
                         preload="metadata"
                         className={
                           tweet?.description
-                            ? " rounded object-cover w-251 h-140 "
-                            : " rounded object-cover w-251 h-140 mt-12"
+                            ? " rounded object-cover w-200 h-120 "
+                            : " rounded object-cover w-200 h-120 mt-12"
                         }
                         playsInline
                       />
@@ -145,8 +196,8 @@ const Tweets = ({ tweet }) => {
                           alt="image"
                           className={
                             tweet?.description
-                              ? " rounded object-cover w-251 h-140 "
-                              : " rounded object-cover w-251 h-140 mt-12"
+                              ? " rounded object-cover w-200 h-120 "
+                              : " rounded object-cover w-200 h-120 mt-12"
                           }
                         />
                       </>
@@ -157,12 +208,15 @@ const Tweets = ({ tweet }) => {
             </div>
 
             <div className="flex justify-between p-8">
-              <div className="flex   p-2 rounded-full cursor-pointer">
+              <div className="flex   p-2 rounded-full  cursor-pointer">
                 <FaRegComment
+                  onClick={() => HandleGetComment(tweet._id)}
                   size={23}
                   className=" text-gray-600 hover:text-green-600"
                 />
-                <p className="ml-2">0</p>
+                <p className="ml-2">{commentLength}</p>
+              
+                
               </div>
               <div className="flex  p-2 rounded-full cursor-pointer">
                 <Link
@@ -212,6 +266,25 @@ const Tweets = ({ tweet }) => {
                 )}
               </div>
             </div>
+              {showComment && selectedId === tweet._id && (
+                  <GetComment id={selectedId} />
+                )}
+                {showComment && (
+                  <div className=" pb-4 mt-2 px-2">
+                    <textarea
+                      value={addComment}
+                      placeholder="Write a comment..."
+                      onChange={(e) => setAddComment(e.target.value)}
+                      className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                    <button
+                      onClick={() => handleCommentSubmit(tweet._id)}
+                      className="mt-2 cursor-pointer bg-blue-500 text-white px-4 py-1 rounded-full hover:bg-blue-600"
+                    >
+                      Comment
+                    </button>
+                  </div>
+                )}
           </div>
         </div>
       </div>

@@ -2,14 +2,14 @@ import React from "react";
 import CreatePost from "./CreatePost";
 import Tweets from "./Tweets";
 import { useSelector } from "react-redux";
-import { CgLayoutGrid } from "react-icons/cg";
+
 
 const Feed = () => {
   const { tweet } = useSelector((store) => store?.tweet);
 
   return (
     <>
-      <div className="w-[68%] ml-7 flex mt-1 border border-gray-300 flex-col">
+      <div className="w-[55%] ml-7 flex  border border-gray-300 flex-col">
         <CreatePost />
 
         {tweet?.map((tweet) => (
