@@ -5,13 +5,22 @@ It enables users to authenticate securely, share posts, and engage in real-time 
 The app provides a seamless and responsive user experience with Tailwind CSS, 
 while Redux Toolkit and Socket.IO ensure smooth state management and instant communication.
 
-🚀 Features
+🚀 Features --
+
+🚀 Lazy Loading
+
+BlueNest leverages React Lazy Loading to improve performance by loading components only
+when they are required. Using React.lazy() and Suspense, major pages such as Home, Feed, 
+Profile, Signup, Edit Profile, Messages, Bookmarks, Login, and OTP Verification are dynamically imported. 
+This reduces the initial bundle size, speeds up the first render, and ensures efficient resource utilization.
+A spinner-based fallback loader is displayed during component loading to maintain a smooth and responsive user experience.
 
 🔐 User Authentication
+
 Secure signup with OTP verification
 JWT-based authentication for login and session handling
 📝 Create & Manage Posts
-Upload and share text, images, and media
+Upload and share text, images, media and can be do comments on post ,
 Integrated Cloudinary for image and videos hosting
 💬 Real-time Chat
 One-on-one live chat using Socket.IO
@@ -58,8 +67,13 @@ Responsive, elegant design with Tailwind CSS
 <img width="1918" height="863" alt="Screenshot 2025-10-28 170324" src="https://github.com/user-attachments/assets/fab70205-b99c-48b1-8d0f-c4c6fcd2c23a" />
 <img width="1902" height="861" alt="Screenshot 2026-01-30 225658" src="https://github.com/user-attachments/assets/a6f5b9f6-bb5d-4f17-95db-fa39bae61f9e" />
 
-<video src="https://github.com/user-attachments/assets/e6e7158e-5ef9-4f6e-81e5-2ccdb4ef7066
-"/>
+
+<video src="https://github.com/user-attachments/assets/5bceb634-1924-469c-84b0-bfe31f95c2ba"/>
+
+
+
+
+
 
 
 

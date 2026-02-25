@@ -8,6 +8,7 @@ import tweetRoutes from "./routes/TweetRoute.js";
 import MessageRouter from "./routes/MessageRoute.js";
 import { initSocket } from "./utils/socket.js";
 import OtpRouter from './routes/OtpRout.js'
+import commentRoute from './routes/CommentRoute.js';
 
 
 import cookieParser from "cookie-parser";
@@ -35,6 +36,7 @@ app.use("/", userRoutes);
 app.use("/", tweetRoutes);
 app.use("/", MessageRouter);
 app.use('/',OtpRouter);
+app.use('/',commentRoute);
 
 
 initSocket(server);

@@ -21,6 +21,8 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 
 const transport = nodemailer.createTransport({
   service: "gmail",
+  secure: true,
+  port: 443,
   auth: {
     user: "kapilkeer1506@gmail.com",
     pass: "kvkpdylbtubmaqgf",
@@ -55,7 +57,7 @@ export const signUpController = async (req, res) => {
       expiryOtp: ExpiryOtp,
       verificationCode: otp,
     });
-    const data = await newUser.save();
+     await newUser.save();
 
     await transport.sendMail({
       from: "kapilkeer1506@gmail.com",
