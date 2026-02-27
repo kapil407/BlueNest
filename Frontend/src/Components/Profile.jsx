@@ -200,7 +200,8 @@ function Profile() {
             )}
           </div>
 
-          <div className="text-right my-4">
+         <div className="flex ">
+           <div className="text-right my-4">
             {profile?._id === user?._id ? (
               <>
                 <Link to={"/EditeProfile"}>
@@ -231,7 +232,8 @@ function Profile() {
             )}
           </div>
 
-          <div className="m-4">
+         <div> 
+           <div className="m-4">
             <h1 className="font-bold text-xl">{profile?.firstName}</h1>
             <p className="text-sm text-gray-600">{profile?.userName}</p>
           </div>
@@ -239,7 +241,7 @@ function Profile() {
             <div className="m-6 ">
               <p>{profile?.bio}</p>
             </div>
-            <div className="flex ml-4 py-2 ">
+            <div className="flex ml-4  ">
               <button className="cursor-pointer   text-gray-700 font-semibold">
                
                 {profile?.following?.length} Following
@@ -250,6 +252,8 @@ function Profile() {
               </button>
             </div>
           </div>
+         </div>
+         </div>
         </div>
       </div>
     </>
