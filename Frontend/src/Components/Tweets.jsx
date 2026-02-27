@@ -171,7 +171,7 @@ const [commentLength,setCommentLength]=useState(0);
                   </div>
                 </div>
 
-                <div className=" w-[90%] flex justify-center items-center ml-14 ">
+                <div className=" w-[90%] flex justify-center items-center ml-12 ">
                   <div>
                     <p className="mb-2  mt-3  font-semibold  rounded ">
                       {tweet?.description}
