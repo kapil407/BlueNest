@@ -235,7 +235,7 @@ function Profile() {
             <h1 className="font-bold text-xl">{profile?.firstName}</h1>
             <p className="text-sm text-gray-600">{profile?.userName}</p>
           </div>
-          <div className="bg-black">
+          <div className={`${theme=="dark"?"bg-black":"bg-white"}`}>
             <div className="m-6 ">
               <p>{profile?.bio}</p>
             </div>
