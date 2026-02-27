@@ -184,8 +184,8 @@ const [commentLength,setCommentLength]=useState(0);
                         preload="metadata"
                         className={
                           tweet?.description
-                            ? " rounded object-cover w-200 h-120 "
-                            : " rounded object-cover w-200 h-120 mt-12"
+                            ? " rounded object-cover w-180 h-120 "
+                            : " rounded object-cover w-180 h-120 mt-12"
                         }
                         playsInline
                       />
@@ -196,8 +196,8 @@ const [commentLength,setCommentLength]=useState(0);
                           alt="image"
                           className={
                             tweet?.description
-                              ? " rounded object-cover w-200 h-120 "
-                              : " rounded object-cover w-200 h-120 mt-12"
+                              ? " rounded object-cover w-180 h-120 "
+                              : " rounded object-cover w-180 h-120 mt-12"
                           }
                         />
                       </>
