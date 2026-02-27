@@ -201,7 +201,7 @@ function Profile() {
 
           </div>
 
-         <div className="flex ">
+         <div className="flex justify-between">
           
 
          <div> 
