@@ -1,7 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
-import { connectDB } from "./config/Database.js";
+import { connectDB } from "./config/database.js";
 
 import userRoutes from "./routes/AuthRoute.js";
 import tweetRoutes from "./routes/TweetRoute.js";
@@ -15,7 +15,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 
 const app = express();
-const PORT = 4660;
+const PORT = process.env.PORT || 4660;
 
 const server = http.createServer(app);
 
