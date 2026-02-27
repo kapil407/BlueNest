@@ -111,7 +111,7 @@ function Profile() {
   return (
     <>
       <div
-        className="w-[55%]  border-l border-r border-t border-gray-200 sticky ml-22 h-screen"
+        className="w-[55%] h-screen border-l border-r border-t border-gray-200 sticky ml-22 h-screen"
         style={{
           boxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
           WebkitBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
@@ -235,7 +235,7 @@ function Profile() {
             <h1 className="font-bold text-xl">{profile?.firstName}</h1>
             <p className="text-sm text-gray-600">{profile?.userName}</p>
           </div>
-          <div>
+          <div className="bg-black">
             <div className="m-6 ">
               <p>{profile?.bio}</p>
             </div>
