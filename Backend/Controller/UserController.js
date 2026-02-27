@@ -190,6 +190,8 @@ export const LoginController = async (req, res) => {
     return res
       .cookie("token", token, {
         httpOnly: true,
+         
+  secure: true,
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       })
       .json({ message: "Login successfully", user, success: true });
