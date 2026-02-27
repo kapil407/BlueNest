@@ -27,7 +27,7 @@ const ThemeToggle = () => {
   };
 
   return (
-    <div className="fixed left-3 top-1/2 w-[8%] -translate-y-1/2 z-50 ml-8">
+    <div className="fixed left-3 top-[65%] w-[8%] -translate-y-1/2 z-50 ml-8">
       <button
         onClick={toggleTheme}
         className="p-3 rounded-xl bg-gray-200 text-black shadow-lg transition w-full"
