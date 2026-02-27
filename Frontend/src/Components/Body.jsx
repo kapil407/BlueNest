@@ -54,7 +54,7 @@ const Body = () => {
         },
 
         {
-          path: "/Editeprofile",
+          path: "/EditeProfile",
           element: (
             <Suspense fallback={<Spinner />}>
               <EditeProfile />,

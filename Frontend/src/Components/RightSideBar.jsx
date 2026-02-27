@@ -15,7 +15,7 @@ function RightSideBar({ otherUsers }) {
   const image = profile?.profilePic;
   let array;
   if (otherUsers) array = Object?.values(otherUsers);
-  // console.log("othersUser",otherUsers);
+  
   const { id } = useParams();
   const dispatch = useDispatch();
   const [saerchName, setSearchName] = useState("");
