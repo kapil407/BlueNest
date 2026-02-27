@@ -4,7 +4,7 @@ const Home = lazy(() => import("./Home.jsx"));
 const Feed = lazy(() => import("./Feed.jsx"));
 const Profile = lazy(() => import("./Profile.jsx"));
 const Signup = lazy(() => import("./Signup.jsx"));
-const EditeProfile = lazy(() => import("./EditeProfile.jsx"));
+const Editeprofile = lazy(() => import("./Editeprofile.jsx"));
 const Message = lazy(() => import("./Message.jsx"));
 // const { ChatRoom } = lazy(() => import("./ChatRoom.jsx"));
 const Bookmarks = lazy(() => import("./Bookmarks.jsx"));
@@ -54,10 +54,10 @@ const Body = () => {
         },
 
         {
-          path: "/EditeProfile",
+          path: "/Editeprofile",
           element: (
             <Suspense fallback={<Spinner />}>
-              <EditeProfile />,
+              <Editeprofile />,
             </Suspense>
           ),
         },
