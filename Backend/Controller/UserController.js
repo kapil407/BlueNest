@@ -57,7 +57,7 @@ export const signUpController = async (req, res) => {
       expiryOtp: ExpiryOtp,
       verificationCode: otp,
     });
-     await newUser.save();
+    await newUser.save();
 
     await transport.sendMail({
       from: "kapilkeer1506@gmail.com",
@@ -190,9 +190,9 @@ export const LoginController = async (req, res) => {
     return res
       .cookie("token", token, {
         httpOnly: true,
-         
-  secure: true,
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        secure: true,
+        sameSite: "None", // 👈 VERY IMPORTANT
+        maxAge: 24 * 60 * 60 * 1000,
       })
       .json({ message: "Login successfully", user, success: true });
   } catch (err) {
@@ -202,8 +202,10 @@ export const LoginController = async (req, res) => {
 
 export const LogOutController = async (req, res) => {
   try {
-    res.cookie("token", process.env.SECRET_KEY, {
-      expires: new Date(Date.now()),
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
     });
     return res.json({ message: "logout succesfully", success: true });
   } catch (err) {
