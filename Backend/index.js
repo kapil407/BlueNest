@@ -22,6 +22,9 @@ const server = http.createServer(app);
 
 app.use(express.json());
 app.use(cookieParser());
+app.get("/", (req, res) => {
+  res.send("BlueNest Backend is running 🚀");
+});
 
 const corsOption = {
   origin: "http://localhost:5173",
