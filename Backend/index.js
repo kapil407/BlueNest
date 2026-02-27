@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 });
 
 const corsOption = {
-  origin: "http://localhost:5173",
+  origin: "https://bluenest-frontend.onrender.com",
   credentials: true,
 };
 app.use(cors(corsOption));
