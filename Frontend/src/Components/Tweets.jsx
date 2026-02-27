@@ -138,7 +138,7 @@ const [commentLength,setCommentLength]=useState(0);
   };
   return (
     <>
-      <div className="border-b border-gray-200">
+      <div className="border-b border-gray-200 w-[]">
         <div className="w-full">
           <div className="flex flex-col">
             <div className="ml-1 flex  items-center">
@@ -171,7 +171,7 @@ const [commentLength,setCommentLength]=useState(0);
                   </div>
                 </div>
 
-                <div className=" w-[100%] flex justify-center items-center ml-6 ">
+                <div className=" w-[90%] flex justify-center items-center  ">
                   <div>
                     <p className="mb-2  mt-3  font-semibold  rounded ">
                       {tweet?.description}
