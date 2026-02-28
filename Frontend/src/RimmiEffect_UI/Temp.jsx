@@ -10,7 +10,7 @@ const FeedRemmi = () => {
         <div className={` 
                         shadow-[0_8px_30px_rgba(0,0,0,0.08)] 
                         border border-gray-200 
-                         transition duration-300 w-[55%] mx-auto 
+                         transition duration-300 w-[55%] ml-7
                        ${theme=="light"?"bg-white":"bg-black"}`}>
 
           {/* Upper Box */}
