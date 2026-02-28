@@ -24,7 +24,7 @@ const Home = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000); // 500ms fallback show karega
+    }, 500); // 500ms fallback show karega
 
     return () => clearTimeout(timer);
   }, []);
@@ -38,12 +38,11 @@ const Home = () => {
     </div>
 
     <Outlet />
+    <div className="flex">
+      {loading ? <RightSideRemmi /> :  <RightSideBar otherUsers={otherUsers} />}
+    </div>
 
-    <Suspense fallback={<div className="">
-      <RightSideRemmi/>
-    </div>}>
-      <RightSideBar otherUsers={otherUsers} />
-    </Suspense>
+    
   </div>
 );
 };
