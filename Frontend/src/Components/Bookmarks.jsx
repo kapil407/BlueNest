@@ -129,8 +129,8 @@ const Bookmarks = () => {
                               preload="metadata"
                               className={
                                 tweets?.description
-                                  ? " rounded object-cover w-180 h-140 "
-                                  : " rounded object-cover w-180 h-140 mt-12"
+                                  ? " rounded object-cover w-170 h-140 "
+                                  : " rounded object-cover w-170 h-140 mt-12"
                               }
                               playsInline
                             />
@@ -141,8 +141,8 @@ const Bookmarks = () => {
                                 alt="image"
                                 className={
                                   tweets?.description
-                                    ? " rounded object-cover w-180 h-140 "
-                                    : " rounded object-cover w-180 h-140 mt-12"
+                                    ? " rounded object-cover w-170 h-140 "
+                                    : " rounded object-cover w-170 h-140 mt-12"
                                 }
                               />
                             </>
