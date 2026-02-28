@@ -110,7 +110,7 @@ const LeftSideBar = () => {
             }}
           >
             <PiBookmarkSimple size={30} />
-            <h1>Bookmarks</h1>
+            <h1>Saved</h1>
           </Link>
 
           <div
