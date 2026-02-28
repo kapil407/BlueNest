@@ -48,12 +48,12 @@ const FeedRemmi = () => {
             <div className="flex justify-between items-center p-8">
 
               {/* Media Button */}
-              <div className=" cursor-pointer h-10 w-10 borderd  rounded">
+              <div className=" cursor-pointer h-10 w-10 borderd bg-gray-700  rounded">
                 
               </div>
 
               {/* Post Button */}
-              <button className="bg-gray-400 text-white  p-6 w-24 rounded-full  transition">
+              <button className="bg-gray-400 text-white mb-3  p-5 w-24 rounded-full  transition">
                
               </button>
 
