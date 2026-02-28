@@ -56,7 +56,7 @@ const LeftSideBar = () => {
   const SelecetedPage = "Selected";
   return (
     <>
-      <div className="w-[22%] relative h-screen ">
+      <div className="w-[18%] relative h-screen ">
         <Link
           to={"/"}
           className="hover:bg-gray-300 hover:cursor-pointer rounded-full w-16 h-16 flex items-center justify-center transition delay-75 ease-in mt-1 mb-2 border border-gray-400 "
