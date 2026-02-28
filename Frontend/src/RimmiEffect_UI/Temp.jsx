@@ -12,7 +12,7 @@ const FeedRemmi = () => {
        
 
         {/* Feed Container */}
-        <div className="flex flex-col w-[55%] h-screen ml-2 ">
+        <div className="flex flex-col w-[55%] h-screen ml-2 mx-auto ">
           <div
             className={` 
                         shadow-[0_8px_30px_rgba(0,0,0,0.08)] 
