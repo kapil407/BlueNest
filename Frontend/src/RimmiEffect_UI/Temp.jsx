@@ -14,7 +14,8 @@ const FeedRemmi = () => {
                        ${theme=="light"?"bg-white":"bg-black"}`}>
 
           {/* Upper Box */}
-          <div className="mb-4">
+          <div className="mb-4 border-b border-gray-200">
+            
           </div>
 
           {/* Create Post Box */}
