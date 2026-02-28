@@ -5,7 +5,7 @@ const FeedRemmi = () => {
   return (
     <>
       <div
-        className={`flex h-screen w-screen ${theme == "light" ? "bg-white" : "bg-black"}`}
+        className={`flex justify-center  h-screen w-screen ${theme == "light" ? "bg-white" : "bg-black"}`}
       >
        
 
