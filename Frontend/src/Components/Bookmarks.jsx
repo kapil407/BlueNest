@@ -50,7 +50,7 @@ const Bookmarks = () => {
   }, [bookmarksIds]);
 
   return (
-    <div className="w-[55%] ml-22 ">
+    <div className="w-[55%] mt-2 ml-22 ">
       {bookmarkedTweets?.length == 0 ? (
         <div className="h-screen flex justify-center items-center">
           <div
@@ -80,7 +80,7 @@ const Bookmarks = () => {
               <>
                 <div
                   key={tweets?._id}
-                  className="border border-gray-300 w-[100%] mt-2   rounded p-2 flex flex-col"
+                  className="border border-gray-300 w-[100%]    rounded p-2 flex flex-col"
                   style={{
                     boxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
                     WebkitBoxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
