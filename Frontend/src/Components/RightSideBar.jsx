@@ -38,7 +38,7 @@ function RightSideBar({ otherUsers }) {
 
   return (
     <>
-      <div className="w-[18%]   min-w-[250px] h-screen">
+      <div className="w-[22%]   min-w-[250px] h-screen">
         <div>
           <div
             className={` flex p-3 rounded-full  border-1  ${theme == "light" ? "bg-gray-100 border-gray-300 " : "bg-black border-gray-400 "}`}
