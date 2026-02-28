@@ -24,7 +24,7 @@ const Home = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 500); // 500ms fallback show karega
+    }, 1000); // 500ms fallback show karega
 
     return () => clearTimeout(timer);
   }, []);
