@@ -6,7 +6,7 @@ export const userSocketMap = {}; // userId => socketId
 export const initSocket = (server) => {
   io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: "https://bluenest-frontend.onrender.com",
       credentials: true,
     },
   });
