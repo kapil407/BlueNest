@@ -1,14 +1,17 @@
+import { useSelector } from "react-redux";
+
 const FeedRemmi = () => {
-  return (
+  const {theme}=useSelector(store=>store.theme);
+    return (
     <>
       <div className="w-[55%] mx-auto mt-6">
         
         {/* Feed Container */}
-        <div className="bg-white rounded-2xl 
+        <div className={` rounded-2xl 
                         shadow-[0_8px_30px_rgba(0,0,0,0.08)] 
                         border border-gray-200 
                         p-4 transition duration-300 
-                        hover:shadow-[0_10px_40px_rgba(0,0,0,0.15)]">
+                       ${theme=="light"?"bg-white":"bg-black"}`}>
 
           {/* Upper Box */}
           <div className="mb-4">
