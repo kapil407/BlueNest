@@ -24,13 +24,17 @@ const Home = () => {
   <div className="flex justify-between w-[96%] mx-auto relative">
     <ThemeToggle />
 
-    <Suspense fallback={<LeftSideRemmi/>}>
+    <Suspense fallback={<div className="w-60">
+      <LeftSideRemmi/>
+    </div>}>
       <LeftSideBar />
     </Suspense>
 
     <Outlet />
 
-    <Suspense fallback={<RightSideRemmi/>}>
+    <Suspense fallback={<div className="w-60">
+      <RightSideRemmi/>
+    </div>}>
       <RightSideBar otherUsers={otherUsers} />
     </Suspense>
   </div>
