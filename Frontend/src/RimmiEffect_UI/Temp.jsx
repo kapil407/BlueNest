@@ -19,7 +19,7 @@ const FeedRemmi = () => {
           </div>
 
           {/* Create Post Box */}
-          <div>
+          <div className="m-2">
 
             {/* Photo + Input */}
             <div className="flex gap-3 items-start">
