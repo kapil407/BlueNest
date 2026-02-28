@@ -10,6 +10,7 @@ const Message = lazy(() => import("./Message.jsx"));
 const Bookmarks = lazy(() => import("./Bookmarks.jsx"));
 const Login = lazy(() => import("./Login.jsx"));
 const OtpVerify = lazy(() => import("./OtpVerify.jsx"));
+// import FeedRemmi from '../RimmiEffect_UI/FeedRimmi.jsx';
 import FeedRemmi from "../RimmiEffect_UI/feedRimmi.jsx";
 
 // import Home from "./Home";
