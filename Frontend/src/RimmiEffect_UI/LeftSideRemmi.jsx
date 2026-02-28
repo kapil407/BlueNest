@@ -20,6 +20,9 @@ const LeftSideRemmi = () => {
           <div className={`w-35 p-6 rounded-full  ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
             {/* Home */}
           </div>
+            <div className={`w-35 p-6 rounded-full  ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
+            {/* Home */}
+          </div>
         </div>
 
   </>;
