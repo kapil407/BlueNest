@@ -28,7 +28,7 @@ const FeedRemmi = () => {
           <div className="mx-2">
 
             {/* Photo + Input */}
-            <div className="flex  items-start ">
+            <div className="flex  items-start  ">
               
               {/* Image */}
               <div className="w-[83px] h-[75px] rounded-full bg-gray-700"></div>
@@ -45,15 +45,15 @@ const FeedRemmi = () => {
             </div>
 
             {/* Media + Button */}
-            <div className="flex justify-between items-center p-8 mb-10">
+            <div className="flex justify-between items-center p-8 ">
 
               {/* Media Button */}
-              <div className=" cursor-pointer h-8 w-8 borderd bg-gray-700  rounded">
+              <div className=" cursor-pointer h-8 w-8 borderd bg-gray-700 mb-6 rounded">
                 
               </div>
 
               {/* Post Button */}
-              <button className="bg-[#1D9BF0] text-white mb-3  p-5 w-20 rounded-full  transition">
+              <button className="bg-gray-400 text-white mb-3  p-5 w-20 rounded-full mb-6 transition">
                
               </button>
 
