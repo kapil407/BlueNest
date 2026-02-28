@@ -1,4 +1,8 @@
+import { useSelector } from "react-redux";
+import store from "../redux/store";
+
 const LeftSideRemmi = () => {
+  const {theme}=useSelector(store=>store.theme);
   return <>
          <div
           className={`w-[22%] h-screen ${theme == "light" ? "bg-white" : "bg-black"}`}
