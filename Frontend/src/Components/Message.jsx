@@ -11,6 +11,8 @@ import { useRef } from "react";
 import useSocket from "../hooks/useSocket.js";
 import { formatMessageTime } from "../Utils/setTime.js";
 import store from "../redux/store.js";
+import { getRefresh } from "../redux/tweetSlice.js";
+import {refresh} from '../redux/tweetSlice.js'
 
 const Message = () => {
   const theme = useSelector((store) => store.theme.theme);
@@ -53,6 +55,7 @@ const Message = () => {
 
       // console.log("res->", res.data.newMessage);
       dispatch(setMessage([...message, res?.data?.newMessage]));
+      dispatch(getRefresh());
 
       if (socket) {
         socket.emit("sendMessage", {
@@ -90,7 +93,7 @@ const Message = () => {
     });
 
     return () => socket.off("receiveMessage");
-  }, [socket, message]);
+  }, [socket, message,refresh]);
 
   let array = [];
 
