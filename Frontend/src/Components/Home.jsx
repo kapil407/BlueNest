@@ -39,7 +39,7 @@ const Home = () => {
 
     <Outlet />
 
-    <Suspense fallback={<div className="w-60">
+    <Suspense fallback={<div className="">
       <RightSideRemmi/>
     </div>}>
       <RightSideBar otherUsers={otherUsers} />
