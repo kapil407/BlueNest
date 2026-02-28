@@ -4,9 +4,9 @@ const FeedRemmi = () => {
   const { theme } = useSelector((store) => store.theme);
   return (
     <>
-      <div
+      {/* <div
         className={`flex h-screen w-screen ${theme == "light" ? "bg-white" : "bg-black"}`}
-      >
+      > */}
        
 
         {/* <div className={`h-screen w-screen ${theme=="light"?"bg-white":"bg-black"}`}> */}
@@ -57,7 +57,7 @@ const FeedRemmi = () => {
           </div>
         </div>
        
-      </div>
+      {/* </div> */}
     </>
   );
 };
