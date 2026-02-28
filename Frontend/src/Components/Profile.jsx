@@ -208,7 +208,7 @@ function Profile() {
           
             {profile?._id === user?._id?(
               <>
-            <div className="m-6">
+            <div className="m-4">
                <h1 className="font-bold  text-xl">{profile?.firstName}</h1>
             <p className="text-sm text-gray-600">{profile?.userName}</p>
             </div>
@@ -216,7 +216,7 @@ function Profile() {
 
             ):(
               <>
-              <div className="m-6">
+              <div className="m-4">
                <h1 className="font-bold  mt-6 text-xl">{profile?.firstName}</h1>
             <p className="text-sm text-gray-600">{profile?.userName}</p>
             </div>
