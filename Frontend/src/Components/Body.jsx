@@ -33,7 +33,7 @@ const Body = () => {
       path: "/",
 
       element: (
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<FeedRemmi />}>
           <Home />
         </Suspense>
       ),
