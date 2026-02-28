@@ -72,8 +72,8 @@ const LeftSideBar = () => {
             to="/"
             className={
               selectedMenu === 0
-                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-between font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-between font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-evenly font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-evenly font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
             }
             onClick={() => {
               clickHandler(0);
@@ -88,8 +88,8 @@ const LeftSideBar = () => {
             to={`/profile/${user?._id}`}
             className={
               selectedMenu === 1
-                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-between font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-between font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-evenly font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-evenly font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
             }
             onClick={() => {
               clickHandler(1);
@@ -102,8 +102,8 @@ const LeftSideBar = () => {
             to={`/bookmarks/${user?._id}`}
             className={
               selectedMenu === 2
-                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-between font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-between font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-evenly font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-evenly font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
             }
             onClick={() => {
               clickHandler(2);
@@ -116,8 +116,8 @@ const LeftSideBar = () => {
           <div
             className={
               selectedMenu === 3
-                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-between font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-between font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-evenly font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
+                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-evenly font-bold text-2xl w-45  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
             }
             onClick={() => {
               clickHandlers(3);
