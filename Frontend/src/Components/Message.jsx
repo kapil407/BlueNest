@@ -12,10 +12,11 @@ import useSocket from "../hooks/useSocket.js";
 import { formatMessageTime } from "../Utils/setTime.js";
 import store from "../redux/store.js";
 import { getRefresh } from "../redux/tweetSlice.js";
-import {refresh} from '../redux/tweetSlice.js'
+
 
 const Message = () => {
   const theme = useSelector((store) => store.theme.theme);
+  const {refresh}=useSelector(store=>store.tweet);
   useGetMessages();
   const socket = useSocket();
 
