@@ -25,7 +25,7 @@ const FeedRemmi = () => {
           </div>
 
           {/* Create Post Box */}
-          <div className="mx-2">
+          <div className="mx-2 p-4">
 
             {/* Photo + Input */}
             <div className="flex  items-start  ">
