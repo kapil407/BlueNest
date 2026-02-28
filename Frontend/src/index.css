@@ -27,3 +27,11 @@ body {
 .Selected {
   background-color: rgb(211, 211, 211);
 }
+.initial-loader {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f172a;
+  color: white;
+}
