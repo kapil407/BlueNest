@@ -205,10 +205,27 @@ function Profile() {
           
 
          <div> 
-           <div className="m-4">
-            <h1 className="font-bold text-xl">{profile?.firstName}</h1>
+          
+            {profile?._id === user?._id?(
+              <>
+            <div className="m-6">
+               <h1 className="font-bold  text-xl">{profile?.firstName}</h1>
             <p className="text-sm text-gray-600">{profile?.userName}</p>
-          </div>
+            </div>
+              </>
+
+            ):(
+              <>
+              <div className="m-6">
+               <h1 className="font-bold  mt-6 text-xl">{profile?.firstName}</h1>
+            <p className="text-sm text-gray-600">{profile?.userName}</p>
+            </div>
+              </>
+            )
+
+            }
+           
+         
           <div className={`${theme=="dark"?"bg-black":"bg-white"}`}>
             <div className="m-6 ">
               <p>{profile?.bio}</p>
