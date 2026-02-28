@@ -9,7 +9,7 @@ const Feed = () => {
 
   return (
     <>
-      <div className="w-[60%] mr-10 flex  border border-gray-300 flex-col">
+      <div className="w-[56%] mr-10 flex  border border-gray-300 flex-col">
         <CreatePost />
 
         {tweet?.map((tweet) => (
