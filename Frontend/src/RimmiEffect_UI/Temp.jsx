@@ -4,14 +4,12 @@ const FeedRemmi = () => {
   const {theme}=useSelector(store=>store.theme);
     return (
     <>
-   <div className="flex h-screen w-screen">
-     <div className="w-[10%] h-screen">
+   <div className={`flex h-screen w-screen ${theme=="light"?"bg-white":"bg-black"}`}>
+     <div className={`w-[10%] h-screen ${theme=="light"?"bg-white":"bg-black"}`}>
       {/* leftside bar */}
     </div>
-    <div className="w-[18%] h-screen">
-      {/* rightside bar */}
-    </div>
-      <div className={`h-screen w-screen ${theme=="light"?"bg-white":"bg-black"}`}>
+    
+      {/* <div className={`h-screen w-screen ${theme=="light"?"bg-white":"bg-black"}`}> */}
         
         {/* Feed Container */}
         <div className={` 
@@ -62,8 +60,11 @@ const FeedRemmi = () => {
 
           </div>
 
-        </div>
+        {/* </div> */}
       </div>
+      <div className="w-[18%] h-screen">
+      {/* rightside bar */}
+    </div>
    </div>
     </>
   );
