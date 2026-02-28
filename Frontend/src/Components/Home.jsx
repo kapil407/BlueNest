@@ -9,6 +9,7 @@ import useOtherUsers from "../hooks/useOtherUsers.js";
 import useGetTweets from "../hooks/useGetTweets.js";
 import ThemeToggle from "./Theme.jsx";
 const Home = () => {
+   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { user, otherUsers } = useSelector((store) => store.user);
 
@@ -20,15 +21,21 @@ const Home = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 500); // 500ms fallback show karega
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
   <div className="flex justify-between w-[96%] mx-auto relative">
     <ThemeToggle />
 
-    <Suspense fallback={<div className="w-60">
-      <LeftSideRemmi/>
-    </div>}>
-      <LeftSideBar />
-    </Suspense>
+     <div className="flex">
+      {loading ? <LeftSideRemmi /> : <LeftSideBar />}
+    </div>
 
     <Outlet />
 
