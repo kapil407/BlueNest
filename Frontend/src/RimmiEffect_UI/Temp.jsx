@@ -27,7 +27,7 @@ const FeedRemmi = () => {
               <div className="flex-1">
                 <input
                   type="text"
-                  placeholder="What's happening?"
+                  placeholder=""
                   className="w-full outline-none text-lg"
                 />
               </div>
@@ -39,12 +39,12 @@ const FeedRemmi = () => {
 
               {/* Media Button */}
               <div className="text-blue-500 cursor-pointer">
-                 Media
+                
               </div>
 
               {/* Post Button */}
               <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition">
-                Post
+               
               </button>
 
             </div>
