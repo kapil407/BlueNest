@@ -34,7 +34,7 @@ const FeedRemmi = () => {
               <div className="w-[83px] h-[75px] rounded-full bg-gray-700"></div>
 
               {/* Input */}
-              <div className="flex-1 bg-gray-700 ml-4 mt-1">
+              <div className="flex-1 bg-gray-700 ml-4 mt-2">
                 <input
                   type="text"
                   placeholder=""
@@ -63,7 +63,7 @@ const FeedRemmi = () => {
 
         {/* </div> */}
       </div>
-      <div className="h-[70%] border-b border-l border-r ">
+      <div className="h-[70%] border-b border-l border-r bg-gray-700">
 
       </div>
        </div>
