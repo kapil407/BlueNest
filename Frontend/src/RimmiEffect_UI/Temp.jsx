@@ -5,7 +5,7 @@ const FeedRemmi = () => {
     return (
     <>
    <div className={`flex h-screen w-screen ${theme=="light"?"bg-white":"bg-black"}`}>
-     <div className={`w-[10%] h-screen ${theme=="light"?"bg-white":"bg-black"}`}>
+     <div className={`w-[22%] h-screen ${theme=="light"?"bg-white":"bg-black"}`}>
       {/* leftside bar */}
     </div>
     
@@ -15,7 +15,7 @@ const FeedRemmi = () => {
         <div className={` 
                         shadow-[0_8px_30px_rgba(0,0,0,0.08)] 
                         border border-gray-200 
-                         transition duration-300 w-[55%] ml-7
+                         transition duration-300 w-[55%] ml-2
                        ${theme=="light"?"bg-white":"bg-black"}`}>
 
           {/* Upper Box */}
@@ -62,7 +62,7 @@ const FeedRemmi = () => {
 
         {/* </div> */}
       </div>
-      <div className="w-[18%] h-screen">
+      <div className="w-[22%] h-screen">
       {/* rightside bar */}
     </div>
    </div>
