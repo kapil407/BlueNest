@@ -60,7 +60,7 @@ const FeedRemmi = () => {
          
           </div>
         </div>
-        <div className="w-[22%] h-screen">{/* rightside bar */}</div>
+        <div className={`w-[22%] h-screen ${theme=="light"?"bg-white":"bg-black"}`}>{/* rightside bar */}</div>
       </div>
     </>
   );
