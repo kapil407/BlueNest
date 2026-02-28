@@ -11,6 +11,18 @@ const FeedRemmi = () => {
           className={`w-[22%] h-screen ${theme == "light" ? "bg-white" : "bg-black"}`}
         >
           {/* leftside bar */}
+          <div className="w-35 p-6 bg-gray-700">
+            {/* Home */}
+          </div>
+          <div className="w-35 p-6 bg-gray-700">
+            {/* Home */}
+          </div>
+          <div className="w-35 p-6 bg-gray-700">
+            {/* Home */}
+          </div>
+          <div className="w-35 p-6 bg-gray-700">
+            {/* Home */}
+          </div>
         </div>
 
         {/* <div className={`h-screen w-screen ${theme=="light"?"bg-white":"bg-black"}`}> */}
@@ -60,7 +72,15 @@ const FeedRemmi = () => {
          
           </div>
         </div>
-        <div className={`w-[22%] h-screen ${theme=="light"?"bg-white":"bg-black"}`}>{/* rightside bar */}</div>
+        <div className={`w-[22%] h-screen ${theme=="light"?"bg-white":"bg-black"}`}>
+          {/* rightside bar */}
+          <div className="w-[18%] p-6 bg-gray-700">
+            <div className="bg-gray-700 w-[18%] h-20">
+              
+            </div>
+
+          </div>
+          </div>
       </div>
     </>
   );
