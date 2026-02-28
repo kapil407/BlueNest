@@ -45,7 +45,7 @@ const FeedRemmi = () => {
             </div>
 
             {/* Media + Button */}
-            <div className="flex justify-between items-center p-8">
+            <div className="flex justify-between items-center p-8 mb-6">
 
               {/* Media Button */}
               <div className=" cursor-pointer h-10 w-10 borderd bg-gray-700  rounded">
