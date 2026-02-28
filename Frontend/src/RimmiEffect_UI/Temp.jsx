@@ -21,7 +21,7 @@ const FeedRemmi = () => {
             className={` 
                         shadow-[0_8px_30px_rgba(0,0,0,0.08)] 
                         border border-gray-200 
-                         transition duration-300  h-[30%] 
+                         transition duration-300  h-[40%] 
                        ${theme == "light" ? "bg-white" : "bg-black"}`}
           >
             {/* Upper Box */}
