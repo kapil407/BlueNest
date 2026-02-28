@@ -10,25 +10,25 @@ const FeedRemmi = () => {
         <div className={` 
                         shadow-[0_8px_30px_rgba(0,0,0,0.08)] 
                         border border-gray-200 
-                         transition duration-300 w-[55%] ml-7
+                         transition duration-300 w-[55%] mx-auto
                        ${theme=="light"?"bg-white":"bg-black"}`}>
 
           {/* Upper Box */}
-          <div className="mb-4 border-b border-gray-200 py-6">
+          <div className="mb-4 border-b border-gray-200 py-6 bg-gray-400">
 
           </div>
 
           {/* Create Post Box */}
-          <div className="m-2">
+          <div className="mx-2">
 
             {/* Photo + Input */}
-            <div className="flex gap-3 items-start">
+            <div className="flex  items-start ">
               
               {/* Image */}
-              <div className="w-10 h-10 rounded-full bg-gray-300"></div>
+              <div className="w-[83px] h-[75px] rounded-full bg-gray-300"></div>
 
               {/* Input */}
-              <div className="flex-1">
+              <div className="flex-1 bg-gray-400 ml-4 mt-1">
                 <input
                   type="text"
                   placeholder=""
