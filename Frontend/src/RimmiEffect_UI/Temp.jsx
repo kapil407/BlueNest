@@ -4,13 +4,13 @@ const FeedRemmi = () => {
   const {theme}=useSelector(store=>store.theme);
     return (
     <>
-      <div className="w-[55%] mx-auto mt-6">
+      <div className={`h-screen w-screen ${theme=="light"?"bg-white":"bg-black"}`}>
         
         {/* Feed Container */}
         <div className={` rounded-2xl 
                         shadow-[0_8px_30px_rgba(0,0,0,0.08)] 
                         border border-gray-200 
-                        p-4 transition duration-300 
+                        p-4 transition duration-300 w-[55%] mx-auto mt-6
                        ${theme=="light"?"bg-white":"bg-black"}`}>
 
           {/* Upper Box */}
