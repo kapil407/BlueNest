@@ -9,7 +9,7 @@ const RightSideRemmi = () => {
       >
         {/* rightside bar */}
         <div className={` p-6 w-45 rounded-full  p-2 mb-2 mt-1 ${theme=="light"?"bg-gray-400 border-gray-400":"bg-gray-700 border-gray-700"}`}></div>
-        <div className={`  h-30 w-45 mt-2 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}></div>
+        <div className={`  h-30 rounded w-45 mt-2 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}></div>
       </div>
     </>
   );
