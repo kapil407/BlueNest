@@ -42,6 +42,11 @@ Designed a responsive Tailwind CSS UI
 🎨 Modern UI
 Responsive, elegant design with Tailwind CSS
 
+✨ Remmi effect
+
+Built a reusable animated feed skeleton (Remmi effect) with theme 
+support to optimize user experience during data fetching.
+
 
 <img width="1903" height="857" alt="Screenshot 2026-01-30 225237" src="https://github.com/user-attachments/assets/b572f483-a8b3-45c6-b449-61b30e899a57" />
 
