@@ -52,23 +52,23 @@ const FeedRemmi = () => {
 
            
           </div>
-          <div className="border-b border-gray-200 w-[70%]">
+          <div className="border-b border-l border-r border-gray-400 w-[70%]">
               <div className="m-2 ">
-                <div className="flex ">
+                <div className="flex mb-2 mt-2">
                   {/* profile image and name  */}
-                  <div className={`h-10 w-10 rounded-full animate-pulse bg-gray-400 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
+                  <div className={`h-10 w-10 ml-2 rounded-full animate-pulse bg-gray-400 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
 
                   </div>
-                  <div className={`ml-4  w-20 animate-pulse p-2 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
+                  <div className={`ml-6  w-20 animate-pulse px-py-1  ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
 
                   </div>
                 </div>
                 <div className="flex flex-col">
                   {/* text and post */}
-                  <div className={`w-10 p-3 animate-pulse mb-3 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
+                  <div className={`w-10 ml-2 p-1 animate-pulse mb-5 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
 
                   </div>
-                  <div className={`h-110 w-186 animate-pulse  ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
+                  <div className={`h-110 ml-2 w-186 animate-pulse  ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
 
                   </div>
                 </div>
