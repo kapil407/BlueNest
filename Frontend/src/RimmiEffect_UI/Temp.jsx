@@ -21,17 +21,17 @@ const FeedRemmi = () => {
                        ${theme == "light" ? "bg-white" : "bg-black"}`}
           >
             {/* Upper Box */}
-            <div className="mb-4 border-b border-gray-200 py-6 bg-gray-700"></div>
+            <div className="mb-4 border-b border-gray-200 py-6 animate-pulse bg-gray-700"></div>
 
             {/* Create Post Box */}
             <div className="mx-2 p-4">
               {/* Photo + Input */}
               <div className="flex  items-start  ">
                 {/* Image */}
-                <div className="w-[83px] h-[75px] rounded-full bg-gray-700"></div>
+                <div className="w-[83px] h-[75px] animate-pulse rounded-full bg-gray-700"></div>
 
                 {/* Input */}
-                <div className="flex-1 bg-gray-700 ml-4 mt-2">
+                <div className="flex-1 bg-gray-700 animate-pulse ml-4 mt-2">
                   <input
                     type="text"
                     placeholder=""
@@ -43,10 +43,10 @@ const FeedRemmi = () => {
               {/* Media + Button */}
               <div className="flex justify-between items-center p-8 h-[8%]">
                 {/* Media Button */}
-                <div className=" cursor-pointer h-8 w-8 borderd bg-gray-700 mb-6 rounded"></div>
+                <div className=" cursor-pointer animate-pulse h-8 w-8 borderd bg-gray-700 mb-6 rounded"></div>
 
                 {/* Post Button */}
-                <button className="bg-gray-400 text-white mb-3  p-5 w-20 rounded-full mb-6 transition"></button>
+                <button className="bg-gray-400 animate-pulse text-white mb-3  p-5 w-20 rounded-full mb-6 transition"></button>
               </div>
             </div>
 
