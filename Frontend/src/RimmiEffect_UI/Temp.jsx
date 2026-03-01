@@ -59,16 +59,16 @@ const FeedRemmi = () => {
                   <div className={`h-10 w-10 rounded-full animate-pulse bg-gray-400 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
 
                   </div>
-                  <div className={`ml-4  w-20  p-2 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
+                  <div className={`ml-4  w-20 animate-pulse p-2 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
 
                   </div>
                 </div>
                 <div className="flex flex-col">
                   {/* text and post */}
-                  <div className={`w-10 p-3 mb-3 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
+                  <div className={`w-10 p-3 animate-pulse mb-3 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
 
                   </div>
-                  <div className={`h-110 w-186  ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
+                  <div className={`h-110 w-186 animate-pulse  ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
 
                   </div>
                 </div>
