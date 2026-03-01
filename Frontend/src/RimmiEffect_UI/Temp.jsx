@@ -52,7 +52,7 @@ const FeedRemmi = () => {
 
            
           </div>
-          <div className="border-b border-l border-r border-gray-400 w-[70%]">
+          <div className="border-b border-l border-r border-gray-400 w-[100%]">
               <div className="m-2 ">
                 <div className="flex mb-2 mt-2">
                   {/* profile image and name  */}
