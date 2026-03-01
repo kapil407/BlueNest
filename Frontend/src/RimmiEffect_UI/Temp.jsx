@@ -63,12 +63,12 @@ const FeedRemmi = () => {
 
                   </div>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col ml-12">
                   {/* text and post */}
                   <div className={`w-10 ml-2 p-1 animate-pulse mb-5 ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
 
                   </div>
-                  <div className={`h-110 ml-2 w-186 animate-pulse  ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
+                  <div className={`h-110 w-186 ml-12 animate-pulse  ${theme=="light"?"bg-gray-400":"bg-gray-700"}`}>
 
                   </div>
                 </div>
