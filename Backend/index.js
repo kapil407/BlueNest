@@ -9,6 +9,7 @@ import MessageRouter from "./routes/MessageRoute.js";
 import { initSocket } from "./utils/socket.js";
 import OtpRouter from './routes/OtpRout.js'
 import commentRoute from './routes/CommentRoute.js';
+import GeminiRouter from './routes/GeminiRoutes.js'
 
 
 import cookieParser from "cookie-parser";
@@ -40,6 +41,7 @@ app.use("/", tweetRoutes);
 app.use("/", MessageRouter);
 app.use('/',OtpRouter);
 app.use('/',commentRoute);
+app.use('/',GeminiRouter);
 
 
 initSocket(server);
