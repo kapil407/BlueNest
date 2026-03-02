@@ -74,6 +74,16 @@ const CreatePost = () => {
   const followingTweetHandler = () => {
     dispatch(getIsActive(false));
   };
+  const handleAIGenerate=async()=>{
+    try {
+        const res=await axios.post(`${TWEET_API_END_POINT}/generate-post`,{prompt},{
+          withCredentials:true
+        })
+        console.log("res",res);
+    } catch (error) {
+      console.log("error in AI",error);
+    }
+  }
 
   return (
     <div className="w-[100%]">
@@ -160,7 +170,7 @@ const CreatePost = () => {
             {!showInput ? (
               <button
                 onClick={() => setShowInput(true)}
-                className="bg-purple-500 text-white px-4 py-2 rounded"
+                className="bg-purple-500 text-white px-4 py-2  rounded"
               >
                  Create Post By Gemini
               </button>
@@ -176,7 +186,7 @@ const CreatePost = () => {
 
                 <button
                   onClick={handleAIGenerate}
-                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-full"
                 >
                   Generate
                 </button>
