@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 // import User from "../models/User.js";
 import dotenv from "dotenv";
 dotenv.config();
-console.log("api_key",process.env.GEMINI_API_KEY);
+console.log("api_key", process.env.GEMINI_API_KEY);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const GeneratePostText = async (req, res) => {
@@ -27,10 +27,10 @@ const GeneratePostText = async (req, res) => {
       text,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
+    console.error("FULL ERROR:", error);
+    return res.status(500).json({
       success: false,
-      message: "AI generation failed",
+      message: error.message,
     });
   }
 };
