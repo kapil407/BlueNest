@@ -17,7 +17,9 @@ import { useDispatch } from "react-redux";
 import { getMyTweets } from "../redux/tweetSlice.js";
 import Message from "./Message.jsx";
 import ThemeToggle from "./Theme.jsx";
+
 const LeftSideBar = () => {
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.user); // user is loggedInUser

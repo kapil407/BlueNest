@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { USER_API_END_POINT } from "../Utils/constant";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../redux/userSlice";
+import { getMyProfile, getUser } from "../redux/userSlice";
 // import MagicBento from './MagicBento'
 
 function Login() {
@@ -33,6 +33,7 @@ function Login() {
       // console.log("login->", res?.data?.user?.firstName);
 
       dispatch(getUser(res?.data?.user));
+      dispatch(getMyProfile(res?.data?.user));
 
       if (res?.data?.success) {
         navigate("/");
