@@ -11,6 +11,7 @@
   "author": "Kapil Kumar",
   "license": "ISC",
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.7.0",
     "cookie-parser": "^1.4.7",

@@ -1,5 +1,5 @@
 import express from "express";
-import { SignUpValidation } from "../utils/signUpValidation.js";
+import { SignUpValidation } from "../Middleware/signUpValidation.js";
 
 import isAuth from "../Middleware/Authentication.js";
 import upload from "../Middleware/multer.js";

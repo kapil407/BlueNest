@@ -75,6 +75,14 @@ const userSchema = new mongoose.Schema(
       type: Date,
     },
     verificationCode: String,
+    aiUsageToday: {
+      type: Number,
+      default: 0,
+    },
+
+    aiUsageDate: {
+      type: Date,
+    },
   },
   {
     timestamps: true,
