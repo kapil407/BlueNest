@@ -170,7 +170,7 @@ const CreatePost = () => {
             {!showInput ? (
               <button
                 onClick={() => setShowInput(true)}
-                className="bg-purple-500 text-white px-4 py-2  rounded"
+                className="bg-purple-500 text-white px-4 py-2  rounded-full"
               >
                  Create Post By Gemini
               </button>

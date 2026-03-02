@@ -27,10 +27,10 @@ const Tweets = ({ tweet }) => {
   const [showComment, setShowComment] = useState(false);
   const [addComment, setAddComment] = useState();
   const [selectedId, setSelectedId] = useState(null);
-const [commentLength,setCommentLength]=useState(0);
-  
+  const [commentLength, setCommentLength] = useState(0);
+
   const { profile, bookmarksIds } = useSelector((store) => store.user);
-  const {refresh}=useSelector(store=>store.tweet);
+  const { refresh } = useSelector((store) => store.tweet);
 
   const isBookmarked = bookmarksIds?.some(
     (id) => id.toString() === tweet?._id?.toString(),
@@ -105,16 +105,16 @@ const [commentLength,setCommentLength]=useState(0);
     setShowComment(!showComment);
   };
 
-      useEffect(()=>{
-          const fetchCommentLength=async()=>{
-            const res= await axios.get(`${TWEET_API_END_POINT}/${tweet?._id}`,{
-              withCredentials:true
-            });
-            console.log("res->>lenght,res",res?.data?.comments?.length);
-            setCommentLength(res?.data?.comments?.length);
-          }
-          fetchCommentLength()
-      },[tweet?._id,refresh])
+  useEffect(() => {
+    const fetchCommentLength = async () => {
+      const res = await axios.get(`${TWEET_API_END_POINT}/${tweet?._id}`, {
+        withCredentials: true,
+      });
+      console.log("res->>lenght,res", res?.data?.comments?.length);
+      setCommentLength(res?.data?.comments?.length);
+    };
+    fetchCommentLength();
+  }, [tweet?._id, refresh]);
   const handleCommentSubmit = async (id) => {
     try {
       const res = await axios.post(
@@ -177,30 +177,22 @@ const [commentLength,setCommentLength]=useState(0);
                       {tweet?.description}
                     </p>
 
-                    {!tweet?.image?.url ? (
+                    {tweet?.image?.url && (
+                      <img
+                        src={tweet?.image?.url}
+                        alt="image"
+                        className="rounded object-cover w-186 h-110"
+                      />
+                    )}
+
+                    {tweet?.video?.url && (
                       <video
                         src={tweet?.video?.url}
                         controls
                         preload="metadata"
-                        className={
-                          tweet?.description
-                            ? " rounded object-cover w-186 h-110 "
-                            : " rounded object-cover w-186 h-110 mt-12"
-                        }
+                        className="rounded object-cover w-186 h-110"
                         playsInline
                       />
-                    ) : (
-                      <>
-                        <img
-                          src={tweet?.image?.url}
-                          alt="image"
-                          className={
-                            tweet?.description
-                              ? " rounded object-cover w-186 h-110 "
-                              : " rounded object-cover w-186 h-110 mt-12"
-                          }
-                        />
-                      </>
                     )}
                   </div>
                 </div>
@@ -215,8 +207,6 @@ const [commentLength,setCommentLength]=useState(0);
                   className=" text-gray-600 hover:text-green-600"
                 />
                 <p className="ml-2">{commentLength}</p>
-              
-                
               </div>
               <div className="flex  p-2 rounded-full cursor-pointer">
                 <Link
@@ -266,25 +256,25 @@ const [commentLength,setCommentLength]=useState(0);
                 )}
               </div>
             </div>
-              {showComment && selectedId === tweet._id && (
-                  <GetComment id={selectedId} />
-                )}
-                {showComment && (
-                  <div className=" pb-4 mt-2 px-2">
-                    <textarea
-                      value={addComment}
-                      placeholder="Write a comment..."
-                      onChange={(e) => setAddComment(e.target.value)}
-                      className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
-                    <button
-                      onClick={() => handleCommentSubmit(tweet._id)}
-                      className="mt-2 cursor-pointer bg-blue-500 text-white px-4 py-1 rounded-full hover:bg-blue-600"
-                    >
-                      Comment
-                    </button>
-                  </div>
-                )}
+            {showComment && selectedId === tweet._id && (
+              <GetComment id={selectedId} />
+            )}
+            {showComment && (
+              <div className=" pb-4 mt-2 px-2">
+                <textarea
+                  value={addComment}
+                  placeholder="Write a comment..."
+                  onChange={(e) => setAddComment(e.target.value)}
+                  className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+                <button
+                  onClick={() => handleCommentSubmit(tweet._id)}
+                  className="mt-2 cursor-pointer bg-blue-500 text-white px-4 py-1 rounded-full hover:bg-blue-600"
+                >
+                  Comment
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
