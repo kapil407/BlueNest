@@ -10,7 +10,7 @@ const GeneratePostText = async (req, res) => {
     const { prompt } = req.body;
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-pro",
+     model: "gemini-1.5-flash",
     });
     const result = await model.generateContent(
       `Generate a short social media post. Keep it under 150 words.\nTopic: ${prompt}`,
