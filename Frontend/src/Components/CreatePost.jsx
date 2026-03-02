@@ -15,6 +15,8 @@ const CreatePost = () => {
   const { isActive } = useSelector((store) => store.tweet);
   const [description, setDescription] = useState("");
   const [media, setMedia] = useState(null);
+  const [prompt, setPrompt] = useState("");
+  const [showInput, setShowInput] = useState(false);
   const dispatch = useDispatch();
   // console.log("progile", profile);
   let profileImage = profile?.profilePic?.url;
@@ -154,20 +156,55 @@ const CreatePost = () => {
             </span>
           </div>
 
-          <button
-            onClick={submitHandler}
-            disabled={(!media && !description.trim()) || loading}
-            className={` p-3 rounded-full  border-none w-24 font-bold text-white flex items-center justify-center gap-2 disabled:opacity-70 ${(!media && !description.trim()) || loading ? "cursor-not-allowed bg-gray-600 text-black" : "cursor-pointer bg-[#1D9BF0]  hover:bg-blue-400"}`}
-          >
-            {loading ? (
-              <>
-                <ClipLoader size={18} color="#fff" />
-                Posting...
-              </>
+          <div className="flex gap-2">
+            {!showInput ? (
+              <button
+                onClick={() => setShowInput(true)}
+                className="bg-purple-500 text-white px-4 py-2 rounded"
+              >
+                 Create Post By Gemini
+              </button>
             ) : (
-              "Post"
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  placeholder="Create Post"
+                  className="p-2 border rounded w-64"
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                />
+
+                <button
+                  onClick={handleAIGenerate}
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                >
+                  Generate
+                </button>
+
+                <button
+                  onClick={() => setShowInput(false)}
+                  className="text-red-500"
+                >
+                  Cancel
+                </button>
+              </div>
             )}
-          </button>
+
+            <button
+              onClick={submitHandler}
+              disabled={(!media && !description.trim()) || loading}
+              className={` p-3 rounded-full  border-none w-24 font-bold text-white flex items-center justify-center gap-2 disabled:opacity-70 ${(!media && !description.trim()) || loading ? "cursor-not-allowed bg-gray-600 text-black" : "cursor-pointer bg-[#1D9BF0]  hover:bg-blue-400"}`}
+            >
+              {loading ? (
+                <>
+                  <ClipLoader size={18} color="#fff" />
+                  Posting...
+                </>
+              ) : (
+                "Post"
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>
