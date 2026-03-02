@@ -1,32 +1,32 @@
-// import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenAI } from "@google/genai";
-// import User from "../models/User.js";
 import dotenv from "dotenv";
 dotenv.config();
-console.log("api_key", process.env.GEMINI_API_KEY);
-const genAI = new GoogleGenAI(process.env.GEMINI_API_KEY);
+
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
 const GeneratePostText = async (req, res) => {
   try {
     const { prompt } = req.body;
 
-    const model = genAI.getGenerativeModel({
-     model: "gemini-1.5-flash",
+    const response = await ai.models.generateContent({
+      model: "gemini-1.5-flash",
+      contents: `Generate a short social media post under 150 words.
+      Topic: ${prompt}`,
     });
-    const result = await model.generateContent(
-      `Generate a short social media post. Keep it under 150 words.\nTopic: ${prompt}`,
-    );
 
-    const response = await result.response;
-    const text = response.text();
+    const text = response.text;
+
     const user = req.user;
     user.aiUsageToday = (user.aiUsageToday || 0) + 1;
     await user.save();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       text,
     });
+
   } catch (error) {
     console.error("FULL ERROR:", error);
     return res.status(500).json({
