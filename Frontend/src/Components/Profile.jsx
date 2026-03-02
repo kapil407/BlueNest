@@ -218,7 +218,7 @@ function Profile() {
               <>
               <div className="mt-4">
                <h1 className="font-bold ml-4 mt-15 text-xl">{profile?.firstName}</h1>
-            <p className="text-sm text-gray-600">{profile?.userName}</p>
+            <p className="text-sm ml-4 text-gray-600">{profile?.userName}</p>
             </div>
               </>
             )
