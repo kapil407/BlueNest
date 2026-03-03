@@ -162,7 +162,7 @@ const Message = () => {
         />
         <button
           onClick={() => sendmessages()}
-          className={`mr-2 border border-gray-400 p-1 w-28 h-12 rounded     cursor-pointer ${theme == "light" ? "bg-gray-200 hover:bg-gray-300" : "bg-black hover:bg-gray-600"}`}
+          className={`mr-2 border border-gray-400 p-1 w-28 h-12 mb-2 rounded     cursor-pointer ${theme == "light" ? "bg-gray-200 hover:bg-gray-300" : "bg-black hover:bg-gray-600"}`}
         >
           send
         </button>
