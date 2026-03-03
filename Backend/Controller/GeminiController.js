@@ -1,7 +1,9 @@
 // backend/Controller/grokController.js
 import axios from 'axios';
+import dotenv from 'dotenv'
+dotenv.config();
 
-const XAI_API_KEY = process.env.XAI_API_KEY;
+const XAI_API_KEY = process.env.GROK_API_KEY;
 const XAI_BASE_URL = 'https://api.x.ai/v1';
 
 const GeminiController = async (req, res) => {
