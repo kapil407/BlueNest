@@ -151,7 +151,7 @@ const Message = () => {
 
       {/* Input Box */}
       <div
-        className={` border-b border-t rounded border-gray-400 h-[14%]  px-2 items-center text-center flex justify-between ${theme == "light" ? "bg-gray-200" : "bg-black"}`}
+        className={` border-b border-t rounded border-gray-400 h-[10%]  px-2 items-center text-center flex justify-between ${theme == "light" ? "bg-gray-200" : "bg-black"}`}
       >
         <input
           type="text"
