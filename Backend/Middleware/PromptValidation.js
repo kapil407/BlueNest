@@ -22,20 +22,7 @@ const GeminiPromptValidation = async (req, res, next) => {
       });
     }
 
-    const user = await User.findById(req.user._id);
-
-    const today = new Date().toDateString();
-
-    if (user.aiUsageDate?.toDateString() !== today) {
-      user.aiUsageToday = 0;
-      user.aiUsageDate = new Date();
-    }
-
-    if (user.aiUsageToday >= 5) {
-      return res.status(403).json({
-        message: "Daily AI limit reached",
-      });
-    }
+    
 
     
     next();
