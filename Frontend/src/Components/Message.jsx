@@ -105,7 +105,7 @@ const Message = () => {
   }
 
   return (
-    <div className="w-[55%] ml-10  border-l border-r border-b  border-gray-300 rounded h-screen fixed mx-[16%]">
+    <div className="w-[55%]   border-l border-r border-b  border-gray-300 rounded h-screen fixed mx-[16%]">
       {/* Header */}
       <div
         className={`border p-3 rounded flex  items-center  border-gray-400 ${theme == "light" ? "bg-gray-200" : "bg-black"}`}
