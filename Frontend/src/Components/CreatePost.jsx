@@ -15,8 +15,8 @@ const CreatePost = () => {
   const { isActive } = useSelector((store) => store.tweet);
   const [description, setDescription] = useState("");
   const [media, setMedia] = useState(null);
-  const [prompt, setPrompt] = useState("");
-  const [showInput, setShowInput] = useState(false);
+  // const [prompt, setPrompt] = useState("");
+  // const [showInput, setShowInput] = useState(false);
   const dispatch = useDispatch();
   // console.log("progile", profile);
   let profileImage = profile?.profilePic?.url;
@@ -74,16 +74,16 @@ const CreatePost = () => {
   const followingTweetHandler = () => {
     dispatch(getIsActive(false));
   };
-  const handleAIGenerate=async()=>{
-    try {
-        const res=await axios.post(`${TWEET_API_END_POINT}/generate-post`,{prompt},{
-          withCredentials:true
-        })
-        console.log("res",res);
-    } catch (error) {
-      console.log("error in AI",error);
-    }
-  }
+  // const handleAIGenerate=async()=>{
+  //   try {
+  //       const res=await axios.post(`${TWEET_API_END_POINT}/generate-post`,{prompt},{
+  //         withCredentials:true
+  //       })
+  //       console.log("res",res);
+  //   } catch (error) {
+  //     console.log("error in AI",error);
+  //   }
+  // }
 
   return (
     <div className="w-[100%]">
@@ -167,7 +167,7 @@ const CreatePost = () => {
           </div>
 
           <div className="flex gap-2">
-            {!showInput ? (
+            {/* {!showInput ? (
               <button
                 onClick={() => setShowInput(true)}
                 className="bg-purple-500 text-white px-4 py-2  rounded-full"
@@ -198,7 +198,7 @@ const CreatePost = () => {
                   Cancel
                 </button>
               </div>
-            )}
+            )} */}
 
             <button
               onClick={submitHandler}
