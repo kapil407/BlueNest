@@ -1,86 +1,50 @@
-import axios from 'axios';
-import dotenv from 'dotenv';
+import { GoogleGenAI } from "@google/genai";
+import dotenv from "dotenv";
 dotenv.config();
 
-const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
-const DEEPSEEK_BASE_URL = 'https://api.deepseek.com';
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
-// Simple controller for post creation
-const GeminiController = async (req, res) => {
-  const { prompt } = req.body;
-
-  // Check if prompt exists
-  if (!prompt || !prompt.trim()) {
-    return res.status(400).json({ 
-      success: false, 
-      error: 'Kuch likho to sahi! Prompt toh do.' 
-    });
-  }
-
+const GeneratePostController = async (req, res) => {
   try {
-    console.log(' Post create kar raha hu for:', prompt);
+    // User frontend se prompt bhejega (e.g., "Write a post about my MCA exams")
+    const { prompt } = req.body;
 
-    // Make API call to DeepSeek
-    const response = await axios.post(
-      `${DEEPSEEK_BASE_URL}/chat/completions`,
-      {
-        model: 'deepseek-chat',
-        messages: [
-          {
-            role: 'system',
-            content: `Tu ek masta** Indian social media post writer hai. 
-            Hindi-English mix (Hinglish) mein likhna. 
-            Funny, attitude wala, aur engaging post bana.
-            Emojis aur trending hashtags bhi daalna.
-            Instagram ya Twitter ke liye short aur punchy post bana.`
-          },
-          { 
-            role: 'user', 
-            content: `Is topic pe ek post bana: ${prompt}` 
-          }
-        ],
-        temperature: 0.8,
-        max_tokens: 500,
-      },
-      {
-        headers: {
-          'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        timeout: 10000
+    if (!prompt) {
+      return res.status(400).json({ success: false, message: "Prompt is required" });
+    }
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: `Write an engaging social media post about: ${prompt}`,
+      config: {
+        // Yeh instruction AI ki personality set karega
+        systemInstruction: "You are an expert social media manager. Create engaging, short, and catchy posts. Always respond in pure JSON format with two keys: 'content' (the main text of the post) and 'hashtags' (an array of relevant strings).",
+        // Yeh API ko majboor karega ki response sirf JSON format mein aaye
+        responseMimeType: "application/json",
       }
-    );
+    });
 
-    // Get the generated post
-    const generatedPost = response.data.choices[0].message.content.trim();
+    // API ne JSON string return ki hai, usko JS object mein convert karo
+    const postData = JSON.parse(response.text);
 
-    // Return the post
-    return res.json({
+    return res.status(200).json({
       success: true,
-      post: generatedPost,
-      prompt: prompt,
-      timestamp: new Date().toISOString()
+      data: {
+        content: postData.content,
+        hashtags: postData.hashtags
+      }
     });
 
   } catch (error) {
-    console.error('DeepSeek Error:', error.message);
-
-    // Simple error messages
-    let errorMsg = 'Kuch gadbad hui, phir se try kar';
-    
-    if (error.response?.status === 401) {
-      errorMsg = 'API key sahi nahi hai';
-    } else if (error.response?.status === 429) {
-      errorMsg = 'Thoda ruk ke try kar, limit khatam';
-    } else if (error.code === 'ECONNABORTED') {
-      errorMsg = 'Time ho gaya, dheere dheere type kar';
-    }
-
+    console.error("POST GENERATION ERROR:", error);
     return res.status(500).json({
       success: false,
-      error: errorMsg
+      message: "Failed to generate post",
+      error: error.message
     });
   }
 };
 
-export default GeminiController;
+export default GeneratePostController;
