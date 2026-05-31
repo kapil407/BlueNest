@@ -10,7 +10,7 @@ const Feed = () => {
   const isLight = theme == "light";
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[760px] flex-col">
+    <div className="mx-auto flex min-h-screen w-full center max-w-[760px] flex-col">
       <div
         className={`sticky top-0 z-20 border-b px-4 py-4 backdrop-blur-xl ${
           isLight
