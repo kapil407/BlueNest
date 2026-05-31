@@ -11,6 +11,7 @@
   "author": "Kapil Kumar",
   "license": "ISC",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.79.0",
     "@google/genai": "^1.43.0",
     "axios": "^1.13.6",
     "bcrypt": "^5.1.1",
