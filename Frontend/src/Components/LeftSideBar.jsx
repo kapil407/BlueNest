@@ -51,7 +51,7 @@ const LeftSideBar = () => {
   };
 
   return (
-    <div className="flex h-full ml-8 flex-col justify-between">
+    <div className="flex h-full ml-4 flex-col justify-between">
       <div>
         <Link
           to="/"
@@ -96,7 +96,7 @@ const LeftSideBar = () => {
       </div>
 
       <div
-        className={`rounded-3xl border p-3 ${
+        className={`rounded-3xl w-[50%] border p-3 ${
           isLight
             ? "border-slate-200 bg-slate-50"
             : "border-slate-800 bg-slate-900/70"
