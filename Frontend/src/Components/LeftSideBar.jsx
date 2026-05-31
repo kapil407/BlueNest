@@ -50,6 +50,11 @@ const LeftSideBar = () => {
     return location.pathname.startsWith(to);
   };
 
+  const activeIndex = Math.max(
+    navItems.findIndex((item) => isActive(item.to)),
+    0,
+  );
+
   return (
     <div className="flex h-full ml-2 flex-col justify-between">
       <div>
@@ -70,7 +75,12 @@ const LeftSideBar = () => {
           </div>
         </Link>
 
-        <nav className="space-y-2">
+        <nav className="relative w-[65%] space-y-2">
+          <span
+            className="pointer-events-none absolute left-0 top-0 h-14 w-full rounded-2xl bg-[#1D9BF0] shadow-lg shadow-sky-500/20 transition-transform duration-300 ease-out"
+            style={{ transform: `translateY(${activeIndex * 4}rem)` }}
+          />
+
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.to);
@@ -79,15 +89,20 @@ const LeftSideBar = () => {
               <Link
                 key={item.label}
                 to={item.to}
-                className={`flex items-center gap-4 rounded-2xl px-4 py-3 w-[50%] text-lg font-bold transition ${
+                className={`group relative z-10 flex h-14 items-center gap-4 rounded-2xl px-4 text-lg font-bold transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] ${
                   active
-                    ? "bg-[#1D9BF0] text-white shadow-lg shadow-sky-500/20"
+                    ? "text-white"
                     : isLight
-                      ? "text-slate-700 hover:bg-slate-100 hover:text-slate-950"
-                      : "text-slate-300 hover:bg-slate-900 hover:text-white"
+                      ? "text-slate-700 hover:bg-slate-100/80 hover:text-slate-950"
+                      : "text-slate-300 hover:bg-slate-900/80 hover:text-white"
                 }`}
               >
-                <Icon size={26} />
+                <Icon
+                  size={26}
+                  className={`transition-transform duration-300 ease-out ${
+                    active ? "scale-110" : "group-hover:scale-110"
+                  }`}
+                />
                 <span>{item.label}</span>
               </Link>
             );
@@ -96,13 +111,13 @@ const LeftSideBar = () => {
       </div>
 
       <div
-        className={`rounded-3xl w-[50%] border p-3 ${
+        className={`rounded-3xl w-[65%] border p-3 ${
           isLight
             ? "border-slate-200 bg-slate-50"
             : "border-slate-800 bg-slate-900/70"
         }`}
       >
-        <div className="mb-4 flex items-center gap-3">
+        <div className="mb-4  flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1D9BF0] text-sm font-black text-white">
             {user?.firstName?.charAt(0) || "B"}
           </div>
