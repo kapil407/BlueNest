@@ -73,36 +73,36 @@ const Signup = () => {
 
   return (
     <div
-      className={`min-h-screen w-full overflow-hidden px-4 py-8 sm:px-6 lg:px-10 ${
+      className={`h-screen w-full overflow-hidden px-3 py-3 sm:px-5 sm:py-4 lg:px-8 ${
         theme == "light"
           ? "bg-[radial-gradient(circle_at_top_left,#dbeafe_0,#f8fafc_35%,#eef2ff_100%)] text-slate-950"
           : "bg-[radial-gradient(circle_at_top_left,#0f2d47_0,#020617_42%,#0f172a_100%)] text-white"
       }`}
     >
-      <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-6xl items-center justify-center">
+      <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-center">
         <div
-          className={`grid w-full overflow-hidden rounded-[2rem] border shadow-2xl lg:grid-cols-[0.95fr_1.05fr] ${
+          className={`grid max-h-full w-full overflow-hidden rounded-[1.5rem] border shadow-2xl lg:grid-cols-[0.95fr_1.05fr] ${
             theme == "light"
               ? "border-white/80 bg-white/75 shadow-sky-900/10"
               : "border-slate-800/80 bg-slate-950/80 shadow-black/40"
           }`}
         >
           <div
-            className={`relative hidden min-h-[640px] flex-col justify-between p-10 lg:flex ${
+            className={`relative hidden min-h-0 flex-col justify-between p-7 xl:p-8 lg:flex ${
               theme == "light"
                 ? "bg-sky-50/80"
                 : "bg-gradient-to-br from-slate-900 via-slate-950 to-sky-950"
             }`}
           >
             <div>
-              <div className="mb-10 inline-flex items-center gap-3 rounded-full border border-sky-400/30 bg-sky-500/10 px-4 py-2 text-sm font-semibold text-sky-500">
+              <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-sky-400/30 bg-sky-500/10 px-4 py-2 text-sm font-semibold text-sky-500">
                 <span className="h-2 w-2 rounded-full bg-sky-500" />
                 BlueNest Social
               </div>
-              <h1 className="max-w-md text-5xl font-black leading-tight tracking-normal">
+              <h1 className="max-w-md text-4xl font-black leading-tight tracking-normal xl:text-5xl">
                 Apni awaaz ko ek fresh nest do.
               </h1>
-              <p className={`mt-5 max-w-sm text-base leading-7 ${mutedText}`}>
+              <p className={`mt-4 max-w-sm text-sm leading-6 xl:text-base ${mutedText}`}>
                 Join karo, profile banao, aur apne thoughts ko clean, fast aur
                 friendly space mein share karo.
               </p>
@@ -115,16 +115,16 @@ const Signup = () => {
                 }`}
               />
               <img
-                className="relative mx-auto aspect-square w-full max-w-[360px] rounded-full border-8 border-white/60 object-cover shadow-2xl"
+                className="relative mx-auto aspect-square w-full max-w-[260px] rounded-full border-8 border-white/60 object-cover shadow-2xl xl:max-w-[320px]"
                 src={`${theme == "dark" ? "logo_Dark.png" : "logo.png"}`}
                 alt="BlueNest logo"
               />
             </div>
           </div>
 
-          <div className="flex items-center justify-center px-5 py-8 sm:px-10 lg:px-14">
+          <div className="flex min-h-0 items-center justify-center px-5 py-5 sm:px-8 lg:px-12">
             <div className="w-full max-w-md">
-              <div className="mb-8 flex items-center gap-4 lg:hidden">
+              <div className="mb-5 flex items-center gap-4 lg:hidden">
                 <img
                   className="h-14 w-14 rounded-2xl border border-sky-400/40 object-cover"
                   src={`${theme == "dark" ? "logo_Dark.png" : "logo.png"}`}
@@ -138,18 +138,18 @@ const Signup = () => {
                 </div>
               </div>
 
-              <div className="mb-8 hidden lg:block">
+              <div className="mb-5 hidden lg:block">
                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-500">
                   Get started
                 </p>
-                <h2 className="mt-3 text-4xl font-black">Create account</h2>
-                <p className={`mt-3 text-sm leading-6 ${mutedText}`}>
+                <h2 className="mt-2 text-3xl font-black xl:text-4xl">Create account</h2>
+                <p className={`mt-2 text-sm leading-6 ${mutedText}`}>
                   Bas kuch details, phir BlueNest ready.
                 </p>
               </div>
 
-              <form onSubmit={submittedHandler} className="space-y-4">
-                <div className="grid gap-4 sm:grid-cols-2">
+              <form onSubmit={submittedHandler} className="space-y-3">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <label className="block">
                     <span className={`mb-2 block text-sm font-semibold ${mutedText}`}>
                       First name
@@ -161,7 +161,7 @@ const Signup = () => {
                         placeholder="Kapil"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
-                        className={`w-full rounded-2xl border py-3 pl-11 pr-4 outline-none transition focus:ring-4 ${inputStyle}`}
+                        className={`w-full rounded-2xl border py-2.5 pl-11 pr-4 outline-none transition focus:ring-4 ${inputStyle}`}
                       />
                     </div>
                   </label>
@@ -177,7 +177,7 @@ const Signup = () => {
                         placeholder="Sharma"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
-                        className={`w-full rounded-2xl border py-3 pl-11 pr-4 outline-none transition focus:ring-4 ${inputStyle}`}
+                        className={`w-full rounded-2xl border py-2.5 pl-11 pr-4 outline-none transition focus:ring-4 ${inputStyle}`}
                       />
                     </div>
                   </label>
@@ -194,7 +194,7 @@ const Signup = () => {
                       placeholder="kapil_01"
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
-                      className={`w-full rounded-2xl border py-3 pl-11 pr-4 outline-none transition focus:ring-4 ${inputStyle}`}
+                      className={`w-full rounded-2xl border py-2.5 pl-11 pr-4 outline-none transition focus:ring-4 ${inputStyle}`}
                     />
                   </div>
                 </label>
@@ -210,7 +210,7 @@ const Signup = () => {
                       placeholder="kapil@example.com"
                       value={emailId}
                       onChange={(e) => setEmailId(e.target.value)}
-                      className={`w-full rounded-2xl border py-3 pl-11 pr-4 outline-none transition focus:ring-4 ${inputStyle}`}
+                      className={`w-full rounded-2xl border py-2.5 pl-11 pr-4 outline-none transition focus:ring-4 ${inputStyle}`}
                     />
                   </div>
                 </label>
@@ -228,7 +228,7 @@ const Signup = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Create a strong password"
-                      className="w-full bg-transparent px-3 py-3 outline-none"
+                      className="w-full bg-transparent px-3 py-2.5 outline-none"
                     />
 
                     <button
@@ -244,7 +244,7 @@ const Signup = () => {
 
                 <button
                   type="submit"
-                  className="w-full rounded-2xl bg-[#1D9BF0] px-5 py-3.5 font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5 hover:bg-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-500/30"
+                  className="w-full rounded-2xl bg-[#1D9BF0] px-5 py-3 font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5 hover:bg-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-500/30"
                 >
                   Create account
                 </button>
