@@ -51,7 +51,7 @@ const LeftSideBar = () => {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between">
+    <div className="flex h-full  flex-col justify-between">
       <div>
         <Link
           to="/"
@@ -79,7 +79,7 @@ const LeftSideBar = () => {
               <Link
                 key={item.label}
                 to={item.to}
-                className={`flex items-center gap-4 rounded-2xl px-4 py-3 text-lg font-bold transition ${
+                className={`flex items-center gap-4 rounded-2xl px-4 py-3 w-[50%] text-lg font-bold transition ${
                   active
                     ? "bg-[#1D9BF0] text-white shadow-lg shadow-sky-500/20"
                     : isLight
