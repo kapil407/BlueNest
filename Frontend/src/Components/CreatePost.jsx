@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { TWEET_API_END_POINT } from "../Utils/constant.js";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
-import { getRefresh, getIsActive } from "../redux/tweetSlice.js";
+import { getRefresh } from "../redux/tweetSlice.js";
 import { FaImage } from "react-icons/fa";
 import ClipLoader from "react-spinners/ClipLoader";
 import { IoClose } from "react-icons/io5";
@@ -13,7 +13,6 @@ import { IoClose } from "react-icons/io5";
 const CreatePost = () => {
   const theme = useSelector((store) => store.theme.theme);
   const { user, profile } = useSelector((store) => store.user);
-  const { isActive } = useSelector((store) => store.tweet);
   const [description, setDescription] = useState("");
   const [media, setMedia] = useState(null);
   // const [prompt, setPrompt] = useState("");
@@ -69,12 +68,6 @@ const CreatePost = () => {
     }
   };
 
-  const forYouHandler = () => {
-    dispatch(getIsActive(true));
-  };
-  const followingTweetHandler = () => {
-    dispatch(getIsActive(false));
-  };
   // const handleAIGenerate=async()=>{
   //   try {
   //       const res=await axios.post(`${TWEET_API_END_POINT}/generate-post`,{prompt},{
@@ -89,50 +82,6 @@ const CreatePost = () => {
   return (
     <div className="w-full">
       <div>
-        <div
-          className={`sticky top-0 z-20 grid grid-cols-2 border-b backdrop-blur-xl ${
-            isLight
-              ? "border-slate-200 bg-white/85"
-              : "border-slate-800 bg-slate-950/85"
-          }`}
-        >
-          <div
-            onClick={forYouHandler}
-            className={`${
-              isActive
-                ? "text-sky-500"
-                : isLight
-                  ? "text-slate-500"
-                  : "text-slate-400"
-            } group flex cursor-pointer justify-center text-center transition hover:bg-sky-500/10`}
-          >
-            <h1 className="relative px-4 py-4 text-base font-black">
-              For you
-              {isActive && (
-                <span className="absolute bottom-0 left-1/2 h-1 w-12 -translate-x-1/2 rounded-full bg-[#1D9BF0]" />
-              )}
-            </h1>
-          </div>
-
-          <div
-            onClick={followingTweetHandler}
-            className={`${
-              !isActive
-                ? "text-sky-500"
-                : isLight
-                  ? "text-slate-500"
-                  : "text-slate-400"
-            } group flex cursor-pointer justify-center text-center transition hover:bg-sky-500/10`}
-          >
-            <h1 className="relative px-4 py-4 text-base font-black">
-              Following
-              {!isActive && (
-                <span className="absolute bottom-0 left-1/2 h-1 w-12 -translate-x-1/2 rounded-full bg-[#1D9BF0]" />
-              )}
-            </h1>
-          </div>
-        </div>
-
         <div className={`border-b p-4 ${isLight ? "border-slate-200" : "border-slate-800"}`}>
           <div className="flex gap-3">
             <Link to={`/profile/${user?._id}`}>
