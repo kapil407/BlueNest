@@ -109,37 +109,44 @@ function Profile() {
   };
 
   return (
-    <>
+    <div className="mx-auto min-h-screen w-full max-w-[760px]">
       <div
-        className="w-[55%] h-screen border-l border-r border-t border-gray-200 sticky ml-10  h-screen"
-        style={{
-          boxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
-          WebkitBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
-          MozBoxShadow: "-1px -1px 3px -1px rgba(0,0,0,0.75)",
-        }}
+        className={`min-h-screen border-x ${
+          theme == "light"
+            ? "border-slate-200 bg-white"
+            : "border-slate-800 bg-slate-950"
+        }`}
       >
-        <div className=" border-gray-200">
-          <div className="flex my-2 ml-2">
+        <div>
+          <div
+            className={`sticky top-0 z-20 flex items-center border-b px-4 py-3 backdrop-blur-xl ${
+              theme == "light"
+                ? "border-slate-200 bg-white/85"
+                : "border-slate-800 bg-slate-950/85"
+            }`}
+          >
             <Link
               to="/"
               onClick={() => dispatch(resetProfile())}
-              className="flex items-center  "
+              className="flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-sky-500/10"
             >
               <IoMdArrowRoundBack
-                size={28}
-                className={`rounded-full   ${theme == "light" ? "hover:bg-gray-200" : "hover:bg-gray-400"}`}
+                size={24}
+                className={theme == "light" ? "text-slate-700" : "text-slate-200"}
               />
             </Link>
-            <div className="flex flex-col ml-4">
-              <h1 className="font-bold text-lg ">{profile?.firstName}</h1>
-              <p className="text-gray-600">{tweet?.length} post</p>
+            <div className="ml-3 flex flex-col">
+              <h1 className="text-lg font-black">{profile?.firstName}</h1>
+              <p className={theme == "light" ? "text-sm text-slate-500" : "text-sm text-slate-400"}>
+                {tweet?.length} post
+              </p>
             </div>
           </div>
 
-          <div>
+          <div className="relative">
             {!profile?.backGroundImage?.url ? (
               <img
-                className="h-100 w-full  "
+                className="h-64 w-full object-cover"
                 src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGNvZGV8ZW58MHx8MHx8fDA%3D"
                 alt="Banner"
               />
@@ -147,11 +154,11 @@ function Profile() {
               <img
                 src={`${profile?.backGroundImage?.url}?v=${profile?.updatedAt}`}
                 alt="backcoverImage"
-                className="h-100 w-full object-cover"
+                className="h-64 w-full object-cover"
               />
             )}
             {profile?._id === user?._id && (
-              <div className="flex items-center gap-5 justify-end mt-2 mr-4">
+              <div className="absolute bottom-4 right-4 flex items-center gap-3">
                 <input
                   id="backCover"
                   className="hidden"
@@ -160,12 +167,12 @@ function Profile() {
                   onChange={(e) => setimage(e.target.files[0])}
                 />
                 <label htmlFor="backCover">
-                  <FaImage className=" cursor-pointer text-blue-600 size-13 mt-1" />
+                  <FaImage className="size-11 cursor-pointer rounded-full bg-white/90 p-2.5 text-blue-600 shadow-lg" />
                 </label>
                 <button
                   onClick={changeBackgroundImage}
                   disabled={!image || loading}
-                  className={` rounded p-1 h-10  mt-2 px-2
+                  className={`h-10 rounded-full px-4 font-bold shadow-lg
                   ${
                     !image || loading
                       ? "bg-gray-400 cursor-not-allowed text-black"
@@ -183,32 +190,31 @@ function Profile() {
                 </button>
               </div>
             )}
+            <div className="absolute -bottom-14 left-5 cursor-pointer rounded-full border-4 border-white bg-white shadow-xl">
+              {!profile?.profilePic?.url ? (
+                <Avatar
+                  src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
+                  size="112"
+                  round={true}
+                />
+              ) : (
+                <img
+                  src={profile?.profilePic?.url}
+                  alt="profileimage"
+                  className="h-28 w-28 rounded-full object-cover"
+                />
+              )}
+            </div>
           </div>
-          <div className="cursor-pointer absolute border-4 border-black top-102 translate-x-2/10 rounded-full">
-            {!profile?.profilePic?.url ? (
-              <Avatar
-                src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
-                size="102"
-                round={true}
-              />
-            ) : (
-              <img
-                src={profile?.profilePic?.url}
-                alt="profileimage"
-                className="rounded-full w-[102px] h-[102px] object-cover"
-              />
-            )}
 
-          </div>
-
-         <div className="flex justify-between">
+         <div className="flex justify-between px-5 pt-16">
           
 
          <div> 
           
             {profile?._id === user?._id?(
               <>
-            <div className="m-4">
+            <div>
                <h1 className="font-bold  text-xl">{profile?.firstName}</h1>
             <p className="text-sm text-gray-600">{profile?.userName}</p>
             </div>
@@ -216,9 +222,9 @@ function Profile() {
 
             ):(
               <>
-              <div className="mt-4">
-               <h1 className="font-bold ml-4 mt-15 text-xl">{profile?.firstName}</h1>
-            <p className="text-sm ml-4 text-gray-600">{profile?.userName}</p>
+              <div>
+               <h1 className="font-bold text-xl">{profile?.firstName}</h1>
+            <p className="text-sm text-gray-600">{profile?.userName}</p>
             </div>
               </>
             )
@@ -227,10 +233,10 @@ function Profile() {
            
          
           <div className={`${theme=="dark"?"bg-black":"bg-white"}`}>
-            <div className="m-6 ">
+            <div className="my-5">
               <p>{profile?.bio}</p>
             </div>
-            <div className="flex ml-4  ">
+            <div className="flex">
               <button className="cursor-pointer   text-gray-700 font-semibold">
                
                 {profile?.following?.length} Following
@@ -242,7 +248,7 @@ function Profile() {
             </div>
           </div>
          </div>
-          <div className="text-right my-4">
+          <div className="text-right">
             {profile?._id === user?._id ? (
               <>
                 <Link to={"/EditeProfile"}>
@@ -275,7 +281,7 @@ function Profile() {
          </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

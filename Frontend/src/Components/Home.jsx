@@ -38,7 +38,7 @@ const Home = () => {
           : "bg-slate-950 text-slate-100"
       }`}
     >
-      <div className="mx-auto grid h-full w-full max-w-[1440px] grid-cols-1 lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,680px)_340px]">
+      <div className="mx-auto grid h-full w-full max-w-[1540px] grid-cols-1 lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,760px)_minmax(360px,1fr)]">
         <aside
           className={`hidden h-screen border-r px-3 py-4 lg:block ${
             theme == "light"
@@ -54,7 +54,7 @@ const Home = () => {
         </main>
 
         <aside
-          className={`hidden h-screen border-l px-4 py-4 xl:block ${
+          className={`hidden h-screen border-l py-4 pl-8 pr-4 xl:block ${
             theme == "light"
               ? "border-slate-200 bg-white/60"
               : "border-slate-800 bg-slate-950/70"
