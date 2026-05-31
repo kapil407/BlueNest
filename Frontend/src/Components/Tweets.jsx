@@ -190,7 +190,7 @@ const Tweets = ({ tweet }) => {
             />
           )}
 
-          <div className="mt-3 flex max-w-sm items-center justify-between">
+          <div className="mt-3 flex  items-center justify-between">
             <button
               type="button"
               onClick={() => HandleGetComment(tweet._id)}

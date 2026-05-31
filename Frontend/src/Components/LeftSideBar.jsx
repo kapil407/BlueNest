@@ -51,7 +51,7 @@ const LeftSideBar = () => {
   };
 
   return (
-    <div className="flex h-full ml-4 flex-col justify-between">
+    <div className="flex h-full ml-2 flex-col justify-between">
       <div>
         <Link
           to="/"
