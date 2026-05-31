@@ -27,10 +27,11 @@ const ThemeToggle = () => {
   };
 
   return (
-    <div className="fixed left-3 top-[60%] w-[8%] -translate-y-1/2 z-50 ml-8">
+    <div className="fixed bottom-5 right-5 z-50">
       <button
         onClick={toggleTheme}
-        className="p-3 rounded-xl bg-gray-200 text-black shadow-lg transition w-full"
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1D9BF0] text-white shadow-xl shadow-sky-500/30 transition hover:bg-sky-500"
+        aria-label="Toggle theme"
       >
         {localTheme === "light" ? (
           <MdDarkMode size={22} />

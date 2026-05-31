@@ -1,34 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import Avatar from "react-avatar";
-import { Link, useParams } from "react-router-dom";
-import { CgLayoutGrid } from "react-icons/cg";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOtherUsers } from "../redux/userSlice";
 import toast from "react-hot-toast";
 
 function RightSideBar({ otherUsers }) {
   const theme = useSelector((store) => store.theme.theme);
-  // console.log("right side", theme);
-
-  const { profile } = useSelector((store) => store.user);
-  const image = profile?.profilePic;
-  let array;
-  if (otherUsers) array = Object?.values(otherUsers);
-  
-  const { id } = useParams();
+  const isLight = theme == "light";
+  const array = otherUsers ? Object.values(otherUsers) : [];
   const dispatch = useDispatch();
-  const [saerchName, setSearchName] = useState("");
+  const [searchName, setSearchName] = useState("");
 
   const searchHandler = (e) => {
     e.preventDefault();
 
-    const SearchedUser = array?.find((other) =>
-      other?.firstName.toLowerCase().includes(saerchName.toLowerCase())
+    const searchedUser = array?.find((other) =>
+      other?.firstName?.toLowerCase().includes(searchName.toLowerCase()),
     );
 
-    if (SearchedUser) {
-      dispatch(getOtherUsers([SearchedUser]));
+    if (searchedUser) {
+      dispatch(getOtherUsers([searchedUser]));
     } else {
       toast.success("User not found");
     }
@@ -37,86 +30,109 @@ function RightSideBar({ otherUsers }) {
   };
 
   return (
-    <>
-      <div className="w-[18%]   min-w-[250px] h-screen">
-        <div>
-          <div
-            className={` flex p-3 rounded-full  border-1  ${theme == "light" ? "bg-gray-100 border-gray-300 " : "bg-black border-gray-400 "}`}
-          >
-            <IoSearch size={25} />
-            <input
-              type="text"
-              value={saerchName}
-              onChange={(e) => setSearchName(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") searchHandler(e);
-              }}
-              placeholder="Search"
-              className={`ml-2 outline-none ${theme == "light" ? "text-black placeholder-gray-400" : "text-white placeholder-gray-500"} `}
-            />
-          </div>
-          <div
-            className={` mt-3 rounded-2xl p-1.5 border border-gray-300 ${theme == "light" ? "bg-gray-100" : "bg-black"}`}
-          >
-            <h1 className="font-bold text-lg mb-2 mt-2 mr-1 text-center">
-              Who to follow 
-            </h1>
+    <div className="flex h-full flex-col gap-4">
+      <form
+        onSubmit={searchHandler}
+        className={`sticky top-4 z-10 flex items-center gap-3 rounded-2xl border px-4 py-3 ${
+          isLight
+            ? "border-slate-200 bg-white text-slate-950 shadow-sm"
+            : "border-slate-800 bg-slate-900 text-slate-100"
+        }`}
+      >
+        <IoSearch size={22} className={isLight ? "text-slate-500" : "text-slate-400"} />
+        <input
+          type="text"
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+          placeholder="Search BlueNest"
+          className="min-w-0 flex-1 bg-transparent outline-none placeholder:text-slate-400"
+        />
+      </form>
 
-            <div className="flex justify-between flex-col ">
-              {array &&
-                array?.map((otherUser) => {
-                  return (
-                    <>
-                      <div
-                        className={`flex justify-between  mt-1.5 px-1 rounded-lg items-center ${theme == "light" ? "bg-gray-100 border border-gray-200 " : "bg-black border border-gray-100 "}`}
-                      >
-                        <div
-                          key={otherUser?._id}
-                          className="ml-2 my-2 flex justify-center items-center"
-                        >
-                          {!otherUser?.profilePic ? (
-                            <Avatar
-                              className="m-1 cursor-pointer"
-                              src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
-                              size="50"
-                              round={true}
-                            />
-                          ) : (
-                            <img
-                              src={otherUser.profilePic?.url}
-                              alt="image"
-                              className="w-15 object-cover h-15 rounded-full"
-                            />
-                          )}
-                          <div className="ml-2">
-                            <h1 className="font-bold">
-                              {otherUser?.firstName}
-                            </h1>
-                            <p>{`${otherUser?.userName}`}</p>
-                          </div>
-                        </div>
-                        {/* redirect to otherUsers profile */}
-                        <Link
-                          to={`/profile/${otherUser?._id}`}
-                          className=" my-2"
-                        >
-                          <div className="my-2 ">
-                            <button
-                              className={`px-4 py-1.5  rounded-full cursor-pointer ${theme == "light" ? "bg-black text-white" : "bg-gray-600 text-white"}`}
-                            >
-                              Profile
-                            </button>
-                          </div>
-                        </Link>
-                      </div>
-                    </>
-                  );
-                })}
-            </div>
-          </div>
+      <section
+        className={`rounded-3xl border p-4 ${
+          isLight
+            ? "border-slate-200 bg-white shadow-sm"
+            : "border-slate-800 bg-slate-900/70"
+        }`}
+      >
+        <div className="mb-3">
+          <h1 className="text-xl font-black">Who to follow</h1>
+          <p className={`text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+            Discover people around you
+          </p>
         </div>
-      </div>
-    </>
+
+        <div className="space-y-2">
+          {array?.slice(0, 6).map((otherUser) => (
+            <div
+              key={otherUser?._id}
+              className={`flex items-center justify-between gap-3 rounded-2xl p-2 transition ${
+                isLight ? "hover:bg-slate-100" : "hover:bg-slate-800"
+              }`}
+            >
+              <div className="flex min-w-0 items-center gap-3">
+                {!otherUser?.profilePic ? (
+                  <Avatar
+                    className="shrink-0 cursor-pointer"
+                    src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
+                    size="44"
+                    round={true}
+                  />
+                ) : (
+                  <img
+                    src={otherUser.profilePic?.url}
+                    alt="profile"
+                    className="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-sky-500/20"
+                  />
+                )}
+                <div className="min-w-0">
+                  <h2 className="truncate font-bold">{otherUser?.firstName}</h2>
+                  <p
+                    className={`truncate text-sm ${
+                      isLight ? "text-slate-500" : "text-slate-400"
+                    }`}
+                  >
+                    @{otherUser?.userName}
+                  </p>
+                </div>
+              </div>
+
+              <Link
+                to={`/profile/${otherUser?._id}`}
+                className={`shrink-0 rounded-full px-4 py-2 text-sm font-bold transition ${
+                  isLight
+                    ? "bg-slate-950 text-white hover:bg-slate-700"
+                    : "bg-white text-slate-950 hover:bg-slate-200"
+                }`}
+              >
+                View
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section
+        className={`rounded-3xl border p-4 ${
+          isLight
+            ? "border-slate-200 bg-white shadow-sm"
+            : "border-slate-800 bg-slate-900/70"
+        }`}
+      >
+        <h2 className="font-black">Trending</h2>
+        <div className="mt-3 space-y-3">
+          {["#BlueNest", "#WebDev", "#React"].map((tag) => (
+            <div key={tag}>
+              <p className={`text-xs ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+                Trending now
+              </p>
+              <p className="font-bold">{tag}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
 

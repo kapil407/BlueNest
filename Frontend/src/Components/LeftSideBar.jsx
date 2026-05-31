@@ -1,30 +1,27 @@
-import React, { useState } from "react";
-import { IoMdHome } from "react-icons/io";
-import { IoSearch } from "react-icons/io5";
-import { MdOutlineNotificationsNone } from "react-icons/md";
+import React from "react";
 import { CgProfile } from "react-icons/cg";
-import { IoMdLogOut } from "react-icons/io";
+import { IoMdHome, IoMdLogOut } from "react-icons/io";
 import { PiBookmarkSimple } from "react-icons/pi";
-import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { USER_API_END_POINT, TWEET_API_END_POINT } from "../Utils/constant.js";
-
+import { USER_API_END_POINT } from "../Utils/constant.js";
 import { toast } from "react-hot-toast";
-import { getMyProfile, getUser, getOtherUsers } from "../redux/userSlice.js";
-import { useDispatch } from "react-redux";
+import { getMyProfile, getOtherUsers, getUser } from "../redux/userSlice.js";
 import { getMyTweets } from "../redux/tweetSlice.js";
-import Message from "./Message.jsx";
-import ThemeToggle from "./Theme.jsx";
 
 const LeftSideBar = () => {
-  
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user } = useSelector((store) => store.user); // user is loggedInUser
-  const { tweet } = useSelector((store) => store.tweet);
+  const location = useLocation();
+  const { user } = useSelector((store) => store.user);
   const theme = useSelector((store) => store.theme.theme);
+
+  const isLight = theme == "light";
+  const navItems = [
+    { label: "Home", icon: IoMdHome, to: "/" },
+    { label: "Profile", icon: CgProfile, to: `/profile/${user?._id}` },
+    { label: "Saved", icon: PiBookmarkSimple, to: `/bookmarks/${user?._id}` },
+  ];
 
   const logoutHandler = async () => {
     try {
@@ -47,90 +44,90 @@ const LeftSideBar = () => {
       console.log(error);
     }
   };
-  const [selectedMenu, setSelectedMenu] = useState(0);
-  const clickHandler = (index) => {
-    setSelectedMenu(index);
+
+  const isActive = (to) => {
+    if (to === "/") return location.pathname === "/";
+    return location.pathname.startsWith(to);
   };
-  const clickHandlers = (index) => {
-    clickHandler(index);
-    logoutHandler();
-  };
-  const SelecetedPage = "Selected";
+
   return (
-    <>
-      <div className="w-[18%] relative h-screen ">
+    <div className="flex h-full flex-col justify-between">
+      <div>
         <Link
-          to={"/"}
-          className="hover:bg-gray-300 hover:cursor-pointer rounded-full w-16 h-16 flex items-center justify-center transition delay-75 ease-in mt-1 mb-2 border border-gray-400 "
+          to="/"
+          className="mb-8 flex items-center gap-3 rounded-2xl px-2 py-2 transition hover:bg-sky-500/10"
         >
           <img
-            className=" object-cover w-15 h-15  rounded-full "
-            src="/logo.png"
-            alt="logo"
+            className="h-12 w-12 rounded-2xl object-cover shadow-md"
+            src={isLight ? "/logo.png" : "/logo_Dark.png"}
+            alt="BlueNest logo"
           />
+          <div>
+            <h1 className="text-xl font-black">BlueNest</h1>
+            <p className={`text-xs ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+              Social space
+            </p>
+          </div>
         </Link>
-        <div className="flex flex-col justify-between mr-4">
-          <Link
-            to="/"
-            className={
-              selectedMenu === 0
-                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-evenly font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-evenly font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-            }
-            onClick={() => {
-              clickHandler(0);
-            }}
-          >
-            <IoMdHome size={30} />
-            <h1>Home</h1>
-          </Link>
 
-          {/*  this redirect to loggedIn User */}
-          <Link
-            to={`/profile/${user?._id}`}
-            className={
-              selectedMenu === 1
-                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-evenly font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-evenly font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-            }
-            onClick={() => {
-              clickHandler(1);
-            }}
-          >
-            <CgProfile size={30} />
-            <h1>Profile</h1>
-          </Link>
-          <Link
-            to={`/bookmarks/${user?._id}`}
-            className={
-              selectedMenu === 2
-                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-evenly font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-evenly font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-            }
-            onClick={() => {
-              clickHandler(2);
-            }}
-          >
-            <PiBookmarkSimple size={30} />
-            <h1>Saved</h1>
-          </Link>
+        <nav className="space-y-2">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.to);
 
-          <div
-            className={
-              selectedMenu === 3
-                ? ` ${theme == "light" ? `hover:bg-gray-200 ${SelecetedPage}` : `hover:bg-gray-600 bg-gray-600 `} flex items-center justify-evenly font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-                : `${theme == "light" ? `hover:bg-gray-200 ` : "hover:bg-gray-600 "} flex items-center justify-evenly font-bold text-2xl w-35  mt-4 py-2 px-3  hover:cursor-pointer rounded-full transition delay-75 ease-in border border-gray-300 `
-            }
-            onClick={() => {
-              clickHandlers(3);
-            }}
-          >
-            <IoMdLogOut />
-            <h1>Logout</h1>
+            return (
+              <Link
+                key={item.label}
+                to={item.to}
+                className={`flex items-center gap-4 rounded-2xl px-4 py-3 text-lg font-bold transition ${
+                  active
+                    ? "bg-[#1D9BF0] text-white shadow-lg shadow-sky-500/20"
+                    : isLight
+                      ? "text-slate-700 hover:bg-slate-100 hover:text-slate-950"
+                      : "text-slate-300 hover:bg-slate-900 hover:text-white"
+                }`}
+              >
+                <Icon size={26} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+
+      <div
+        className={`rounded-3xl border p-3 ${
+          isLight
+            ? "border-slate-200 bg-slate-50"
+            : "border-slate-800 bg-slate-900/70"
+        }`}
+      >
+        <div className="mb-4 flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1D9BF0] text-sm font-black text-white">
+            {user?.firstName?.charAt(0) || "B"}
+          </div>
+          <div className="min-w-0">
+            <h2 className="truncate font-bold">{user?.firstName || "BlueNest"}</h2>
+            <p className={`truncate text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+              @{user?.userName || "user"}
+            </p>
           </div>
         </div>
+
+        <button
+          onClick={logoutHandler}
+          className={`flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-2.5 font-bold transition ${
+            isLight
+              ? "bg-slate-900 text-white hover:bg-slate-700"
+              : "bg-white text-slate-950 hover:bg-slate-200"
+          }`}
+        >
+          <IoMdLogOut size={22} />
+          Logout
+        </button>
       </div>
-    </>
+    </div>
   );
 };
+
 export default LeftSideBar;

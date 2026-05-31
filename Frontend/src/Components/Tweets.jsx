@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Avatar from "react-avatar";
-import { FaDiaspora, FaImage } from "react-icons/fa6";
 import { FaRegComment } from "react-icons/fa";
 import { BiLike } from "react-icons/bi";
 import { Link } from "react-router-dom";
@@ -15,8 +14,6 @@ import { USER_API_END_POINT } from "../Utils/constant";
 import GetComment from "./ShowComments.jsx";
 import { formatMessageTime } from "../Utils/setTime.js";
 
-import { isAction } from "@reduxjs/toolkit";
-
 import { getBookMarksIds } from "../redux/userSlice.js";
 
 import useBookmarks from "../hooks/useBookmarks.js";
@@ -29,16 +26,15 @@ const Tweets = ({ tweet }) => {
   const [selectedId, setSelectedId] = useState(null);
   const [commentLength, setCommentLength] = useState(0);
 
-  const { profile, bookmarksIds } = useSelector((store) => store.user);
+  const { bookmarksIds } = useSelector((store) => store.user);
   const { refresh } = useSelector((store) => store.tweet);
+  const theme = useSelector((store) => store.theme.theme);
+  const isLight = theme == "light";
 
   const isBookmarked = bookmarksIds?.some(
     (id) => id.toString() === tweet?._id?.toString(),
   );
-  console.log("image and video", tweet?.image?.url);
-
   const { handleBookmark } = useBookmarks();
-  const { userDetails } = tweet;
 
   const firstUser =
     Array.isArray(tweet.userDetails) && tweet.userDetails.length > 0
@@ -47,7 +43,7 @@ const Tweets = ({ tweet }) => {
 
   const { user } = useSelector((store) => store.user);
 
-  const image = tweet.userDetails[0].profilePic;
+  const image = firstUser?.profilePic;
 
   const dispatch = useDispatch();
 
@@ -137,148 +133,141 @@ const Tweets = ({ tweet }) => {
     }
   };
   return (
-    <>
-      <div className="border-b border-gray-200 w-[]">
-        <div className="w-full">
-          <div className="flex flex-col">
-            <div className="ml-1 flex  items-center">
-              <div className="">
-                <div className="flex ml-6">
-                  <Link to={`profile/${tweet?.userId}`} className="m-1  ">
-                    {!image?.url ? (
-                      <Avatar
-                        className="m-1 cursor-pointer"
-                        src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
-                        size="50"
-                        round={true}
-                      />
-                    ) : (
-                      <img
-                        src={image?.url}
-                        alt="photo"
-                        className="w-13 h-13 rounded-full border-2 object-cover border-gray-400 "
-                      />
-                    )}
-                  </Link>
-                  <div className="flex ml-2 mb-4 items-center ">
-                    <h1 className="font-bold text-lg ml-1">
-                      {firstUser?.firstName}
-                    </h1>
-                    <p className="ml-1">
-                      @{firstUser?.userName}{" "}
-                      {formatMessageTime(tweet.createdAt)}
-                    </p>
-                  </div>
-                </div>
+    <article
+      className={`border-b px-4 py-5 transition ${
+        isLight
+          ? "border-slate-200 hover:bg-slate-50"
+          : "border-slate-800 hover:bg-slate-900/55"
+      }`}
+    >
+      <div className="flex gap-3">
+        <Link to={`profile/${tweet?.userId}`} className="shrink-0">
+          {!image?.url ? (
+            <Avatar
+              className="cursor-pointer"
+              src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
+              size="48"
+              round={true}
+            />
+          ) : (
+            <img
+              src={image?.url}
+              alt="photo"
+              className="h-12 w-12 rounded-full object-cover ring-2 ring-sky-500/20"
+            />
+          )}
+        </Link>
 
-                <div className=" w-[90%] flex justify-center items-center ml-12 ">
-                  <div>
-                    <p className="mb-2  mt-3  font-semibold  rounded ">
-                      {tweet?.description}
-                    </p>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <h1 className="font-black">{firstUser?.firstName || "BlueNest User"}</h1>
+            <p className={`text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+              @{firstUser?.userName || "user"} · {formatMessageTime(tweet.createdAt)}
+            </p>
+          </div>
 
-                    {tweet?.image?.url && (
-                      <img
-                        src={tweet?.image?.url}
-                        alt="image"
-                        className="rounded object-cover w-186 h-110"
-                      />
-                    )}
+          {tweet?.description && (
+            <p className="mt-2 whitespace-pre-wrap text-[15px] leading-6">
+              {tweet?.description}
+            </p>
+          )}
 
-                    {tweet?.video?.url && (
-                      <video
-                        src={tweet?.video?.url}
-                        controls
-                        preload="metadata"
-                        className="rounded object-cover w-186 h-110"
-                        playsInline
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
+          {tweet?.image?.url && (
+            <img
+              src={tweet?.image?.url}
+              alt="post"
+              className="mt-3 max-h-[520px] w-full rounded-3xl border border-slate-200 object-cover dark:border-slate-800"
+            />
+          )}
 
-            <div className="flex justify-between p-8">
-              <div className="flex   p-2 rounded-full  cursor-pointer">
-                <FaRegComment
-                  onClick={() => HandleGetComment(tweet._id)}
-                  size={23}
-                  className=" text-gray-600 hover:text-green-600"
-                />
-                <p className="ml-2">{commentLength}</p>
-              </div>
-              <div className="flex  p-2 rounded-full cursor-pointer">
-                <Link
-                  onClick={() => likeDisLikeHandler(tweet?._id)}
-                  className="flex"
-                >
-                  <BiLike
-                    size={25}
-                    className={
-                      isLiked
-                        ? "flex text-pink-600"
-                        : "flex text-gray-600 hover:text-pink-600"
-                    }
-                  />
-                  <p className="ml-2">{`${tweet.likes.length}`}</p>
-                </Link>
-              </div>
-              <div>
-                {user?._id !== tweet.userId ? (
-                  <>
-                    <Link
-                      onClick={() => handleBookmark(tweet?._id)}
-                      className="flex   p-2 rounded-full  cursor-pointer"
-                    >
-                      <PiBookmarkSimpleBold
-                        size={25}
-                        className={
-                          isBookmarked
-                            ? "text-yellow-500"
-                            : "text-gray-600 hover:text-yellow-600"
-                        }
-                      />
-                    </Link>
-                  </>
-                ) : (
-                  <>
-                    <Link
-                      onClick={() => DeleteTweetHandler(tweet?._id)}
-                      className=" flex items-center   rounded-3xl p-2"
-                    >
-                      <MdOutlineDelete
-                        size={25}
-                        className=" text-gray-600 hover:text-red-600"
-                      />
-                    </Link>
-                  </>
-                )}
-              </div>
-            </div>
-            {showComment && selectedId === tweet._id && (
-              <GetComment id={selectedId} />
-            )}
-            {showComment && (
-              <div className=" pb-4 mt-2 px-2">
-                <textarea
-                  value={addComment}
-                  placeholder="Write a comment..."
-                  onChange={(e) => setAddComment(e.target.value)}
-                  className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-                <button
-                  onClick={() => handleCommentSubmit(tweet._id)}
-                  className="mt-2 cursor-pointer bg-blue-500 text-white px-4 py-1 rounded-full hover:bg-blue-600"
-                >
-                  Comment
-                </button>
-              </div>
+          {tweet?.video?.url && (
+            <video
+              src={tweet?.video?.url}
+              controls
+              preload="metadata"
+              className="mt-3 max-h-[520px] w-full rounded-3xl border border-slate-200 object-cover dark:border-slate-800"
+              playsInline
+            />
+          )}
+
+          <div className="mt-3 flex max-w-sm items-center justify-between">
+            <button
+              type="button"
+              onClick={() => HandleGetComment(tweet._id)}
+              className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm transition hover:bg-emerald-500/10 hover:text-emerald-500 ${
+                isLight ? "text-slate-500" : "text-slate-400"
+              }`}
+            >
+              <FaRegComment size={18} />
+              <span>{commentLength}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => likeDisLikeHandler(tweet?._id)}
+              className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm transition hover:bg-pink-500/10 hover:text-pink-500 ${
+                isLiked
+                  ? "text-pink-600"
+                  : isLight
+                    ? "text-slate-500"
+                    : "text-slate-400"
+              }`}
+            >
+              <BiLike size={20} />
+              <span>{tweet.likes.length}</span>
+            </button>
+
+            {user?._id !== tweet.userId ? (
+              <button
+                type="button"
+                onClick={() => handleBookmark(tweet?._id)}
+                className={`rounded-full px-3 py-2 transition hover:bg-yellow-500/10 hover:text-yellow-500 ${
+                  isBookmarked
+                    ? "text-yellow-500"
+                    : isLight
+                      ? "text-slate-500"
+                      : "text-slate-400"
+                }`}
+              >
+                <PiBookmarkSimpleBold size={20} />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => DeleteTweetHandler(tweet?._id)}
+                className={`rounded-full px-3 py-2 transition hover:bg-red-500/10 hover:text-red-500 ${
+                  isLight ? "text-slate-500" : "text-slate-400"
+                }`}
+              >
+                <MdOutlineDelete size={21} />
+              </button>
             )}
           </div>
+
+          {showComment && selectedId === tweet._id && <GetComment id={selectedId} />}
+          {showComment && (
+            <div className="mt-3">
+              <textarea
+                value={addComment}
+                placeholder="Write a comment..."
+                onChange={(e) => setAddComment(e.target.value)}
+                className={`w-full resize-none rounded-2xl border p-3 outline-none transition focus:ring-4 focus:ring-sky-500/20 ${
+                  isLight
+                    ? "border-slate-200 bg-white text-slate-950"
+                    : "border-slate-800 bg-slate-900 text-slate-100"
+                }`}
+              />
+              <button
+                onClick={() => handleCommentSubmit(tweet._id)}
+                className="mt-2 cursor-pointer rounded-full bg-[#1D9BF0] px-5 py-2 font-bold text-white hover:bg-sky-500"
+              >
+                Comment
+              </button>
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </article>
   );
 };
 

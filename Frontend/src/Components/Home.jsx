@@ -1,17 +1,18 @@
-import React, { useEffect,useState, lazy, Suspense } from "react";
+import React, { useEffect, useState, lazy } from "react";
 const LeftSideBar = lazy(() => import("./LeftSideBar.jsx"));
 const RightSideBar = lazy(() => import("./RightSideBar.jsx"));
-const LeftSideRemmi=lazy(()=> import('../RimmiEffect_UI/LeftSideRemmi.jsx'));
-const RightSideRemmi=lazy(()=>import('../RimmiEffect_UI/RightSideRemmi.jsx'));
+const LeftSideRemmi = lazy(() => import("../RimmiEffect_UI/LeftSideRemmi.jsx"));
+const RightSideRemmi = lazy(() => import("../RimmiEffect_UI/RightSideRemmi.jsx"));
 import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useOtherUsers from "../hooks/useOtherUsers.js";
 import useGetTweets from "../hooks/useGetTweets.js";
 import ThemeToggle from "./Theme.jsx";
 const Home = () => {
-   const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { user, otherUsers } = useSelector((store) => store.user);
+  const theme = useSelector((store) => store.theme.theme);
 
   useOtherUsers();
   useGetTweets();
@@ -30,21 +31,41 @@ const Home = () => {
   }, []);
 
   return (
-  <div className="flex justify-between w-[96%] mx-auto relative">
-    <ThemeToggle />
+    <div
+      className={`h-screen w-full overflow-hidden ${
+        theme == "light"
+          ? "bg-slate-100 text-slate-950"
+          : "bg-slate-950 text-slate-100"
+      }`}
+    >
+      <div className="mx-auto grid h-full w-full max-w-[1440px] grid-cols-1 lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,680px)_340px]">
+        <aside
+          className={`hidden h-screen border-r px-3 py-4 lg:block ${
+            theme == "light"
+              ? "border-slate-200 bg-white/80"
+              : "border-slate-800 bg-slate-950/90"
+          }`}
+        >
+          {loading ? <LeftSideRemmi /> : <LeftSideBar />}
+        </aside>
 
-     <div className="flex">
-      {loading ? <LeftSideRemmi /> : <LeftSideBar />}
+        <main className="h-screen min-w-0 overflow-y-auto custom-scrollbar">
+          <Outlet />
+        </main>
+
+        <aside
+          className={`hidden h-screen border-l px-4 py-4 xl:block ${
+            theme == "light"
+              ? "border-slate-200 bg-white/60"
+              : "border-slate-800 bg-slate-950/70"
+          }`}
+        >
+          {loading ? <RightSideRemmi /> : <RightSideBar otherUsers={otherUsers} />}
+        </aside>
+      </div>
+      <ThemeToggle />
     </div>
-
-    <Outlet />
-    <div className="flex">
-      {loading ? <RightSideRemmi /> :  <RightSideBar otherUsers={otherUsers} />}
-    </div>
-
-    
-  </div>
-);
+  );
 };
 
 export default Home;

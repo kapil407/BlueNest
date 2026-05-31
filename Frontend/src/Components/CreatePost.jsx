@@ -8,9 +8,10 @@ import { toast } from "react-hot-toast";
 import { getRefresh, getIsActive } from "../redux/tweetSlice.js";
 import { FaImage } from "react-icons/fa";
 import ClipLoader from "react-spinners/ClipLoader";
+import { IoClose } from "react-icons/io5";
 
 const CreatePost = () => {
-  const theme = useSelector((store) => store.theme);
+  const theme = useSelector((store) => store.theme.theme);
   const { user, profile } = useSelector((store) => store.user);
   const { isActive } = useSelector((store) => store.tweet);
   const [description, setDescription] = useState("");
@@ -20,8 +21,8 @@ const CreatePost = () => {
   const dispatch = useDispatch();
   // console.log("progile", profile);
   let profileImage = profile?.profilePic?.url;
-  console.log("profileimahge", profileImage);
   const [loading, setLoading] = useState(false);
+  const isLight = theme == "light";
 
   const submitHandler = async () => {
     if (!description && !media) {
@@ -86,34 +87,52 @@ const CreatePost = () => {
   // }
 
   return (
-    <div className="w-[100%]">
+    <div className="w-full">
       <div>
-        <div className="flex justify-around items-center border-b border-gray-200">
+        <div
+          className={`grid grid-cols-2 border-b ${
+            isLight ? "border-slate-200" : "border-slate-800"
+          }`}
+        >
           <div
             onClick={forYouHandler}
             className={`${
               isActive
-                ? "border-b-3 border-blue-400 "
-                : "border-b border-transparent"
-            } flex justify-center cursor-pointer hover:bg-gray-400 w-full text-center transition delay-75 py-3 px-2`}
+                ? "text-sky-500"
+                : isLight
+                  ? "text-slate-500"
+                  : "text-slate-400"
+            } group flex cursor-pointer justify-center text-center transition hover:bg-sky-500/10`}
           >
-            <h1 className="font-bold text-gray-700 text-lg">For you</h1>
+            <h1 className="relative px-4 py-4 text-base font-black">
+              For you
+              {isActive && (
+                <span className="absolute bottom-0 left-1/2 h-1 w-12 -translate-x-1/2 rounded-full bg-[#1D9BF0]" />
+              )}
+            </h1>
           </div>
 
           <div
             onClick={followingTweetHandler}
             className={`${
               !isActive
-                ? "border-b-3  border-blue-400"
-                : "border border-transparent"
-            } flex justify-center cursor-pointer hover:bg-gray-400 w-full text-center transition delay-75 py-3 px-2`}
+                ? "text-sky-500"
+                : isLight
+                  ? "text-slate-500"
+                  : "text-slate-400"
+            } group flex cursor-pointer justify-center text-center transition hover:bg-sky-500/10`}
           >
-            <h1 className="font-bold text-gray-700 text-lg ">Following</h1>
+            <h1 className="relative px-4 py-4 text-base font-black">
+              Following
+              {!isActive && (
+                <span className="absolute bottom-0 left-1/2 h-1 w-12 -translate-x-1/2 rounded-full bg-[#1D9BF0]" />
+              )}
+            </h1>
           </div>
         </div>
 
-        <div>
-          <div className="flex m-2">
+        <div className={`border-b p-4 ${isLight ? "border-slate-200" : "border-slate-800"}`}>
+          <div className="flex gap-3">
             <Link to={`/profile/${user?._id}`}>
               {!profileImage ? (
                 <Avatar
@@ -125,48 +144,69 @@ const CreatePost = () => {
                 <img
                   src={profileImage}
                   alt="profilePhoto"
-                  className="rounded-full border-2 border-gray-400 w-[83px] h-[75px] object-cover"
+                  className="h-12 w-12 rounded-full object-cover ring-2 ring-sky-500/20"
                 />
               )}
             </Link>
 
-            <input
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              type="text"
-              placeholder="What's happening?"
-              className={`text-lg ml-4 mt-1 outline-none border-none w-full ${theme == "light" ? "placeholder-gray-400" : "placeholder-gray-500"}`}
-            />
-          </div>
-        </div>
+            <div className="min-w-0 flex-1">
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={3}
+                placeholder="What's happening?"
+                className={`w-full resize-none bg-transparent text-lg outline-none placeholder:text-slate-400 ${
+                  isLight ? "text-slate-950" : "text-slate-100"
+                }`}
+              />
 
-        <div className="flex justify-between p-8 border-b border-gray-300 items-center">
-          <input
-            type="file"
-            accept="image/*,video/*"
-            id="galleryUpload"
-            onChange={(e) => setMedia(e.target.files[0])}
-            style={{ display: "none" }}
-          />
-          <div className="relative group inline-block">
-            <label
-              htmlFor="galleryUpload"
-              className="cursor-pointer text-3xl text-blue-500 hover:text-blue-700"
-            >
-              <FaImage />
-            </label>
+              {media && (
+                <div
+                  className={`mt-3 flex items-center justify-between rounded-2xl border px-4 py-2 text-sm ${
+                    isLight
+                      ? "border-slate-200 bg-slate-50 text-slate-600"
+                      : "border-slate-800 bg-slate-900 text-slate-300"
+                  }`}
+                >
+                  <span className="truncate">{media.name}</span>
+                  <button
+                    type="button"
+                    onClick={() => setMedia(null)}
+                    className="ml-3 rounded-full p-1 hover:bg-red-500/10 hover:text-red-500"
+                    aria-label="Remove media"
+                  >
+                    <IoClose size={18} />
+                  </button>
+                </div>
+              )}
 
-            <span
-              className={`absolute -top-8 left-15 -translate-x-1/2 
-                   opacity-0 group-hover:opacity-100 
-                   transition-opacity duration-200 
-                   bg-black  text-xs px-2 py-1 rounded ${theme == "light" ? "text-white" : "text-gray-400"}`}
-            >
-              Upload Image
-            </span>
-          </div>
+              <div className="mt-4 flex items-center justify-between">
+                <input
+                  type="file"
+                  accept="image/*,video/*"
+                  id="galleryUpload"
+                  onChange={(e) => setMedia(e.target.files[0])}
+                  className="hidden"
+                />
+                <div className="relative group inline-block">
+                  <label
+                    htmlFor="galleryUpload"
+                    className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sky-500 transition hover:bg-sky-500/10"
+                  >
+                    <FaImage size={22} />
+                  </label>
 
-          <div className="flex gap-2">
+                  <span
+                    className={`pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded px-2 py-1 text-xs opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${
+                      isLight
+                        ? "bg-slate-950 text-white"
+                        : "bg-white text-slate-950"
+                    }`}
+                  >
+                    Upload
+                  </span>
+                </div>
+
             {/* {!showInput ? (
               <button
                 onClick={() => setShowInput(true)}
@@ -203,7 +243,11 @@ const CreatePost = () => {
             <button
               onClick={submitHandler}
               disabled={(!media && !description.trim()) || loading}
-              className={` p-3 rounded-full  border-none w-24 font-bold text-white flex items-center justify-center gap-2 disabled:opacity-70 ${(!media && !description.trim()) || loading ? "cursor-not-allowed bg-gray-600 text-black" : "cursor-pointer bg-[#1D9BF0]  hover:bg-blue-400"}`}
+                  className={`flex min-w-24 items-center justify-center gap-2 rounded-full px-5 py-2.5 font-bold text-white transition disabled:opacity-60 ${
+                    (!media && !description.trim()) || loading
+                      ? "cursor-not-allowed bg-slate-400"
+                      : "cursor-pointer bg-[#1D9BF0] shadow-lg shadow-sky-500/20 hover:bg-sky-500"
+                  }`}
             >
               {loading ? (
                 <>
@@ -214,6 +258,8 @@ const CreatePost = () => {
                 "Post"
               )}
             </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
