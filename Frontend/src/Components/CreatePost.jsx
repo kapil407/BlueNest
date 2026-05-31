@@ -90,8 +90,10 @@ const CreatePost = () => {
     <div className="w-full">
       <div>
         <div
-          className={`grid grid-cols-2 border-b ${
-            isLight ? "border-slate-200" : "border-slate-800"
+          className={`sticky top-0 z-20 grid grid-cols-2 border-b backdrop-blur-xl ${
+            isLight
+              ? "border-slate-200 bg-white/85"
+              : "border-slate-800 bg-slate-950/85"
           }`}
         >
           <div
