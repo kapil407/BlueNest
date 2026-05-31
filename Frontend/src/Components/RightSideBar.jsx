@@ -30,7 +30,7 @@ function RightSideBar({ otherUsers }) {
   };
 
   return (
-    <div className="ml-auto flex h-full w-full max-w-[340px] flex-col gap-4">
+    <div className="ml-auto flex h-full mr-8 w-full max-w-[340px] flex-col gap-4">
       <form
         onSubmit={searchHandler}
         className={`sticky top-4 z-10 flex items-center gap-3 rounded-2xl border px-4 py-3 ${
