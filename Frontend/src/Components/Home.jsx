@@ -38,7 +38,7 @@ const Home = () => {
           : "bg-slate-950 text-slate-100"
       }`}
     >
-      <div className="mx-auto grid h-full w-full max-w-[1540px] grid-cols-1 lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,760px)_minmax(360px,1fr)]">
+      <div className="mx-auto grid h-full w-full max-w-[1540px] grid-cols-1 lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[minmax(260px,1fr)_760px_minmax(260px,1fr)]">
         <aside
           className={`hidden h-screen border-r px-3 py-4 lg:block ${
             theme == "light"
