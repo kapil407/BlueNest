@@ -1,15 +1,15 @@
-import React, { lazy, Suspense } from "react";
+import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-const Home = lazy(() => import("./Home.jsx"));
-const Feed = lazy(() => import("./Feed.jsx"));
-const Profile = lazy(() => import("./Profile.jsx"));
-const Signup = lazy(() => import("./Signup.jsx"));
-const EditeProfile = lazy(() => import("./Editeprofile.jsx"));
-const Message = lazy(() => import("./Message.jsx"));
+import Home from "./Home.jsx";
+import Feed from "./Feed.jsx";
+import Profile from "./Profile.jsx";
+import Signup from "./Signup.jsx";
+import EditeProfile from "./Editeprofile.jsx";
+import Message from "./Message.jsx";
 // const { ChatRoom } = lazy(() => import("./ChatRoom.jsx"));
-const Bookmarks = lazy(() => import("./Bookmarks.jsx"));
-const Login = lazy(() => import("./Login.jsx"));
-const OtpVerify = lazy(() => import("./OtpVerify.jsx"));
+import Bookmarks from "./Bookmarks.jsx";
+import Login from "./Login.jsx";
+import OtpVerify from "./OtpVerify.jsx";
 // import FeedRemmi from '../RimmiEffect_UI/FeedRimmi.jsx';
 import FeedRemmi from "../RimmiEffect_UI/Temp.jsx";
 
