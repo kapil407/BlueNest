@@ -232,7 +232,7 @@ function Profile() {
             }
            
          
-          <div className={`${theme=="dark"?"bg-black":"bg-white"}`}>
+          <div className={`${theme=="dark"?"text-sm text-slate-400 bg-slate-950/85":"bg-white"}`}>
             <div className="my-5">
               <p>{profile?.bio}</p>
             </div>
