@@ -29,7 +29,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const signUpController = async (req, res) => {
   console.log("EMAIL_USER", process.env.RESEND_API_KEY);
@@ -70,12 +70,12 @@ export const signUpController = async (req, res) => {
 
     console.log("Newuser", newUser);
 
-   const info=await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: emailId,
-      subject: "OTP Verification",
-      text: `Your OTP is : ${otp}`,
-    });
+  //  const info=await resend.emails.send({
+  //     from: 'onboarding@resend.dev',
+  //     to: emailId,
+  //     subject: "OTP Verification",
+  //     text: `Your OTP is : ${otp}`,
+  //   });
     const Data = await transporter.sendMail({
     from: process.env.EMAIL_USER, // sender address
     to: emailId, // list of recipients
@@ -84,7 +84,7 @@ export const signUpController = async (req, res) => {
     html: "<b>Hello world?</b>", // HTML body
   });
 
-      console.log("info",info);
+      // console.log("info",info);
       console.log("Data",Data);
     await newUser.save();
 
@@ -167,12 +167,12 @@ export const resendOTP = async (req, res) => {
     const expires = new Date(Date.now() + 2 * 60 * 1000);
     user.expiryOtp = expires;
    await user.save();
-   const info=await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: emailId,
-      subject: "OTP Verification",
-      text: `Your OTP is : ${otp}`,
-    });
+  //  const info=await resend.emails.send({
+  //     from: 'onboarding@resend.dev',
+  //     to: emailId,
+  //     subject: "OTP Verification",
+  //     text: `Your OTP is : ${otp}`,
+  //   });
     const Data = await transporter.sendMail({
     from: process.env.EMAIL_USER, // sender address
     to: emailId, // list of recipients
@@ -181,7 +181,7 @@ export const resendOTP = async (req, res) => {
     html: "<b>Hello world?</b>", // HTML body
   });
 
-      console.log("info",info);
+      // console.log("info",info);
       console.log("Data",Data);
     console.log("otp resend", otp,user.verificationCode);
  
