@@ -20,7 +20,7 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 
 // email transport
 
-const transport = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
