@@ -129,12 +129,12 @@ export const verifyOTP = async (req, res) => {
 
 export const resendOTP = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { emailId } = req.body;
     // console.log("email", email);
-    if (!email) {
+    if (!emailId) {
       return res.status(400).json({ message: "email is undefined" });
     }
-    const user = await User.findOne({ emailId: email });
+    const user = await User.findOne({ emailId: emailId });
     if (!user) {
       return res
         .status(400)
