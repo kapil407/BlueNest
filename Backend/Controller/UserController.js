@@ -149,14 +149,14 @@ export const resendOTP = async (req, res) => {
 
     const expires = new Date(Date.now() + 2 * 60 * 1000);
     user.expiryOtp = expires;
-    await user.save();
-    await transport.sendMail({
+  
+   resend.emails.send({
       from: process.env.EMAIL_USER,
-      to: email,
+      to: emailId,
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
     });
-
+  await user.save();
     return res
       .status(200)
       .json({ message: "OTP resent successfully", success: true });
