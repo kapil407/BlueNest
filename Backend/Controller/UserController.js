@@ -24,8 +24,8 @@ const transport = nodemailer.createTransport({
   secure: true,
   port: 443,
   auth: {
-    user: "kapilkeer1506@gmail.com",
-    pass: "kvkpdylbtubmaqgf",
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
@@ -57,16 +57,17 @@ export const signUpController = async (req, res) => {
       expiryOtp: ExpiryOtp,
       verificationCode: otp,
     });
-    await newUser.save();
+  
   
 
     await transport.sendMail({
-      from: "kapilkeer1506@gmail.com",
+      from: process.env.EMAIL_USER,
       to: emailId,
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
     });
       console.log("newUser", otp);
+        await newUser.save();
 
     return res.status(200).json({
       message: "Register succesfully.Please verify OTP sent to your email",
@@ -148,7 +149,7 @@ export const resendOTP = async (req, res) => {
     user.expiryOtp = expires;
     await user.save();
     await transport.sendMail({
-      from: "kapilkeer1506@gmail.com",
+      from: process.env.EMAIL_USER,
       to: email,
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
