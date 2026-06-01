@@ -20,7 +20,7 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 
 // email transport
 
-import nodemailer from "nodemailer";
+// import nodemailer from "nodemailer";
 
 const transport = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
