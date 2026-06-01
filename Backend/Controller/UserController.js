@@ -58,6 +58,7 @@ export const signUpController = async (req, res) => {
       verificationCode: otp,
     });
     await newUser.save();
+    console.log("newUser", otp);
 
     await transport.sendMail({
       from: "kapilkeer1506@gmail.com",
