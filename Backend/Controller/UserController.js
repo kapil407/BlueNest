@@ -20,12 +20,15 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 
 // email transport
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
- 
+import nodemailer from "nodemailer";
+
+const transport = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.BREVO_USER,
+    pass: process.env.BREVO_PASS,
   },
 });
 // const resend = new Resend(process.env.RESEND_API_KEY);

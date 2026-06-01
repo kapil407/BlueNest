@@ -19,7 +19,33 @@ import {
 } from "../Controller/UserController.js";
 
 const router = express.Router();
+import express from "express";
+import transport from "../Middleware/Email.js";
 
+// const router = express.Router();
+
+router.get("/test-mail", async (req, res) => {
+  try {
+    const info = await transport.sendMail({
+      from: "kapilkeer1998@gmail.com",
+      to: "kapilkeer1998@gmail.com",
+      subject: "Brevo Test",
+      text: "Hello from Brevo",
+    });
+
+    console.log(info);
+
+    res.json({
+      success: true,
+      info,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
+// export default router;
 // Auth routes
 router.post("/signup", SignUpValidation, signUpController);
 router.post("/login", LoginController);
