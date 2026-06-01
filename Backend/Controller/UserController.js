@@ -63,7 +63,7 @@ export const signUpController = async (req, res) => {
     console.log("Newuser", newUser);
 
     resend.emails.send({
-      from: process.env.EMAIL_USER,
+      from: 'onboarding@resend.dev',
       to: emailId,
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
@@ -149,15 +149,15 @@ export const resendOTP = async (req, res) => {
 
     const expires = new Date(Date.now() + 2 * 60 * 1000);
     user.expiryOtp = expires;
-  
+   await user.save();
    resend.emails.send({
-      from: process.env.EMAIL_USER,
+      from: 'onboarding@resend.dev',
       to: emailId,
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
     });
     console.log("otp resend", otp,user.verificationCode);
-  await user.save();
+ 
     return res
       .status(200)
       .json({ message: "OTP resent successfully", success: true });
