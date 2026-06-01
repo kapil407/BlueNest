@@ -85,16 +85,16 @@ export const signUpController = async (req, res) => {
 
 export const verifyOTP = async (req, res) => {
   try {
-    const email = req.body.email;
+    const emailId = req.body.emailId;
     const otp = req.body.otp;
-    // console.log("backend", email);
+    console.log("backend", emailId);
     // console.log("otp from frontend", otp);
 
-    if (!email || !otp) {
+    if (!emailId || !otp) {
       return res.status(400).json("email is undefined");
     }
 
-    const user = await User.findOne({ emailId: email });
+    const user = await User.findOne({ emailId: emailId });
     // console.log("otp in user data", user.verificationCode);
 
     if (!user) {
@@ -130,7 +130,7 @@ export const verifyOTP = async (req, res) => {
 export const resendOTP = async (req, res) => {
   try {
     const { emailId } = req.body;
-    // console.log("email", email);
+    console.log("email", emailId);
     if (!emailId) {
       return res.status(400).json({ message: "email is undefined" });
     }
