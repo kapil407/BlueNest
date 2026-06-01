@@ -33,7 +33,7 @@ function OtpVerify() {
     try {
       const res = await axios.post(
         `${USER_API_END_POINT}/verifyOtp`,
-        { email, otp },
+        { emailId: email, otp },
         { withCredentials: true },
       );
 
@@ -51,7 +51,7 @@ function OtpVerify() {
     try {
       const res = await axios.post(
         `${USER_API_END_POINT}/sendOtp`,
-        { email },
+        { emailId: email },
         { withCredentials: true },
       );
       // console.log("resend otp", res);
