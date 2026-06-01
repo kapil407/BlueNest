@@ -21,11 +21,13 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 
 const transport = nodemailer.createTransport({
   service: "gmail",
-  
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
 });
 
 export const signUpController = async (req, res) => {
