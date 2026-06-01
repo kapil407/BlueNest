@@ -20,7 +20,15 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 
 // email transport
 
-
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  
+  secure: false, // use STARTTLS (upgrade connection to TLS after connecting)
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const signUpController = async (req, res) => {
@@ -68,8 +76,16 @@ export const signUpController = async (req, res) => {
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
     });
+    const Data = await transporter.sendMail({
+    from: 'process.env.EMAIL_USER', // sender address
+    to: emailId, // list of recipients
+    subject: "Hello", // subject line
+    text: `Your OTP is : ${otp}`, // plain text body
+    html: "<b>Hello world?</b>", // HTML body
+  });
 
       console.log("info",info);
+      console.log("Data",Data);
     await newUser.save();
 
     return res.status(200).json({
@@ -157,8 +173,16 @@ export const resendOTP = async (req, res) => {
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
     });
+    const Data = await transporter.sendMail({
+    from: 'process.env.EMAIL_USER', // sender address
+    to: emailId, // list of recipients
+    subject: "Hello", // subject line
+    text: `Your OTP is : ${otp}`, // plain text body
+    html: "<b>Hello world?</b>", // HTML body
+  });
 
       console.log("info",info);
+      console.log("Data",Data);
     console.log("otp resend", otp,user.verificationCode);
  
     return res
