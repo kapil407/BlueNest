@@ -29,7 +29,7 @@ const Signup = () => {
   const submittedHandler = async (e) => {
     e.preventDefault();
     try {
-            console.log("dsagdkjaskjdhskadhkj");
+            
       const res = await axios.post(
         `${USER_API_END_POINT}/signup`,
         { firstName, lastName, userName, emailId, password },
@@ -40,6 +40,7 @@ const Signup = () => {
           withCredentials: true,
         },
       );
+      console.log("dsagdkjaskjdhskadhkj");
       console.log("sign", res);
       if (res.status === 200) {
         dispatch(getUser(res.data.newUser));
