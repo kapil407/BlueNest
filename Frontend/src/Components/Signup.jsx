@@ -29,9 +29,9 @@ const Signup = () => {
   const submittedHandler = async (e) => {
     e.preventDefault();
     try {
-      console.log("kapil->>>");
+     
       const res = await axios.post(
-        `${USER_API_END_POINT}/signUp`,
+        `${USER_API_END_POINT}/signup`,
         { firstName, lastName, userName, emailId, password },
         {
           headers: {
