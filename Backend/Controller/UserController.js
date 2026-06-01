@@ -156,6 +156,7 @@ export const resendOTP = async (req, res) => {
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
     });
+    console.log("otp resend", otp,user.verificationCode);
   await user.save();
     return res
       .status(200)
