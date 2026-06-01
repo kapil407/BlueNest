@@ -57,7 +57,7 @@ export const signUpController = async (req, res) => {
       verificationCode: otp,
     });
   
-  
+  console.log("Newuser",newUser);
 
     await transport.sendMail({
       from: process.env.EMAIL_USER,
