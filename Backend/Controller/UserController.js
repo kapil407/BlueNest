@@ -58,7 +58,7 @@ export const signUpController = async (req, res) => {
       verificationCode: otp,
     });
     await newUser.save();
-    console.log("newUser", otp);
+  
 
     await transport.sendMail({
       from: "kapilkeer1506@gmail.com",
@@ -66,6 +66,7 @@ export const signUpController = async (req, res) => {
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
     });
+      console.log("newUser", otp);
 
     return res.status(200).json({
       message: "Register succesfully.Please verify OTP sent to your email",
