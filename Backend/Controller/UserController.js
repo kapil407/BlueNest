@@ -19,11 +19,12 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 // console.log("generateOTP", generateOTP);
 
 // email transport
-console.log("EMAIL_USER", process.env.RESEND_API_KEY);
+
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const signUpController = async (req, res) => {
+  console.log("EMAIL_USER", process.env.RESEND_API_KEY);
   try {
     const { firstName, lastName, userName, emailId, password } = req.body;
 
