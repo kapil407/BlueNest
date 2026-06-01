@@ -19,6 +19,7 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 // console.log("generateOTP", generateOTP);
 
 // email transport
+console.log("EMAIL_USER", process.env.RESEND_API_KEY);
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
