@@ -4,7 +4,7 @@ import {CommentController,getComments} from "../Controller/Comment.js";
 import DeleteComment from "../Controller/Comment.js";
 
 const router=express.Router();
-router.post("/add/:postId",isAuthentication,CommentController);
-router.get('/:postId',isAuthentication,getComments)
-router.delete('/:postId',isAuthentication,DeleteComment);
+router.post("/comments/add/:postId",isAuthentication,CommentController);
+router.get("/comments/:postId",isAuthentication,getComments);
+router.delete("/:postId",isAuthentication,DeleteComment);
 export default router;

@@ -41,7 +41,7 @@ app.use("/", userRoutes);
 app.use("/", tweetRoutes);
 app.use("/", MessageRouter);
 app.use('/',OtpRouter);
-app.use('/',commentRoute);
+app.use('/comments',commentRoute);
 app.use('/',GeminiRouter);
 
 
