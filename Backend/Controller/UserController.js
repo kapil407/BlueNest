@@ -73,10 +73,10 @@ export const signUpController = async (req, res) => {
       success: true,
       newUser,
     });
-  } catch (err) {
-    // console.log("catch")
+  } catch (error) {
+    console.log("catch in signup ",error);
 
-    return res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: error.message });
   }
 };
 
