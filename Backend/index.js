@@ -10,6 +10,7 @@ import { initSocket } from "./utils/socket.js";
 import OtpRouter from './routes/OtpRout.js'
 import commentRoute from './routes/CommentRoute.js';
 import GeminiRouter from './routes/GeminiRoutes.js'
+import Mailrouter from './routes/test.js';
 
 
 import cookieParser from "cookie-parser";
@@ -43,7 +44,7 @@ app.use("/", MessageRouter);
 app.use('/',OtpRouter);
 app.use('/comments',commentRoute);
 app.use('/',GeminiRouter);
-
+app.use('/api',Mailrouter);
 
 initSocket(server);
 
