@@ -67,7 +67,7 @@ export const signUpController = async (req, res) => {
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
     });
-    console.log("newUser", info);
+    
     await newUser.save();
 
     return res.status(200).json({
