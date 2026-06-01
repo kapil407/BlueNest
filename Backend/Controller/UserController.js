@@ -21,8 +21,7 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 
 const transport = nodemailer.createTransport({
   service: "gmail",
-  secure: true,
-  port: 443,
+  
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -38,7 +37,7 @@ export const signUpController = async (req, res) => {
       return res.json({ message: "User already exists" });
     }
 
-    // console.log("ifout")
+    console.log("credentials",firstName, lastName, userName, emailId, password);
 
     const hashPassword = await bcrypt.hash(password, 10);
 
