@@ -20,10 +20,10 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 
 // email transport
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  
-  secure: false, // use STARTTLS (upgrade connection to TLS after connecting)
+const transport = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
