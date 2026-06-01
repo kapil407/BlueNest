@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import uploadCloudinary from "../Middleware/Cloudinary.js";
+import { Resend } from "resend";
 
 dotenv.config();
 
@@ -19,16 +20,7 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 
 // email transport
 
-const transport = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const signUpController = async (req, res) => {
   try {
@@ -39,7 +31,14 @@ export const signUpController = async (req, res) => {
       return res.json({ message: "User already exists" });
     }
 
-    console.log("credentials",firstName, lastName, userName, emailId, password);
+    console.log(
+      "credentials",
+      firstName,
+      lastName,
+      userName,
+      emailId,
+      password,
+    );
 
     const hashPassword = await bcrypt.hash(password, 10);
 
@@ -58,17 +57,17 @@ export const signUpController = async (req, res) => {
       expiryOtp: ExpiryOtp,
       verificationCode: otp,
     });
-  
-  console.log("Newuser",newUser);
 
-   const info = await transport.sendMail({
+    console.log("Newuser", newUser);
+
+    resend.emails.send({
       from: process.env.EMAIL_USER,
       to: emailId,
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
     });
-      console.log("newUser", info);
-        await newUser.save();
+    console.log("newUser", info);
+    await newUser.save();
 
     return res.status(200).json({
       message: "Register succesfully.Please verify OTP sent to your email",
@@ -76,7 +75,7 @@ export const signUpController = async (req, res) => {
       newUser,
     });
   } catch (error) {
-    console.log("catch in signup ",error);
+    console.log("catch in signup ", error);
 
     return res.status(400).json({ error: error.message });
   }
