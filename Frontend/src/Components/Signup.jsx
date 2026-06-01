@@ -29,7 +29,7 @@ const Signup = () => {
   const submittedHandler = async (e) => {
     e.preventDefault();
     try {
-     
+            console.log("dsagdkjaskjdhskadhkj");
       const res = await axios.post(
         `${USER_API_END_POINT}/signup`,
         { firstName, lastName, userName, emailId, password },
