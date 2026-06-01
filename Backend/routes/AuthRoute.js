@@ -20,10 +20,20 @@ import {
 
 const router = express.Router();
 // import express from "express";
-import transport from "../Middleware/Email.js";
+// import transport from "../Middleware/Email.js";
 
 // const router = express.Router();
+import nodemailer from "nodemailer";
 
+const transport = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.BREVO_USER,
+    pass: process.env.BREVO_PASS,
+  },
+});
 router.get("/test-mail", async (req, res) => {
   try {
     const info = await transport.sendMail({
