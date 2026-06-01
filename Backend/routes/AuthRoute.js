@@ -19,7 +19,7 @@ import {
 } from "../Controller/UserController.js";
 
 const router = express.Router();
-import express from "express";
+// import express from "express";
 import transport from "../Middleware/Email.js";
 
 // const router = express.Router();
