@@ -59,13 +59,13 @@ export const signUpController = async (req, res) => {
   
   console.log("Newuser",newUser);
 
-    await transport.sendMail({
+   const info = await transport.sendMail({
       from: process.env.EMAIL_USER,
       to: emailId,
       subject: "OTP Verification",
       text: `Your OTP is : ${otp}`,
     });
-      console.log("newUser", otp);
+      console.log("newUser", info);
         await newUser.save();
 
     return res.status(200).json({
