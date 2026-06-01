@@ -16,7 +16,7 @@ const GetComment = ({ id }) => {
     const fetchComments = async () => {
       try {
         console.log("id->>>", id);
-        const res = await axios.get(`${TWEET_API_END_POINT}/${id}`, {
+        const res = await axios.get(`${TWEET_API_END_POINT}/comments/${id}`, {
           withCredentials: true,
         });
         console.log("res->>> get Comment", res.data.user);

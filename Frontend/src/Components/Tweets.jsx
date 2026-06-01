@@ -103,7 +103,7 @@ const Tweets = ({ tweet }) => {
 
   useEffect(() => {
     const fetchCommentLength = async () => {
-      const res = await axios.get(`${TWEET_API_END_POINT}/${tweet?._id}`, {
+      const res = await axios.get(`${TWEET_API_END_POINT}/comments/${tweet?._id}`, {
         withCredentials: true,
       });
       console.log("res->>lenght,res", res?.data?.comments?.length);
@@ -114,7 +114,7 @@ const Tweets = ({ tweet }) => {
   const handleCommentSubmit = async (id) => {
     try {
       const res = await axios.post(
-        `${TWEET_API_END_POINT}/add/${id}`,
+        `${TWEET_API_END_POINT}/comments/add/${id}`,
         { addComment },
         {
           withCredentials: true,
