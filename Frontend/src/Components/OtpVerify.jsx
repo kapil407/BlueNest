@@ -12,6 +12,7 @@ function OtpVerify() {
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(120);
   const { user } = useSelector((store) => store.user);
+  console.log("user in otp verify", user);
   const email = user?.emailId;
   const navigate = useNavigate();
 
