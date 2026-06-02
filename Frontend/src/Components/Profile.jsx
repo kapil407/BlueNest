@@ -26,7 +26,9 @@ function Profile() {
   const [loading, setLoading] = useState(false);
   const theme = useSelector((store) => store.theme.theme);
   const { id } = useParams();
-  useGetProfile(id);
+
+    useGetProfile(id);
+  
   const { tweet } = useSelector((store) => store?.tweet);
 
   const dispatch = useDispatch();

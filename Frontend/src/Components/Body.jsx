@@ -117,11 +117,7 @@
 // };
 // export default Body;
 import React, { lazy, Suspense } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Spinner from "./Spinner.jsx";
 import FeedRemmi from "../RimmiEffect_UI/Temp.jsx";
@@ -135,8 +131,22 @@ const OtpVerify = lazy(() => import("./OtpVerify.jsx"));
 const EditeProfile = lazy(() => import("./Editeprofile.jsx"));
 const Message = lazy(() => import("./Message.jsx"));
 const Bookmarks = lazy(() => import("./Bookmarks.jsx"));
-
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import useGenerateNewAccessToken from "../GenerateAccessToken/TokenRotation.js";
 const Body = () => {
+  const generateNewAccessToken = useGenerateNewAccessToken();
+  const { user } = useSelector((store) => store.user);
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+    const IntervalId = setInterval(() => {
+        generateNewAccessToken();
+      },14 * 60 * 1000,); // 14 minutes in milliseconds
+       return () => clearInterval(IntervalId);
+  }, [user, generateNewAccessToken]);
+
   return (
     <BrowserRouter>
       <Suspense fallback={<Spinner />}>

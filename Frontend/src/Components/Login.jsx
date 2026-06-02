@@ -6,16 +6,22 @@ import { USER_API_END_POINT } from "../Utils/constant";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile, getUser } from "../redux/userSlice";
-import { FiEye, FiEyeOff, FiLock, FiMail } from "react-icons/fi";
+import { FiEye, FiEyeOff, FiLock, FiMail, FiX } from "react-icons/fi";
 
 function Login() {
   const navigate = useNavigate();
   const theme = useSelector((store) => store.theme.theme);
   const dispatch = useDispatch();
+  
+ 
+
 
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [show, setshow] = useState(false);
+  const [showForgotPasswordBox, setShowForgotPasswordBox] = useState(false);
+  const [forgotPassword, setForgotPassword] = useState("");
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
 
   const submittedHandler = async (e) => {
     e.preventDefault();
@@ -30,10 +36,11 @@ function Login() {
           withCredentials: true,
         },
       );
-      // console.log("login->", res?.data?.user?.firstName);
+      console.log("login->", res);
 
       dispatch(getUser(res?.data?.user));
       dispatch(getMyProfile(res?.data?.user));
+    
 
       if (res?.data?.success) {
         navigate("/");
@@ -51,6 +58,23 @@ function Login() {
   };
   const showHandler = () => {
     setshow(!show);
+  };
+
+  const forgotPasswordHandler = async (e) => {
+    e.preventDefault();
+    // Implement forgot password logic here
+    const res=await axios.post(`${USER_API_END_POINT}/reset-password`, { newPassword: forgotPassword,emailId: forgotPasswordEmail }, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
+    if(res?.data?.success){
+      toast.success(res?.data?.message);
+      setShowForgotPasswordBox(false);
+    } else {
+      toast.error(res?.data?.message || "Something went wrong");
+    } 
   };
 
   const inputStyle =
@@ -180,6 +204,15 @@ function Login() {
                     </button>
                   </div>
                 </label>
+                <div className="-mt-2 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setShowForgotPasswordBox(true)}
+                    className="text-sm font-semibold text-sky-500 transition hover:text-sky-400"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
 
                 <button
                   type="submit"
@@ -203,6 +236,76 @@ function Login() {
           </div>
         </div>
       </div>
+
+      {showForgotPasswordBox && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm">
+          <div
+            className={`w-full max-w-md rounded-3xl border p-6 shadow-2xl ${
+              theme == "light"
+                ? "border-white bg-white text-slate-950"
+                : "border-slate-700 bg-slate-950 text-white"
+            }`}
+          >
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-xl font-black">Reset password</h3>
+                <p className={`mt-1 text-sm leading-6 ${mutedText}`}>
+                  Enter your new password to continue password reset.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowForgotPasswordBox(false)}
+                className={`rounded-full p-2 transition hover:bg-sky-500/10 hover:text-sky-500 ${mutedText}`}
+                aria-label="Close reset password box"
+              >
+                <FiX />
+              </button>
+            </div>
+
+            <form onSubmit={forgotPasswordHandler} className="space-y-4">
+               <label className="block">
+                <span className={`mb-2 block text-sm font-semibold ${mutedText}`}>
+                  Email Address
+                </span>
+                <div className="relative">
+                  <FiMail className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 ${mutedText}`} />
+                  <input
+                    type="email"
+                    value={forgotPasswordEmail}
+                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className={`w-full rounded-2xl border py-3 pl-11 pr-4 outline-none transition focus:ring-4 ${inputStyle}`}
+                  />
+                </div>
+              </label>
+             
+              <label className="block">
+                <span className={`mb-2 block text-sm font-semibold ${mutedText}`}>
+                  New Password
+                </span>
+                <div className="relative">
+                  <FiLock className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 ${mutedText}`} />
+                  <input
+                    type="password"
+                    value={forgotPassword}
+                    onChange={(e) => setForgotPassword(e.target.value)}
+                    placeholder="Enter new password"
+                    className={`w-full rounded-2xl border py-3 pl-11 pr-4 outline-none transition focus:ring-4 ${inputStyle}`}
+                  />
+                </div>
+              </label>
+
+              <button
+                type="submit"
+                className="w-full rounded-2xl bg-[#1D9BF0] px-5 py-3.5 font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5 hover:bg-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-500/30"
+              >
+                Reset password
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

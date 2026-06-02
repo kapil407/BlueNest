@@ -15,11 +15,11 @@ const CreatePost = () => {
   const { user, profile } = useSelector((store) => store.user);
   const [description, setDescription] = useState("");
   const [media, setMedia] = useState(null);
-  // const [prompt, setPrompt] = useState("");
-  // const [showInput, setShowInput] = useState(false);
+  
   const dispatch = useDispatch();
-  // console.log("progile", profile);
+ 
   let profileImage = profile?.profilePic?.url;
+  console.log("profileImage", user);
   const [loading, setLoading] = useState(false);
   const isLight = theme == "light";
 

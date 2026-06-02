@@ -25,15 +25,12 @@ const LeftSideBar = () => {
 
   const logoutHandler = async () => {
     try {
+     
       const res = await axios.post(`${USER_API_END_POINT}/logout`, {},
-        {
-          headers: {
-          "content-type": "application/json",
-        },
-       withCredentials: true,
-      });
+        {  withCredentials: true,  }
+        );
 
-      
+       console.log("logout controller called",USER_API_END_POINT);
 
 
       dispatch(getMyTweets(null));
