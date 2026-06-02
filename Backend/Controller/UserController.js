@@ -371,7 +371,7 @@ export const LoginController = async (req, res) => {
 
 export const LogOutController = async (req, res) => {
   try {
-    const refreshtoken = req.cookies.refreshToken;
+    const refreshtoken = req?.cookies?.refreshToken;
 
     const decoded = await jwt.verify(
       refreshtoken,
@@ -382,16 +382,16 @@ export const LogOutController = async (req, res) => {
     const filteredTokens = [];
     let isTokenMatched = false;
 
-    for (const tokenData of user.RefreshToken) {
-      const isMatch = await bcrypt.compare(refreshToken, tokenData.token);
+    for (const tokenData of user?.RefreshToken) {
+      const isMatch = await bcrypt.compare(refreshtoken, tokenData.token);
       if (!isMatch) {
         filteredTokens.push(tokenData);
         isTokenMatched = true;
       }
     }
     if (!isTokenMatched) {
-      res.clearCookies("accessToken");
-      res.clearCookies("refreshToken");
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
       return res.status(400).json({ message: "Invalid refresh token" });
     }
     user.RefreshToken = filteredTokens;
