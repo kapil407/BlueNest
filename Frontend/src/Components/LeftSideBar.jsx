@@ -25,12 +25,14 @@ const LeftSideBar = () => {
 
   const logoutHandler = async () => {
     try {
-      const res = await axios.post(`${USER_API_END_POINT}/logout`, {
-        headers: {
+      const res = await axios.post(`${USER_API_END_POINT}/logout`, {},
+        {
+          headers: {
           "content-type": "application/json",
         },
         withCredentials: true,
-      });
+        }
+      );
 
       dispatch(getMyTweets(null));
       dispatch(getUser(null));
