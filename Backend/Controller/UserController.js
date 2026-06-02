@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 import Tweet from "../models/Tweets.js";
 import mongoose from "mongoose";
 import nodemailer from "nodemailer";
-import crypto from "crypto";
+import crypto, { secureHeapUsed } from "crypto";
 import uploadCloudinary from "../Middleware/Cloudinary.js";
 import { AccessToken, RefreshToken } from "../GenerateTokens/Tokens.js";
 
@@ -354,10 +354,15 @@ export const LoginController = async (req, res) => {
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
+      secure: true,
+      sameSite: "None",
       maxAge: 15 * 60 * 1000,
+
     });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
+       secure: true,
+      sameSite: "None",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
     await user.save();
