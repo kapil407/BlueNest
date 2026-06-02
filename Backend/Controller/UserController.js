@@ -10,7 +10,7 @@ import mongoose from "mongoose";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import uploadCloudinary from "../Middleware/Cloudinary.js";
-import { Resend } from "resend";
+
 
 dotenv.config();
 
@@ -22,19 +22,19 @@ const generateOTP = () => crypto.randomInt(10000, 100000);
 
 // import nodemailer from "nodemailer";
 
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.BREVO_USER,
-    pass: process.env.BREVO_PASS,
-  },
-});
+// const transporter = nodemailer.createTransport({
+//   host: "smtp-relay.brevo.com",
+//   port: 587,
+//   secure: false,
+//   auth: {
+//     user: process.env.BREVO_USER,
+//     pass: process.env.BREVO_PASS,
+//   },
+// });
 // const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const signUpController = async (req, res) => {
-  console.log("EMAIL_USER", process.env.BREVO_USER, "EMAIL_PASS", process.env.BREVO_PASS);
+ 
   try {
     const { firstName, lastName, userName, emailId, password } = req.body;
 
@@ -70,16 +70,32 @@ export const signUpController = async (req, res) => {
   //     subject: "OTP Verification",
   //     text: `Your OTP is : ${otp}`,
   //   });
-    const Data = await transporter.sendMail({
-    from: process.env.BREVO_EMAIL, // sender address
-    to: emailId, // list of recipients
-    subject: "Hello", // subject line
-    text: `Your OTP is : ${otp}`, // plain text body
-    html: "<b>Hello world?</b>", // HTML body
-  });
+    await axios.post(
+  "https://api.brevo.com/v3/smtp/email",
+  {
+    sender: {
+      email: "kapilkeer1998@gmail.com",
+    },
+    to: [
+      {
+        email: emailId,
+      },
+    ],
+    subject: "OTP Verification",
+    htmlContent: `<p>Your OTP is <strong>${otp}</strong></p>`,
+  },
+  {
+    headers: {
+      "api-key": process.env.BREVO_API_KEY,
+      "Content-Type": "application/json",
+    },
+  }
+);
+
+console.log("Mail Sent");
 
       // console.log("info",info);
-      console.log("Data",Data);
+      // console.log("Data",Data);
     await newUser.save();
 
     return res.status(200).json({
@@ -167,16 +183,31 @@ export const resendOTP = async (req, res) => {
   //     subject: "OTP Verification",
   //     text: `Your OTP is : ${otp}`,
   //   });
-    const Data = await transporter.sendMail({
-    from: process.env.BREVO_EMAIL, // sender address
-    to: emailId, // list of recipients
-    subject: "Hello", // subject line
-    text: `Your OTP is : ${otp}`, // plain text body
-    html: "<b>Hello world?</b>", // HTML body
-  });
+    await axios.post(
+  "https://api.brevo.com/v3/smtp/email",
+  {
+    sender: {
+      email: "kapilkeer1998@gmail.com",
+    },
+    to: [
+      {
+        email: emailId,
+      },
+    ],
+    subject: "OTP Verification",
+    htmlContent: `<p>Your OTP is <strong>${otp}</strong></p>`,
+  },
+  {
+    headers: {
+      "api-key": process.env.BREVO_API_KEY,
+      "Content-Type": "application/json",
+    },
+  }
+);
 
+console.log("Mail Sent");
       // console.log("info",info);
-      console.log("Data",Data);
+      // console.log("Data",Data);
     console.log("otp resend", otp,user.verificationCode);
  
     return res
