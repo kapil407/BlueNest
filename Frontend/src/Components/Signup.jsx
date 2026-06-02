@@ -40,7 +40,7 @@ const Signup = () => {
           withCredentials: true,
         },
       );
-      console.log("dsagdkjaskjdhskadhkj");
+   
       console.log("sign", res);
       if (res.status === 200) {
         dispatch(getUser(res.data.newUser));

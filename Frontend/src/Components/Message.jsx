@@ -105,41 +105,69 @@ const Message = () => {
   }
 
   return (
-    <div className="w-[55%]   border-l border-r border-b  border-gray-300 rounded h-screen fixed mx-[16%]">
+    <div className="fixed inset-y-0 left-1/2 z-10 flex w-full max-w-3xl -translate-x-1/2 flex-col border-x border-gray-200 bg-white shadow-xl sm:w-[78%] lg:w-[55%]">
       {/* Header */}
       <div
-        className={`border p-3 rounded flex  items-center  border-gray-400 ${theme == "light" ? "bg-gray-200" : "bg-black"}`}
+        className={`flex items-center gap-3 border-b px-4 py-3 ${theme == "light" ? "border-gray-200 bg-white text-gray-950" : "border-gray-700 bg-black text-white"}`}
       >
-        <Link to="/">
+        <Link
+          to="/"
+          className={`flex h-10 w-10 items-center justify-center rounded-full transition ${theme == "light" ? "hover:bg-gray-100" : "hover:bg-gray-800"}`}
+        >
           {" "}
           <IoMdArrowRoundBack size={22} className="cursor-pointer" />
         </Link>
         <img
           src={targetUser?.profilePic?.url}
           alt=""
-          className="w-14 h-14 rounded-full ml-2 object-cover"
+          className="h-12 w-12 rounded-full object-cover ring-2 ring-gray-200"
         />
-        <h1 className="ml-5 text-xl font-semibold">
-          {targetUser?.firstName} {targetUser?.lastName}
-        </h1>
+        <div className="min-w-0">
+          <h1 className="truncate text-lg font-semibold">
+            {targetUser?.firstName} {targetUser?.lastName}
+          </h1>
+          <p
+            className={`text-sm ${theme == "light" ? "text-gray-500" : "text-gray-400"}`}
+          >
+            Messages
+          </p>
+        </div>
       </div>
 
       {/* Chat Messages */}
-      <div className="ml-4 mr-4 mt-2 mb-2 h-[75%] overflow-auto custom-scrollbar">
+      <div
+        className={`custom-scrollbar flex-1 overflow-auto px-4 py-5 ${theme == "light" ? "bg-gray-50" : "bg-gray-950"}`}
+      >
         {array &&
           array?.map((msg, idx) => {
             return (
               <div
                 key={idx}
-                className={`my-1 ${
-                  msg?.senderId === userId ? "text-right" : "text-left"
+                className={`mb-3 flex ${
+                  msg?.senderId === userId ? "justify-end" : "justify-start"
                 }`}
               >
                 <div
-                  className={`text-center inline-block max-w-[70%] mr-4 mt-4  px-3 py-1 rounded-xl break-words whitespace-pre-wrap overflow-hidden ${theme == "light" ? "bg-gray-200" : "bg-gray-600"}`}
+                  className={`max-w-[78%] rounded-2xl px-4 py-2 text-left shadow-sm ${
+                    msg?.senderId === userId
+                      ? "rounded-br-md bg-blue-600 text-white"
+                      : theme == "light"
+                        ? "rounded-bl-md bg-white text-gray-950 ring-1 ring-gray-200"
+                        : "rounded-bl-md bg-gray-800 text-white"
+                  }`}
                 >
-                  <div>{msg?.message}</div>
-                  <span className="text-[10px] font-sm">
+                  <div className="break-words whitespace-pre-wrap text-sm leading-relaxed">
+                    {msg?.message}
+                  </div>
+                  <span
+                    className={`mt-1 block text-right text-[10px] ${
+                      msg?.senderId === userId
+                        ? "text-blue-100"
+                        : theme == "light"
+                          ? "text-gray-500"
+                          : "text-gray-400"
+                    }`}
+                  >
                     {formatMessageTime(msg.createdAt)}
                   </span>
                 </div>
@@ -151,20 +179,21 @@ const Message = () => {
 
       {/* Input Box */}
       <div
-        className={` border-b border-t rounded border-gray-400 h-[11%]  px-2 items-center text-center flex justify-between ${theme == "light" ? "bg-gray-200" : "bg-black"}`}
+        className={`flex items-center gap-3 border-t px-4 py-3 ${theme == "light" ? "border-gray-200 bg-white" : "border-gray-700 bg-black"}`}
       >
         <input
           type="text"
           value={Message}
           onChange={(e) => setmessage(e.target.value)}
           placeholder="Write the message"
-          className="outline-none w-[70%]"
+          className={`h-12 flex-1 rounded-full border px-5 outline-none transition focus:ring-2 focus:ring-blue-500 ${theme == "light" ? "border-gray-200 bg-gray-50 text-gray-950 placeholder:text-gray-400" : "border-gray-700 bg-gray-900 text-white placeholder:text-gray-500"}`}
         />
         <button
+          type="button"
           onClick={() => sendmessages()}
-          className={`mr-2 border border-gray-400 p-1 w-28 h-12 mb-1 rounded     cursor-pointer ${theme == "light" ? "bg-gray-200 hover:bg-gray-300" : "bg-black hover:bg-gray-600"}`}
+          className="h-12 min-w-24 rounded-full bg-blue-600 px-5 font-medium text-white transition hover:bg-blue-700"
         >
-          send
+          Send
         </button>
       </div>
     </div>
