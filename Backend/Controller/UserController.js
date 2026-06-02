@@ -81,8 +81,45 @@ export const signUpController = async (req, res) => {
         email: emailId,
       },
     ],
-    subject: "OTP Verification",
-    htmlContent: `<p>Your OTP is <strong>${otp}</strong></p>`,
+   subject: "BlueNest - Email Verification OTP",
+    htmlContent: `
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px;">
+  <h2 style="color: #2563eb;">BlueNest Email Verification</h2>
+
+  <p>Hello,</p>
+
+  <p>
+    Thank you for signing up with <strong>BlueNest</strong>.
+    Please use the following One-Time Password (OTP) to verify your email address:
+  </p>
+
+  <div style="text-align: center; margin: 25px 0;">
+    <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #2563eb;">
+      ${otp}
+    </span>
+  </div>
+
+  <p>
+    This OTP is valid for <strong>2 minutes</strong>.
+  </p>
+
+  <p>
+    If you did not request this verification, please ignore this email.
+    No further action is required.
+  </p>
+
+  <hr />
+
+  <p style="color: #666; font-size: 12px;">
+    This is an automated message. Please do not reply to this email.
+  </p>
+
+  <p>
+    Regards,<br/>
+    <strong>BlueNest Team</strong>
+  </p>
+</div>
+`
   },
   {
     headers: {
