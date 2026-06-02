@@ -34,7 +34,7 @@ const transporter = nodemailer.createTransport({
 // const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const signUpController = async (req, res) => {
-  console.log("EMAIL_USER", process.env.RESEND_API_KEY);
+  console.log("EMAIL_USER", process.env.BREVO_USER, "EMAIL_PASS", process.env.BREVO_PASS);
   try {
     const { firstName, lastName, userName, emailId, password } = req.body;
 
@@ -43,15 +43,7 @@ export const signUpController = async (req, res) => {
       return res.json({ message: "User already exists" });
     }
 
-    console.log(
-      "credentials",
-      firstName,
-      lastName,
-      userName,
-      emailId,
-      password,
-    );
-
+    
     const hashPassword = await bcrypt.hash(password, 10);
 
     const otp = generateOTP();
