@@ -387,14 +387,19 @@ export const LogOutController = async (req, res) => {
       const isMatch = await bcrypt.compare(refreshtoken, tokenData.token);
       if (!isMatch) {
         filteredTokens.push(tokenData);
+        
+      }
+      else {
         isTokenMatched = true;
       }
     }
-    if (!isTokenMatched) {
+    if (!isTokenMatched ) {
+      
       res.clearCookie("accessToken");
       res.clearCookie("refreshToken");
-      return res.status(400).json({ message: "Invalid refresh token" });
+      return res.status(200).json({ message: "logout succesfully", success: true });
     }
+
     user.RefreshToken = filteredTokens;
     await user.save();
     res.clearCookie("accessToken");
