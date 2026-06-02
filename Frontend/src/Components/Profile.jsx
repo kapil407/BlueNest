@@ -19,7 +19,8 @@ import {
   getUser,
   resetProfile,
 } from "../redux/userSlice.js";
-import { Navigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+
 
 function Profile() {
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,10 @@ function Profile() {
   const { profile, otherUsers, user } = useSelector((store) => store.user);
 
   const [image, setimage] = useState(null);
+  const navigate = useNavigate();
+  if(!user) {
+    navigate("/login");
+  }
 
   const changeBackgroundImage = async () => {
     try {
