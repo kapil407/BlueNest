@@ -381,6 +381,7 @@ export const LogOutController = async (req, res) => {
 
     const filteredTokens = [];
     let isTokenMatched = false;
+    console.log("user in logout", user);
 
     for (const tokenData of user?.RefreshToken) {
       const isMatch = await bcrypt.compare(refreshtoken, tokenData.token);
