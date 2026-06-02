@@ -79,7 +79,7 @@ export const signUpController = async (req, res) => {
   //     text: `Your OTP is : ${otp}`,
   //   });
     const Data = await transporter.sendMail({
-    from: process.env.BREVO_USER, // sender address
+    from: process.env.BREVO_EMAIL, // sender address
     to: emailId, // list of recipients
     subject: "Hello", // subject line
     text: `Your OTP is : ${otp}`, // plain text body
@@ -176,7 +176,7 @@ export const resendOTP = async (req, res) => {
   //     text: `Your OTP is : ${otp}`,
   //   });
     const Data = await transporter.sendMail({
-    from: process.env.BREVO_USER, // sender address
+    from: process.env.BREVO_EMAIL, // sender address
     to: emailId, // list of recipients
     subject: "Hello", // subject line
     text: `Your OTP is : ${otp}`, // plain text body
