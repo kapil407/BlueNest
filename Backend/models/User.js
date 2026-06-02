@@ -79,7 +79,10 @@ const userSchema = new mongoose.Schema(
       {
         token:String,
         Device:String,
-        createdAt:Date.now()
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
       }
     ]
     
