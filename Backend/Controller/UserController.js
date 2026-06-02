@@ -48,7 +48,7 @@ export const signUpController = async (req, res) => {
       "https://api.brevo.com/v3/smtp/email",
       {
         sender: {
-          email: "kapilkeer1998@gmail.com",
+          email: "kapil.2023ca51@mnnit.ac.in",
         },
         to: [
           {
@@ -187,7 +187,7 @@ export const resendOTP = async (req, res) => {
       "https://api.brevo.com/v3/smtp/email",
       {
         sender: {
-          email: "kapilkeer1998@gmail.com",
+          email: "kapil.2023ca51@mnnit.ac.in",
         },
         to: [
           {
@@ -405,7 +405,7 @@ export const LogOutController = async (req, res) => {
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
 
-    return res.json({ message: "logout succesfully", success: true });
+    return res.status(200).json({ message: "logout succesfully", success: true });
   } catch (err) {
     console.log("catch in logout", err);
     return res.status(400).json({ message: err.message });
