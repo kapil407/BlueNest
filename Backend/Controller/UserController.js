@@ -10,8 +10,8 @@ import mongoose from "mongoose";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import uploadCloudinary from "../Middleware/Cloudinary.js";
-import AccessToken from "../GenerateTokens/Tokens.js";
-import RefreshToken from "../GenerateTokens/Tokens.js";
+import {AccessToken,RefreshToken} from "../GenerateTokens/Tokens.js";
+
 
 dotenv.config();
 
