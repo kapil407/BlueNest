@@ -371,7 +371,7 @@ export const LoginController = async (req, res) => {
 
 export const LogOutController = async (req, res) => {
   try {
-    const refreshtoken = req.cookies;
+    const refreshtoken = req.cookies.refreshToken;
 
     const decoded = await jwt.verify(
       refreshtoken,
