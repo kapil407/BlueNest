@@ -10,8 +10,7 @@ import mongoose from "mongoose";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import uploadCloudinary from "../Middleware/Cloudinary.js";
-import {AccessToken,RefreshToken} from "../GenerateTokens/Tokens.js";
-
+import { AccessToken, RefreshToken } from "../GenerateTokens/Tokens.js";
 
 dotenv.config();
 
@@ -287,7 +286,6 @@ export const LoginController = async (req, res) => {
     user.RefreshToken.push({
       token: hashedRefreshToken,
       Device: DeviceInfo,
-      
     });
     await axios.post(
       "https://api.brevo.com/v3/smtp/email",
@@ -362,7 +360,12 @@ export const LoginController = async (req, res) => {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
-    return res.json({ message: "Login successfully", user, success: true });
+    return res.json({
+      message: "Login successfully",
+      user,
+      success: true,
+      
+    });
   } catch (err) {
     console.log("catch in login", err);
     return res.status(400).json({ message: err.message });
@@ -388,17 +391,16 @@ export const LogOutController = async (req, res) => {
       const isMatch = await bcrypt.compare(refreshtoken, tokenData.token);
       if (!isMatch) {
         filteredTokens.push(tokenData);
-        
-      }
-      else {
+      } else {
         isTokenMatched = true;
       }
     }
-    if (!isTokenMatched ) {
-      
+    if (!isTokenMatched) {
       res.clearCookie("accessToken");
       res.clearCookie("refreshToken");
-      return res.status(200).json({ message: "logout succesfully", success: true });
+      return res
+        .status(200)
+        .json({ message: "logout succesfully", success: true });
     }
 
     user.RefreshToken = filteredTokens;
@@ -406,7 +408,9 @@ export const LogOutController = async (req, res) => {
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
 
-    return res.status(200).json({ message: "logout succesfully", success: true });
+    return res
+      .status(200)
+      .json({ message: "logout succesfully", success: true });
   } catch (err) {
     console.log("catch in logout", err);
     return res.status(400).json({ message: err.message });
@@ -652,5 +656,22 @@ export const changeBackgroundImage = async (req, res) => {
   } catch (error) {
     console.log("error", error);
     return res.status(400).json({ message: error, success: false });
+  }
+};
+export const changePasswordController = async (req, res) => {
+  try {
+    
+    const { newPassword, emailId } = req.body;
+    console.log("newPassword", newPassword,emailId);
+    const user = await User.findOne({ emailId });
+    console.log("user in change password", user);
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedNewPassword;
+    await user.save();
+
+    return res.status(200).json({ message: "Password changed successfully" ,success:true});
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).json({ message: error.message });
   }
 };

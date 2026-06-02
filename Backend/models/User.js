@@ -84,7 +84,11 @@ const userSchema = new mongoose.Schema(
           default: Date.now,
         },
       }
-    ]
+    ],
+    newPassword:{
+      type:String,
+       default:""
+    }
     
   },
   {

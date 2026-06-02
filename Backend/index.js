@@ -11,6 +11,7 @@ import OtpRouter from './routes/OtpRout.js'
 import commentRoute from './routes/CommentRoute.js';
 import GeminiRouter from './routes/GeminiRoutes.js'
 import Mailrouter from './routes/test.js';
+import Tokenrouter from './routes/TokenRotation.js';
 
 
 import cookieParser from "cookie-parser";
@@ -30,7 +31,7 @@ app.get("/", (req, res) => {
 });
 
 const corsOption = {
-  origin: "https://localhost:5173",
+  origin: "http://localhost:5173",
   credentials: true,
 };
 app.use(cors(corsOption));
@@ -45,7 +46,7 @@ app.use('/',OtpRouter);
 app.use('/comments',commentRoute);
 app.use('/',GeminiRouter);
 app.use('/api',Mailrouter);
-
+app.use('/tokens',Tokenrouter);
 initSocket(server);
 
 // DB connection + Server start
