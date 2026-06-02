@@ -293,7 +293,7 @@ export const LoginController = async (req, res) => {
       "https://api.brevo.com/v3/smtp/email",
       {
         sender: {
-          email: "kapilkeer1998@gmail.com",
+          email: "kapil.2023ca51@mnnit.ac.in",
         },
         to: [
           {
@@ -372,6 +372,7 @@ export const LoginController = async (req, res) => {
 export const LogOutController = async (req, res) => {
   try {
     const refreshtoken = req?.cookies?.refreshToken;
+    console.log("refreshToken in logout", refreshtoken);
 
     const decoded = jwt.verify(
       refreshtoken,
