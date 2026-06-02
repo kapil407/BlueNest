@@ -22,11 +22,14 @@ const GenerateAccessToken = async (req, res) => {
 
     const user = await User.findById({ _id: userId });
     let isValidToken = false;
+    const tokenData=[];
     for (const token of user.RefreshToken) {
       const isMatched = await bcrypt.compare(refreshtoken, token.token);
-      if (isMatched) {
+      if (!isMatched) {
+        tokenData.push(token);
+      }
+      else {
         isValidToken = true;
-        break;
       }
     }
 
@@ -38,11 +41,9 @@ const GenerateAccessToken = async (req, res) => {
     const newAccessToken = AccessToken(userId);
     const newRefreshToken = RefreshToken(userId);
     const hashedRefreshToken = await bcrypt.hash(newRefreshToken, 10);
-
-    user.RefreshToken.push({
-      token: hashedRefreshToken,
-      Device: req.headers["user-agent"] || "Unknown Device",
-    });
+      user.RefreshToken = tokenData;
+    user.RefreshToken.push({ token: hashedRefreshToken });  
+   
     await user.save();
     res.cookie("accessToken", newAccessToken, {
       httpOnly: true,
