@@ -79,7 +79,7 @@ const userSchema = new mongoose.Schema(
       {
         token:String,
         Device:String,
-        createAt:Date.now()
+        createdAt:Date.now()
       }
     ]
     
