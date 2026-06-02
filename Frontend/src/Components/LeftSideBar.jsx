@@ -30,9 +30,11 @@ const LeftSideBar = () => {
           headers: {
           "content-type": "application/json",
         },
-        withCredentials: true,
-        }
-      );
+       withCredentials: true,
+      });
+
+      
+
 
       dispatch(getMyTweets(null));
       dispatch(getUser(null));
