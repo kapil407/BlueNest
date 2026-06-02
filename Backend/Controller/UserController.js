@@ -364,6 +364,7 @@ export const LoginController = async (req, res) => {
     });
     return res.json({ message: "Login successfully", user, success: true });
   } catch (err) {
+    console.log("catch in login", err);
     return res.status(400).json({ message: err.message });
   }
 };
