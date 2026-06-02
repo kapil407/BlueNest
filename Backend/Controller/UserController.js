@@ -377,7 +377,7 @@ export const LogOutController = async (req, res) => {
       refreshtoken,
       process.env.RefreshToken_Secret_Key,
     );
-    const user = await User.findById(decoded?._id);
+    const user = await User.findById(decoded?.userId);
 
     const filteredTokens = [];
     let isTokenMatched = false;
