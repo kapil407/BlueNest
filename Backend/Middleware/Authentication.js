@@ -7,10 +7,10 @@ import User from "../models/User.js";
 
 const isAuthentication = async (req, res, next) => {
   try {
-    const AccessToken = req.cookies.accessToken;
+    const AccessToken = req?.cookies?.accessToken;
 
     if (!AccessToken) {
-      throw new Error("token is invalid");
+      throw new Error("token is invalid",AccessToken);
     }
 
     const decoded = jwt.verify(AccessToken, process.env.AccessToken_Secret_Key);
