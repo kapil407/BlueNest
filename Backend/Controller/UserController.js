@@ -350,7 +350,7 @@ export const LoginController = async (req, res) => {
       },
     );
 
-    await user.save();
+    
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
@@ -360,6 +360,7 @@ export const LoginController = async (req, res) => {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
+    await user.save();
     return res.json({
       message: "Login successfully",
       user,
