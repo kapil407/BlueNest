@@ -5,6 +5,7 @@ import tweetSlice from "./tweetSlice.js";
 import messageSlice from "./messageSlice.js";
 import themeSlice from "./themeSlice.js";
 import commentSlice from './commentSlice.js'
+import AccessTokenSlice from './accessToken.js'
 import {
   persistStore,
   persistReducer,
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   tweet: tweetSlice,
   message: messageSlice,
   theme: themeSlice,
-  comment:commentSlice
+  comment:commentSlice,
+  accessToken:AccessTokenSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
