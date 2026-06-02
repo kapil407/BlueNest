@@ -11,30 +11,12 @@ import nodemailer from "nodemailer";
 import crypto from "crypto";
 import uploadCloudinary from "../Middleware/Cloudinary.js";
 
-
 dotenv.config();
 
 const generateOTP = () => crypto.randomInt(10000, 100000);
 
-// console.log("generateOTP", generateOTP);
-
-// email transport
-
-// import nodemailer from "nodemailer";
-
-// const transporter = nodemailer.createTransport({
-//   host: "smtp-relay.brevo.com",
-//   port: 587,
-//   secure: false,
-//   auth: {
-//     user: process.env.BREVO_USER,
-//     pass: process.env.BREVO_PASS,
-//   },
-// });
-// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const signUpController = async (req, res) => {
- 
   try {
     const { firstName, lastName, userName, emailId, password } = req.body;
 
@@ -43,7 +25,6 @@ export const signUpController = async (req, res) => {
       return res.json({ message: "User already exists" });
     }
 
-    
     const hashPassword = await bcrypt.hash(password, 10);
 
     const otp = generateOTP();
@@ -62,27 +43,22 @@ export const signUpController = async (req, res) => {
       verificationCode: otp,
     });
 
-    console.log("Newuser", newUser);
+    
 
-  //  const info=await resend.emails.send({
-  //     from: 'onboarding@resend.dev',
-  //     to: emailId,
-  //     subject: "OTP Verification",
-  //     text: `Your OTP is : ${otp}`,
-  //   });
+    
     await axios.post(
-  "https://api.brevo.com/v3/smtp/email",
-  {
-    sender: {
-      email: "kapilkeer1998@gmail.com",
-    },
-    to: [
+      "https://api.brevo.com/v3/smtp/email",
       {
-        email: emailId,
-      },
-    ],
-   subject: "BlueNest - Email Verification OTP",
-    htmlContent: `
+        sender: {
+          email: "kapilkeer1998@gmail.com",
+        },
+        to: [
+          {
+            email: emailId,
+          },
+        ],
+        subject: "BlueNest - Email Verification OTP",
+        htmlContent: `
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px;">
   <h2 style="color: #2563eb;">BlueNest Email Verification</h2>
 
@@ -119,20 +95,19 @@ export const signUpController = async (req, res) => {
     <strong>BlueNest Team</strong>
   </p>
 </div>
-`
-  },
-  {
-    headers: {
-      "api-key": process.env.BREVO_API_KEY,
-      "Content-Type": "application/json",
-    },
-  }
-);
+`,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+        },
+      },
+    );
 
-console.log("Mail Sent");
+    console.log("Mail Sent");
 
-      // console.log("info",info);
-      // console.log("Data",Data);
+    
     await newUser.save();
 
     return res.status(200).json({
@@ -152,14 +127,14 @@ export const verifyOTP = async (req, res) => {
     const emailId = req.body.emailId;
     const otp = req.body.otp;
     console.log("backend", emailId);
-    // console.log("otp from frontend", otp);
+   
 
     if (!emailId || !otp) {
       return res.status(400).json("email is undefined");
     }
 
     const user = await User.findOne({ emailId: emailId });
-    // console.log("otp in user data", user.verificationCode);
+   
 
     if (!user) {
       return res.status(400).json({ message: "user not found" });
@@ -169,8 +144,7 @@ export const verifyOTP = async (req, res) => {
         .status(400)
         .json({ message: "user already verified", success: false });
     }
-    // console.log("user date", user?.expiryOtp);
-    // console.log("time ", new Date());
+    
 
     if (user.verificationCode != otp || user.expiryOtp < new Date()) {
       return res
@@ -213,40 +187,35 @@ export const resendOTP = async (req, res) => {
 
     const expires = new Date(Date.now() + 2 * 60 * 1000);
     user.expiryOtp = expires;
-   await user.save();
-  //  const info=await resend.emails.send({
-  //     from: 'onboarding@resend.dev',
-  //     to: emailId,
-  //     subject: "OTP Verification",
-  //     text: `Your OTP is : ${otp}`,
-  //   });
+    await user.save();
+    
     await axios.post(
-  "https://api.brevo.com/v3/smtp/email",
-  {
-    sender: {
-      email: "kapilkeer1998@gmail.com",
-    },
-    to: [
+      "https://api.brevo.com/v3/smtp/email",
       {
-        email: emailId,
+        sender: {
+          email: "kapilkeer1998@gmail.com",
+        },
+        to: [
+          {
+            email: emailId,
+          },
+        ],
+        subject: "OTP Verification",
+        htmlContent: `<p>Your OTP is <strong>${otp}</strong></p>`,
       },
-    ],
-    subject: "OTP Verification",
-    htmlContent: `<p>Your OTP is <strong>${otp}</strong></p>`,
-  },
-  {
-    headers: {
-      "api-key": process.env.BREVO_API_KEY,
-      "Content-Type": "application/json",
-    },
-  }
-);
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+        },
+      },
+    );
 
-console.log("Mail Sent");
-      // console.log("info",info);
-      // console.log("Data",Data);
-    console.log("otp resend", otp,user.verificationCode);
- 
+    console.log("Mail Sent");
+    // console.log("info",info);
+    // console.log("Data",Data);
+    console.log("otp resend", otp, user.verificationCode);
+
     return res
       .status(200)
       .json({ message: "OTP resent successfully", success: true });
@@ -286,7 +255,7 @@ export const LoginController = async (req, res) => {
       .cookie("token", token, {
         httpOnly: true,
         secure: true,
-        sameSite: "None", // 👈 VERY IMPORTANT
+        sameSite: "None", 
         maxAge: 24 * 60 * 60 * 1000,
       })
       .json({ message: "Login successfully", user, success: true });
@@ -464,7 +433,7 @@ export const FollowingController = async (req, res) => {
 
     const targetUserId = req.params.id;
 
-    const targetUser = await User.findById(targetUserId); // the person , i follow
+    const targetUser = await User.findById(targetUserId); 
     if (!targetUser) {
       return res.json({ message: "user not found" });
     }
@@ -477,7 +446,7 @@ export const FollowingController = async (req, res) => {
           $push: { following: targetUserId },
         },
         { new: true },
-      ); // push the user's userId into following{ARRAY} of LoggedInUser
+      ); 
       await User.findByIdAndUpdate(
         targetUserId,
         { $push: { followers: loggedInUserId } },
