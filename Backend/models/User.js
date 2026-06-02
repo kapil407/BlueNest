@@ -75,6 +75,13 @@ const userSchema = new mongoose.Schema(
       type: Date,
     },
     verificationCode: String,
+    RefreshToken:[
+      {
+        token:String,
+        Device:String,
+        createAt:Date.now()
+      }
+    ]
     
   },
   {

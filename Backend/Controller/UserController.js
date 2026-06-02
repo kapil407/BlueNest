@@ -10,11 +10,12 @@ import mongoose from "mongoose";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import uploadCloudinary from "../Middleware/Cloudinary.js";
+import AccessToken from "../GenerateTokens/Tokens.js";
+import RefreshToken from "../GenerateTokens/Tokens.js";
 
 dotenv.config();
 
 const generateOTP = () => crypto.randomInt(10000, 100000);
-
 
 export const signUpController = async (req, res) => {
   try {
@@ -43,9 +44,6 @@ export const signUpController = async (req, res) => {
       verificationCode: otp,
     });
 
-    
-
-    
     await axios.post(
       "https://api.brevo.com/v3/smtp/email",
       {
@@ -107,7 +105,6 @@ export const signUpController = async (req, res) => {
 
     console.log("Mail Sent");
 
-    
     await newUser.save();
 
     return res.status(200).json({
@@ -127,14 +124,12 @@ export const verifyOTP = async (req, res) => {
     const emailId = req.body.emailId;
     const otp = req.body.otp;
     console.log("backend", emailId);
-   
 
     if (!emailId || !otp) {
       return res.status(400).json("email is undefined");
     }
 
     const user = await User.findOne({ emailId: emailId });
-   
 
     if (!user) {
       return res.status(400).json({ message: "user not found" });
@@ -144,7 +139,6 @@ export const verifyOTP = async (req, res) => {
         .status(400)
         .json({ message: "user already verified", success: false });
     }
-    
 
     if (user.verificationCode != otp || user.expiryOtp < new Date()) {
       return res
@@ -188,7 +182,7 @@ export const resendOTP = async (req, res) => {
     const expires = new Date(Date.now() + 2 * 60 * 1000);
     user.expiryOtp = expires;
     await user.save();
-    
+
     await axios.post(
       "https://api.brevo.com/v3/smtp/email",
       {
@@ -200,8 +194,45 @@ export const resendOTP = async (req, res) => {
             email: emailId,
           },
         ],
-        subject: "OTP Verification",
-        htmlContent: `<p>Your OTP is <strong>${otp}</strong></p>`,
+        subject: "BlueNest - Email Verification OTP",
+        htmlContent: `
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px;">
+  <h2 style="color: #2563eb;">BlueNest Email Verification</h2>
+
+  <p>Hello,</p>
+
+  <p>
+    Thank you for signing up with <strong>BlueNest</strong>.
+    Please use the following One-Time Password (OTP) to verify your email address:
+  </p>
+
+  <div style="text-align: center; margin: 25px 0;">
+    <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #2563eb;">
+      ${otp}
+    </span>
+  </div>
+
+  <p>
+    This OTP is valid for <strong>2 minutes</strong>.
+  </p>
+
+  <p>
+    If you did not request this verification, please ignore this email.
+    No further action is required.
+  </p>
+
+  <hr />
+
+  <p style="color: #666; font-size: 12px;">
+    This is an automated message. Please do not reply to this email.
+  </p>
+
+  <p>
+    Regards,<br/>
+    <strong>BlueNest Team</strong>
+  </p>
+</div>
+`,
       },
       {
         headers: {
@@ -212,8 +243,7 @@ export const resendOTP = async (req, res) => {
     );
 
     console.log("Mail Sent");
-    // console.log("info",info);
-    // console.log("Data",Data);
+
     console.log("otp resend", otp, user.verificationCode);
 
     return res
@@ -248,17 +278,91 @@ export const LoginController = async (req, res) => {
         success: false,
       });
     }
-    // creating token for create cookie
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET); // process.env.JWT_SECRET, secret key
 
-    return res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "None", 
-        maxAge: 24 * 60 * 60 * 1000,
-      })
-      .json({ message: "Login successfully", user, success: true });
+    // creating tokein rotation  for security
+    const accessToken = AccessToken(user?._id);
+    const refreshToken = RefreshToken(user?._id);
+    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    const DeviceInfo = req.headers["user-agent"] || "Unknown Device";
+    user.RefreshToken.push({
+      token: hashedRefreshToken,
+      Device: DeviceInfo,
+      createAt: Date.now(),
+    });
+    await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          email: "kapilkeer1998@gmail.com",
+        },
+        to: [
+          {
+            email: emailId,
+          },
+        ],
+
+        subject: "BlueNest - Login Alert",
+        htmlContent: `
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px;">
+  <h2 style="color: #2563eb;">BlueNest Login Alert</h2>
+
+  <p>Hello,</p>
+
+  <p>
+    We detected a successful login to your <strong>BlueNest</strong> account.
+  </p>
+
+  <p>
+    If this was you, no further action is required and you can safely ignore this email.
+  </p>
+
+  <p>
+    If you do not recognize this login, please secure your account immediately by changing your password and reviewing your account activity.
+  </p>
+
+  <div style="background-color: #f4f7fb; padding: 15px; border-radius: 8px; margin: 20px 0;">
+    <h3 style="margin-top: 0; color: #2563eb;">Login Details</h3>
+
+    <p><strong>Device:</strong> ${DeviceInfo}</p>
+   
+  </div>
+
+  <p>
+    For your security, we recommend using a strong password and keeping your account credentials private.
+  </p>
+
+  <hr />
+
+  <p style="color: #666; font-size: 12px;">
+    This is an automated security notification from BlueNest. Please do not reply to this email.
+  </p>
+
+  <p>
+    Regards,<br/>
+    <strong>BlueNest Team</strong>
+  </p>
+</div>
+`,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    await user.save();
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      maxAge: 15 * 60 * 1000,
+    });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+    return res.json({ message: "Login successfully", user, success: true });
   } catch (err) {
     return res.status(400).json({ message: err.message });
   }
@@ -266,11 +370,34 @@ export const LoginController = async (req, res) => {
 
 export const LogOutController = async (req, res) => {
   try {
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-    });
+    const refreshtoken = req.cookies;
+
+    const decoded = await jwt.verify(
+      refreshtoken,
+      process.env.RefreshToken_Secret_Key,
+    );
+    const user = await User.findById(decoded.user._id);
+
+    const filteredTokens = [];
+    let isTokenMatched = false;
+
+    for (const tokenData of user.RefreshToken) {
+      const isMatch = await bcrypt.compare(refreshToken, tokenData.token);
+      if (!isMatch) {
+        filteredTokens.push(tokenData);
+        isTokenMatched = true;
+      }
+    }
+    if (!isTokenMatched) {
+      res.clearCookies("accessToken");
+      res.clearCookies("refreshToken");
+      return res.status(400).json({ message: "Invalid refresh token" });
+    }
+    user.RefreshToken = filteredTokens;
+    await user.save();
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
     return res.json({ message: "logout succesfully", success: true });
   } catch (err) {
     return res.status(400).json({ message: err.message });
@@ -380,14 +507,14 @@ export const getBookmarksTweetsController = async (req, res) => {
   try {
     const userId = req.userId;
 
-    // 1️⃣ Logged-in user ke bookmarks lao
+    // 1️Logged-in user ke bookmarks lao
     const user = await User.findById(userId).select("bookmarks");
 
     if (!user || user.bookmarks.length === 0) {
       return res.status(200).json({ tweets: [] });
     }
 
-    // 2️⃣ Sirf wahi tweets lao jo user ke bookmarks me hain
+    // 2️ Sirf wahi tweets lao jo user ke bookmarks me hain
     const tweets = await Tweet.find({
       _id: { $in: user.bookmarks },
     }).sort({ createdAt: -1 });
@@ -433,7 +560,7 @@ export const FollowingController = async (req, res) => {
 
     const targetUserId = req.params.id;
 
-    const targetUser = await User.findById(targetUserId); 
+    const targetUser = await User.findById(targetUserId);
     if (!targetUser) {
       return res.json({ message: "user not found" });
     }
@@ -446,7 +573,7 @@ export const FollowingController = async (req, res) => {
           $push: { following: targetUserId },
         },
         { new: true },
-      ); 
+      );
       await User.findByIdAndUpdate(
         targetUserId,
         { $push: { followers: loggedInUserId } },
