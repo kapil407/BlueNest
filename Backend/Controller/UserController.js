@@ -373,7 +373,7 @@ export const LogOutController = async (req, res) => {
   try {
     const refreshtoken = req?.cookies?.refreshToken;
 
-    const decoded = await jwt.verify(
+    const decoded = jwt.verify(
       refreshtoken,
       process.env.RefreshToken_Secret_Key,
     );
@@ -407,6 +407,7 @@ export const LogOutController = async (req, res) => {
 
     return res.json({ message: "logout succesfully", success: true });
   } catch (err) {
+    console.log("catch in logout", err);
     return res.status(400).json({ message: err.message });
   }
 };
