@@ -11,5 +11,5 @@ const AccessTokenSlice=createSlice({
             }
         }
 })
-export const {setAccessToken}=AccessTokenSlice.action;
+export const {setAccessToken}=AccessTokenSlice.actions;
 export default AccessTokenSlice.reducer;
