@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import useOtherUsers from "../hooks/useOtherUsers.js";
 import useGetTweets from "../hooks/useGetTweets.js";
 import ThemeToggle from "./Theme.jsx";
-import {useNavigate} from "react-router-dom";
+
 const Home = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
