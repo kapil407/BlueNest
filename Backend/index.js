@@ -10,7 +10,7 @@ import { initSocket } from "./utils/socket.js";
 import OtpRouter from './routes/OtpRout.js'
 import commentRoute from './routes/CommentRoute.js';
 import GeminiRouter from './routes/GeminiRoutes.js'
-import Mailrouter from './routes/test.js';
+// import Mailrouter from './routes/test.js';
 import Tokenrouter from './routes/TokenRotation.js';
 
 
@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 });
 
 const corsOption = {
-  origin: "https://bluenest-frontend.onrender.com",
+  origin: "http://localhost:4660",
   credentials: true,
 };
 app.use(cors(corsOption));
@@ -45,7 +45,7 @@ app.use("/", MessageRouter);
 app.use('/',OtpRouter);
 app.use('/comments',commentRoute);
 app.use('/',GeminiRouter);
-app.use('/api',Mailrouter);
+// app.use('/api',Mailrouter);
 app.use('/tokens',Tokenrouter);
 initSocket(server);
 

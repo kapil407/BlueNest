@@ -45,12 +45,7 @@ const GenerateAccessToken = async (req, res) => {
     user.RefreshToken.push({ token: hashedRefreshToken });  
    
     await user.save();
-    res.cookie("accessToken", newAccessToken, {
-      httpOnly: true,
-       secure: true,
-      sameSite: "None",
-      maxAge: 15 * 60 * 1000, // 15 minutes
-    });
+   
 
     res.cookie("refreshToken", newRefreshToken, {
       httpOnly: true,
