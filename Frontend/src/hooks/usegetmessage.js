@@ -6,6 +6,7 @@ import { USER_API_END_POINT } from "../Utils/constant";
 import { useParams } from "react-router-dom";
 
 const useGetMessages = () => {
+  const {accessToken} = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const { targetUserId } = useParams();
   const { message } = useSelector((store) => store.message);
@@ -18,6 +19,9 @@ const useGetMessages = () => {
           `${USER_API_END_POINT}/getMessage/${targetUserId}`,
           {},
           {
+            headers:{
+              Authorization: `Bearer ${accessToken}`,
+            },
             withCredentials: true,
           },
         );

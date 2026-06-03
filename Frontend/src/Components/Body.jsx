@@ -134,7 +134,10 @@ const Bookmarks = lazy(() => import("./Bookmarks.jsx"));
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import useGenerateNewAccessToken from "../GenerateAccessToken/TokenRotation.js";
+import { useDispatch } from "react-redux";
+import { setAccessToken } from "../redux/tokenSlice.js";
 const Body = () => {
+  const dispatch = useDispatch();
   const generateNewAccessToken = useGenerateNewAccessToken();
   const { user } = useSelector((store) => store.user);
   useEffect(() => {
@@ -142,9 +145,11 @@ const Body = () => {
       return;
     }
     const IntervalId = setInterval(() => {
-        generateNewAccessToken();
-      },14 * 60 * 1000,); // 14 minutes in milliseconds
-       return () => clearInterval(IntervalId);
+
+    const accessToken=  generateNewAccessToken();
+    dispatch(setAccessToken(accessToken));
+    }, 14 * 60 * 1000); // 14 minutes in milliseconds
+    return () => clearInterval(IntervalId);
   }, [user, generateNewAccessToken]);
 
   return (

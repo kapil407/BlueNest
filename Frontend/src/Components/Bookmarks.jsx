@@ -26,7 +26,7 @@ const Bookmarks = () => {
           {
             withCredentials: true,
             headers: {
-              "content-type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
             },
           },
         );

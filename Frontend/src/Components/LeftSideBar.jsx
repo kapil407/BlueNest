@@ -9,6 +9,7 @@ import { USER_API_END_POINT } from "../Utils/constant.js";
 import { toast } from "react-hot-toast";
 import { getMyProfile, getOtherUsers, getUser } from "../redux/userSlice.js";
 import { getMyTweets } from "../redux/tweetSlice.js";
+import { clearToken } from "../redux/tokenSlice.js";
 
 const LeftSideBar = () => {
   const dispatch = useDispatch();
@@ -37,9 +38,11 @@ const LeftSideBar = () => {
       dispatch(getUser(null));
       dispatch(getMyProfile(null));
       dispatch(getOtherUsers(null));
+      dispatch(clearToken());
 
       if (res?.data?.success) {
         toast.success(res?.data?.message);
+        navigate("/login");
       }
     } catch (error) {
       console.log(error);

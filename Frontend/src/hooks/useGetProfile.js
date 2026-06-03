@@ -4,23 +4,20 @@ import { USER_API_END_POINT } from "../Utils/constant.js";
 import { useDispatch } from "react-redux";
 import { getMyProfile } from "../redux/userSlice.js";
 // import { IoMdVolumeHigh } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 const useGetProfile = (id) => {
   const dispatch = useDispatch();
-
+  const {accessToken}=useSelector((store)=>store.token);
   useEffect(() => {
     const fetchMyProfile = async () => {
       try {
-        const res = await axios.get(`${USER_API_END_POINT}/getProfile/${id}`, {
-          withCredentials: true /* Jab hum Axios ya fetch() se API call karte hai, toh by default browser cookies nahi bhejta agar:
-
-                           // Domain alag hai (frontend localhost:5173, backend localhost:5000)
-                            
-                           // Ya humne  httpOnly cookie set ki hai (secure auth ke liye)
-
-                           Iske bina cookie client ke browser me set nahi hogi
-                         Aur future requests me token backend ko nahi milega
-                           */,
+        const res = await axios.get(`${USER_API_END_POINT}/getProfile/${id}`,{}, {
+          headers: {
+            // Assuming you have the access token stored in localStorage or Redux store
+            Authorization: `Bearer ${accessToken}`,
+          },
+          withCredentials: true 
         });
 
         // console.log("res-> ",res);

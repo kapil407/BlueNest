@@ -21,6 +21,7 @@ import { useEffect } from "react";
 import { setComment } from "../redux/commentSlice.js";
 
 const Tweets = ({ tweet }) => {
+  const { accessToken } = useSelector((store) => store.user);
   const [showComment, setShowComment] = useState(false);
   const [addComment, setAddComment] = useState();
   const [selectedId, setSelectedId] = useState(null);
@@ -53,6 +54,9 @@ const Tweets = ({ tweet }) => {
         `${TWEET_API_END_POINT}/tweetLikeOrDisLike/${id}`,
         { id: user?._id },
         {
+          headers: {  
+            Authorization: `Bearer ${accessToken}`,
+           },
           withCredentials: true,
         },
       );
@@ -73,8 +77,11 @@ const Tweets = ({ tweet }) => {
   const DeleteTweetHandler = async (tweetId) => {
     try {
       const res = await axios.delete(
-        `${TWEET_API_END_POINT}/deleteTweet/${tweetId}`,
+        `${TWEET_API_END_POINT}/deleteTweet/${tweetId}`,{},
         {
+          headers: { 
+            Authorization: `Bearer ${accessToken}`,
+           },
           withCredentials: true,
         },
       );
@@ -103,7 +110,10 @@ const Tweets = ({ tweet }) => {
 
   useEffect(() => {
     const fetchCommentLength = async () => {
-      const res = await axios.get(`${TWEET_API_END_POINT}/comments/${tweet?._id}`, {
+      const res = await axios.get(`${TWEET_API_END_POINT}/comments/${tweet?._id}`,{}, {
+       headers: { 
+        Authorization: `Bearer ${accessToken}`,
+       },
         withCredentials: true,
       });
       console.log("res->>lenght,res", res?.data?.comments?.length);
@@ -117,6 +127,9 @@ const Tweets = ({ tweet }) => {
         `${TWEET_API_END_POINT}/comments/add/${id}`,
         { addComment },
         {
+          headers: { 
+            Authorization: `Bearer ${accessToken}`,
+           },
           withCredentials: true,
         },
       );

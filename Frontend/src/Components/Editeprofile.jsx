@@ -36,10 +36,14 @@ const EditeProfile = () => {
       const res = await axios.patch(
         `${USER_API_END_POINT}/updateProfile`,
         formdata,
-        {
+        { 
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
           withCredentials: true,
         },
       );
+          
       console.log(res);
 
       if (res?.data?.success) {

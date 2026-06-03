@@ -26,7 +26,7 @@ function Profile() {
   const [loading, setLoading] = useState(false);
   const theme = useSelector((store) => store.theme.theme);
   const { id } = useParams();
-
+const {accessToken}=useSelector((store)=>store.token);
     useGetProfile(id);
   
   const { tweet } = useSelector((store) => store?.tweet);
@@ -53,6 +53,10 @@ function Profile() {
         `${USER_API_END_POINT}/changeBackCover`,
         formdata,
         {
+          headers: {
+
+            Authorization: `Bearer ${accessToken}`,
+          },
           withCredentials: true,
         },
       );
@@ -77,6 +81,9 @@ function Profile() {
           `${USER_API_END_POINT}/unfollow/${id}`,
           {},
           {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
             withCredentials: true,
           },
         );
@@ -98,6 +105,9 @@ function Profile() {
           `${USER_API_END_POINT}/follow/${id}`,
           {},
           {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
             withCredentials: true,
           },
         );

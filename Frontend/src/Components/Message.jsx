@@ -15,6 +15,7 @@ import { getRefresh } from "../redux/tweetSlice.js";
 
 
 const Message = () => {
+  const {accessToken} = useSelector((store) => store.user);
   const theme = useSelector((store) => store.theme.theme);
   const {refresh}=useSelector(store=>store.tweet);
   useGetMessages();
@@ -48,7 +49,7 @@ const Message = () => {
         { message: Message },
         {
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
           },
           withCredentials: true,
         },
