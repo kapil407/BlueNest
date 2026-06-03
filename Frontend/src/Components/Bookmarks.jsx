@@ -8,6 +8,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Tweets from "./Tweets.jsx";
 
 const Bookmarks = () => {
+  const  {accessToken}=useSelector(store=>store.accessToken);
   const [loading, setLoading] = useState(false);
   const { bookmarksIds } = useSelector((store) => store.user);
   const theme = useSelector((store) => store.theme.theme);
