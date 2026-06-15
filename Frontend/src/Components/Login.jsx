@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile, getUser } from "../redux/userSlice";
 import { FiEye, FiEyeOff, FiLock, FiMail, FiX } from "react-icons/fi";
-import {setAccessToken} from "../redux/tokenSlice.js"
+
 
 function Login() {
   const navigate = useNavigate();
@@ -31,9 +31,7 @@ function Login() {
         `${USER_API_END_POINT}/login`,
         { emailId, password },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+         
           withCredentials: true,
         },
       );
@@ -41,7 +39,6 @@ function Login() {
 
       dispatch(getUser(res?.data?.user));
       dispatch(getMyProfile(res?.data?.user));
-      dispatch(setAccessToken(res?.data?.accessToken));
     
 
       if (res?.data?.success) {

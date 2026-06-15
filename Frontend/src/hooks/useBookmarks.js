@@ -7,16 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 const useBookmarks = () => {
   const dispatch = useDispatch();
-  const {accessToken} = useSelector((store) => store.token);
+
   const handleBookmark = async (tweetId) => {
     try {
       const res = await axios.patch(
         `${USER_API_END_POINT}/bookmarkstweet/${tweetId}`,
         {},
+
         {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
           withCredentials: true,
         },
       );

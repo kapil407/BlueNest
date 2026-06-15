@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link, useParams } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -26,8 +26,9 @@ function Profile() {
   const [loading, setLoading] = useState(false);
   const theme = useSelector((store) => store.theme.theme);
   const { id } = useParams();
-const {accessToken}=useSelector((store)=>store.token);
-    useGetProfile(id);
+    
+        useGetProfile(id);
+    
   
   const { tweet } = useSelector((store) => store?.tweet);
 
@@ -53,10 +54,7 @@ const {accessToken}=useSelector((store)=>store.token);
         `${USER_API_END_POINT}/changeBackCover`,
         formdata,
         {
-          headers: {
-
-            Authorization: `Bearer ${accessToken}`,
-          },
+          
           withCredentials: true,
         },
       );
@@ -81,9 +79,7 @@ const {accessToken}=useSelector((store)=>store.token);
           `${USER_API_END_POINT}/unfollow/${id}`,
           {},
           {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+            
             withCredentials: true,
           },
         );
@@ -105,9 +101,7 @@ const {accessToken}=useSelector((store)=>store.token);
           `${USER_API_END_POINT}/follow/${id}`,
           {},
           {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+            
             withCredentials: true,
           },
         );

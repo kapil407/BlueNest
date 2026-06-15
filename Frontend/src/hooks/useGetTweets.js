@@ -6,7 +6,7 @@ import { getMyTweets } from "../redux/tweetSlice.js";
 import { getRefresh } from "../redux/tweetSlice.js";
 
 const useGetTweets = () => {
-  const { accessToken } = useSelector((store) => store.user);
+  
   const { refresh, isActive } = useSelector((store) => store?.tweet);
   const { user } = useSelector((store) => store.user);
   const { tweet } = useSelector((store) => store.tweet);
@@ -14,10 +14,8 @@ const useGetTweets = () => {
   const dispatch = useDispatch();
   const fetchTweets = async () => {
     try {
-      const res = await axios.get(`${TWEET_API_END_POINT}/allTweets`,{}, {
-       headers:{
-        Authorization:`Bearer ${accessToken}`,
-       },
+      const res = await axios.get(`${TWEET_API_END_POINT}/allTweets`, {
+      
         withCredentials: true,  
       });
 

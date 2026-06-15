@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "react-avatar";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { TWEET_API_END_POINT } from "../Utils/constant.js";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
@@ -9,15 +9,21 @@ import { getRefresh } from "../redux/tweetSlice.js";
 import { FaImage } from "react-icons/fa";
 import ClipLoader from "react-spinners/ClipLoader";
 import { IoClose } from "react-icons/io5";
+import store from "../redux/store.js";
+// import { useParams } from "react-router-dom";
+import useGetProfile from "../hooks/useGetProfile.js";
 
 const CreatePost = () => {
   const theme = useSelector((store) => store.theme.theme);
   const { user, profile } = useSelector((store) => store.user);
   const [description, setDescription] = useState("");
   const [media, setMedia] = useState(null);
-  
+  const [showInput, setShowInput] = useState(false);
+  const [prompt, setPrompt] = useState("");
+
   const dispatch = useDispatch();
- 
+  useGetProfile(user?._id);
+
   let profileImage = profile?.profilePic?.url;
   console.log("profileImage", user);
   const [loading, setLoading] = useState(false);
@@ -44,9 +50,6 @@ const CreatePost = () => {
         `${TWEET_API_END_POINT}/createTweet`,
         formData,
         {
-          headers: {
-           Authorization: `Bearer ${user?.accessToken}`,
-          },
           withCredentials: true,
         },
       );
@@ -68,21 +71,41 @@ const CreatePost = () => {
     }
   };
 
-  // const handleAIGenerate=async()=>{
-  //   try {
-  //       const res=await axios.post(`${TWEET_API_END_POINT}/generate-post`,{prompt},{
-  //         withCredentials:true
-  //       })
-  //       console.log("res",res);
-  //   } catch (error) {
-  //     console.log("error in AI",error);
-  //   }
-  // }
+  const handleAIGenerate = async () => {
+    const formdata = new FormData();
+    if (media) {
+      formdata.append("media", media);
+    }
+    formdata.append("prompt", prompt);
+    // formData.append("id", user?._id);
+    try {
+      const res = await axios.post(
+        `${TWEET_API_END_POINT}/api/simple-image-post`,
+        formdata,
+        {
+          withCredentials: true,
+        },
+      );
+      setDescription(res.data.postText);
+      console.log("res in Gemini", res);
+      if (res.status == 200) {
+        setPrompt("");
+        setShowInput(false);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+      setPrompt("");
+
+      console.log("error in AI", error.response.data.message);
+    }
+  };
 
   return (
     <div className="w-full">
       <div>
-        <div className={`border-b p-4 ${isLight ? "border-slate-200" : "border-slate-800"}`}>
+        <div
+          className={`border-b p-4 ${isLight ? "border-slate-200" : "border-slate-800"}`}
+        >
           <div className="flex gap-3">
             <Link to={`/profile/${user?._id}`}>
               {!profileImage ? (
@@ -157,58 +180,62 @@ const CreatePost = () => {
                     Upload
                   </span>
                 </div>
+                {/* {gemini buttton } */}
+                {!showInput ? (
+                  <button
+                    onClick={() => setShowInput(true)}
+                    className="bg-purple-500 text-white px-4 py-2  rounded-full cursor-pointer"
+                  >
+                    Create Post By Gemini
+                  </button>
+                ) : (
+                  <>
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+                      <div className="bg-white p-6 rounded-xl shadow-xl flex items-center gap-2">
+                        <input
+                          type="text"
+                          placeholder="Create Post"
+                          className="p-2 border rounded w-64 text-black outline-none"
+                          value={prompt}
+                          onChange={(e) => setPrompt(e.target.value)}
+                        />
 
-            {/* {!showInput ? (
-              <button
-                onClick={() => setShowInput(true)}
-                className="bg-purple-500 text-white px-4 py-2  rounded-full"
-              >
-                 Create Post By Gemini
-              </button>
-            ) : (
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  placeholder="Create Post"
-                  className="p-2 border rounded w-64"
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                />
+                        <button
+                          onClick={handleAIGenerate}
+                          className="bg-blue-500 text-white px-4 py-2 rounded-full cursor-pointer"
+                        >
+                          Generate
+                        </button>
+
+                        <button
+                          onClick={() => setShowInput(false)}
+                          className="text-red-500 cursor-pointer"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 <button
-                  onClick={handleAIGenerate}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-full"
-                >
-                  Generate
-                </button>
-
-                <button
-                  onClick={() => setShowInput(false)}
-                  className="text-red-500"
-                >
-                  Cancel
-                </button>
-              </div>
-            )} */}
-
-            <button
-              onClick={submitHandler}
-              disabled={(!media && !description.trim()) || loading}
+                  onClick={submitHandler}
+                  disabled={(!media && !description?.trim()) || loading}
                   className={`flex min-w-24 items-center justify-center gap-2 rounded-full px-5 py-2.5 font-bold text-white transition disabled:opacity-60 ${
-                    (!media && !description.trim()) || loading
+                    (!media && !description?.trim()) || loading
                       ? "cursor-not-allowed bg-slate-400"
                       : "cursor-pointer bg-[#1D9BF0] shadow-lg shadow-sky-500/20 hover:bg-sky-500"
                   }`}
-            >
-              {loading ? (
-                <>
-                  <ClipLoader size={18} color="#fff" />
-                  Posting...
-                </>
-              ) : (
-                "Post"
-              )}
-            </button>
+                >
+                  {loading ? (
+                    <>
+                      <ClipLoader size={18} color="#fff" />
+                      Posting...
+                    </>
+                  ) : (
+                    "Post"
+                  )}
+                </button>
               </div>
             </div>
           </div>

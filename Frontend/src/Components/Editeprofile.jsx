@@ -9,6 +9,7 @@ import { FaImage } from "react-icons/fa";
 
 import { getMyProfile } from "../redux/userSlice.js";
 const EditeProfile = () => {
+ 
   const { tweet } = useSelector((store) => store?.tweet);
   const theme = useSelector((store) => store.theme.theme);
 
@@ -37,9 +38,7 @@ const EditeProfile = () => {
         `${USER_API_END_POINT}/updateProfile`,
         formdata,
         { 
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+         
           withCredentials: true,
         },
       );

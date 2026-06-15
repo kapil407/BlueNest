@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { formatMessageTime } from "../Utils/setTime.js";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { AiOutlineLike } from "react-icons/ai";
+
 // import { getRefresh } from "../redux/tweetSlice";
 const GetComment = ({ id }) => {
+  
   const { theme } = useSelector((store) => store.theme);
   const { refresh } = useSelector((store) => store.tweet);
   const [user, setUser] = useState();
@@ -17,6 +19,7 @@ const GetComment = ({ id }) => {
       try {
         console.log("id->>>", id);
         const res = await axios.get(`${TWEET_API_END_POINT}/comments/${id}`, {
+          
           withCredentials: true,
         });
         console.log("res->>> get Comment", res.data.user);

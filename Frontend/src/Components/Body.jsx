@@ -133,27 +133,28 @@ const Message = lazy(() => import("./Message.jsx"));
 const Bookmarks = lazy(() => import("./Bookmarks.jsx"));
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import useGenerateNewAccessToken from "../GenerateAccessToken/TokenRotation.js";
-import { useDispatch } from "react-redux";
-import { setAccessToken } from "../redux/tokenSlice.js";
+import { useNavigate } from "react-router-dom";
+import useGenerateAccessToken from "../GenerateAccessToken/useTokenRotation.js";
 const Body = () => {
-  const dispatch = useDispatch();
-  const generateNewAccessToken = useGenerateNewAccessToken();
+  const navigate=useNavigate();
+  const generateNewAccessToken = useGenerateAccessToken();
   const { user } = useSelector((store) => store.user);
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
+  useEffect( () => {
+   const func=async ()=>{
+  const status=await generateNewAccessToken();
+   if(status==401){
+    navigate('/login');
+   }
     const IntervalId = setInterval(() => {
-
-    const accessToken=  generateNewAccessToken();
-    dispatch(setAccessToken(accessToken));
-    }, 14 * 60 * 1000); // 14 minutes in milliseconds
-    return () => clearInterval(IntervalId);
-  }, [user, generateNewAccessToken]);
+     generateNewAccessToken();
+      }, 14*60 * 1000,); // 14 minutes in milliseconds
+       return () => clearInterval(IntervalId);
+    }
+    func();
+  }, [user,generateNewAccessToken]);
 
   return (
-    <BrowserRouter>
+   
       <Suspense fallback={<Spinner />}>
         <Routes>
           <Route
@@ -184,7 +185,7 @@ const Body = () => {
           <Route path="/otpVerify" element={<OtpVerify />} />
         </Routes>
       </Suspense>
-    </BrowserRouter>
+
   );
 };
 

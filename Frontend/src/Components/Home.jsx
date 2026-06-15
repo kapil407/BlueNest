@@ -54,7 +54,7 @@ const Home = () => {
           {loading ? <LeftSideRemmi /> : <LeftSideBar />}
         </aside>
 
-        <main className="h-screen min-w-0 overflow-y-auto custom-scrollbar">
+        <main className="h-screen min-w-0  overflow-y-auto custom-scrollbar">
           <Outlet />
         </main>
 

@@ -8,19 +8,16 @@ import { useSelector } from "react-redux";
 
 const useGetProfile = (id) => {
   const dispatch = useDispatch();
-  const {accessToken}=useSelector((store)=>store.token);
+  
   useEffect(() => {
     const fetchMyProfile = async () => {
       try {
-        const res = await axios.get(`${USER_API_END_POINT}/getProfile/${id}`,{}, {
-          headers: {
-            // Assuming you have the access token stored in localStorage or Redux store
-            Authorization: `Bearer ${accessToken}`,
-          },
+        const res = await axios.get(`${USER_API_END_POINT}/getProfile/${id}`, {
+          
           withCredentials: true 
         });
 
-        // console.log("res-> ",res);
+        console.log("res in useGetProfile-> ",res);
 
         dispatch(getMyProfile(res?.data?.user)); // update the user inside the profile action
       } catch (error) {
