@@ -352,13 +352,13 @@ export const LoginController = async (req, res) => {
 
     
 
-    // res.cookie("accessToken", accessToken, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: "None",
-    //   maxAge: 15 * 60 * 1000,
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 15 * 60 * 1000,
 
-    // });
+    });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
        secure: true,
@@ -369,7 +369,6 @@ export const LoginController = async (req, res) => {
     return res.json({
       message: "Login successfully",
       user,
-      accessToken,
       success: true,
       
     });
@@ -403,7 +402,7 @@ export const LogOutController = async (req, res) => {
       }
     }
     if (!isTokenMatched) {
-     
+      res.clearCookie("accessToken");
       res.clearCookie("refreshToken");
       return res
         .status(200)
@@ -412,7 +411,7 @@ export const LogOutController = async (req, res) => {
 
     user.RefreshToken = filteredTokens;
     await user.save();
-   
+    res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
 
     return res

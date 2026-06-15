@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 });
 
 const corsOption = {
-  origin: "http://localhost:4660",
+  origin: "https://bluenest-frontend.onrender.com",
   credentials: true,
 };
 app.use(cors(corsOption));
@@ -46,7 +46,7 @@ app.use('/',OtpRouter);
 app.use('/comments',commentRoute);
 app.use('/',GeminiRouter);
 // app.use('/api',Mailrouter);
-app.use('/tokens',Tokenrouter);
+app.use('/',Tokenrouter);
 initSocket(server);
 
 // DB connection + Server start

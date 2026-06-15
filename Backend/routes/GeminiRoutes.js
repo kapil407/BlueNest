@@ -1,14 +1,11 @@
 import express from "express";
-const router = express.Router();
+const GeminiRouter = express.Router();
+import upload from "../Middleware/multer.js";
 import generatePost from '../Controller/GeminiController.js'
 import isAuthentication from "../Middleware/Authentication.js";
 // import aiLimiter from "../Middleware/PromptRateLimit.js";
 // import GeminiPromptValidation from "../Middleware/PromptValidation.js";
-router.post(
-  "/generate-post",
-  isAuthentication,
-
-  // GeminiPromptValidation,
+GeminiRouter.post('/api/simple-image-post', upload.single('media'),
   generatePost,
 );
-export default router;
+export default GeminiRouter;

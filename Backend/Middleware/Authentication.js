@@ -7,7 +7,7 @@ import User from "../models/User.js";
 
 const isAuthentication = async (req, res, next) => {
   try {
-    const AccessToken =req.headers.Authorization?.split(" ")[1] ;
+    const AccessToken = req?.cookies?.accessToken;
 
     if (!AccessToken) {
       throw new Error("token is invalid",AccessToken);

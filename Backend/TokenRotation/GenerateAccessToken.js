@@ -23,7 +23,7 @@ const GenerateAccessToken = async (req, res) => {
     const user = await User.findById({ _id: userId });
     let isValidToken = false;
     const tokenData=[];
-    for (const token of user.RefreshToken) {
+    for (const token of user?.RefreshToken) {
       const isMatched = await bcrypt.compare(refreshtoken, token.token);
       if (!isMatched) {
         tokenData.push(token);
@@ -44,16 +44,23 @@ const GenerateAccessToken = async (req, res) => {
       user.RefreshToken = tokenData;
     user.RefreshToken.push({ token: hashedRefreshToken });  
    
-    await user.save();
+    
+    res.cookie("accessToken", newAccessToken, {
+      httpOnly: true,
+       secure: true,
+      sameSite: "None",
+      maxAge: 15 * 60 * 1000, // 15 minutes
+    });
    
 
     res.cookie("refreshToken", newRefreshToken, {
       httpOnly: true,
-       secure: true,
+       secure: false,
       sameSite: "None",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
-    return res.json({ accessToken: newAccessToken });
+    await user.save();
+    return res.json({ message:"accesstoken generated" });
   } catch (error) {
     console.log("Error in GenerateAccessToken:", error);
     return res.status(500).json({ message: "Internal Server Error" });
