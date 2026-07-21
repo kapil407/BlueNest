@@ -15,9 +15,6 @@ const Home = () => {
   // const navigate = useNavigate();
   const { user, otherUsers } = useSelector((store) => store.user);
   const theme = useSelector((store) => store.theme.theme);
-  if(!user){
-    navigate("/login");
-  }
 
   useOtherUsers();
   useGetTweets();
@@ -25,7 +22,7 @@ const Home = () => {
     if (!user) {
       navigate("/login");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -34,6 +31,10 @@ const Home = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div

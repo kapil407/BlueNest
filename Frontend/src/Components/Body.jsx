@@ -117,7 +117,7 @@
 // };
 // export default Body;
 import React, { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Spinner from "./Spinner.jsx";
 import FeedRemmi from "../RimmiEffect_UI/Temp.jsx";
@@ -141,9 +141,10 @@ const Body = () => {
   const generateNewAccessToken = useGenerateAccessToken();
   const { user } = useSelector((store) => store.user);
   useEffect(() => {
-    const publicPaths = ["/login", "/Signup", "/otpVerify"];
+    const publicPaths = ["/login", "/signup", "/otpverify"];
+    const currentPath = location.pathname.toLowerCase();
 
-    if (publicPaths.includes(location.pathname)) {
+    if (publicPaths.includes(currentPath)) {
       return;
     }
 
