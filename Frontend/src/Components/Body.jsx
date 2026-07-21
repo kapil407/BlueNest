@@ -133,25 +133,35 @@ const Message = lazy(() => import("./Message.jsx"));
 const Bookmarks = lazy(() => import("./Bookmarks.jsx"));
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useGenerateAccessToken from "../GenerateAccessToken/useTokenRotation.js";
 const Body = () => {
   const navigate=useNavigate();
+  const location = useLocation();
   const generateNewAccessToken = useGenerateAccessToken();
   const { user } = useSelector((store) => store.user);
-  useEffect( () => {
-   const func=async ()=>{
-  const status=await generateNewAccessToken();
-   if(status==401){
-    navigate('/login');
-   }
-    const IntervalId = setInterval(() => {
-     generateNewAccessToken();
-      }, 14*60 * 1000,); // 14 minutes in milliseconds
-       return () => clearInterval(IntervalId);
+  useEffect(() => {
+    const publicPaths = ["/login", "/signup", "/otpVerify"];
+
+    if (publicPaths.includes(location.pathname)) {
+      return;
     }
-    func();
-  }, [user,generateNewAccessToken]);
+
+    const refreshAccessToken = async () => {
+      const status = await generateNewAccessToken();
+      if (status === 401) {
+        navigate("/login");
+      }
+    };
+
+    refreshAccessToken();
+
+    const intervalId = setInterval(() => {
+      generateNewAccessToken();
+    }, 14 * 60 * 1000); // 14 minutes in milliseconds
+
+    return () => clearInterval(intervalId);
+  }, [location.pathname, navigate, user, generateNewAccessToken]);
 
   return (
    

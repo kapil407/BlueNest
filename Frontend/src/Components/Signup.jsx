@@ -46,7 +46,7 @@ const Signup = () => {
         dispatch(getUser(res.data.newUser));
         toast.success(res.data.message);
 
-        if (res.data.message === "Register succesfully.Please verify OTP sent to your email") {
+        if (res.data.success && res.data.newUser && !res.data.newUser.otpVerified) {
           navigate("/otpVerify");
         } else {
           navigate("/login");
