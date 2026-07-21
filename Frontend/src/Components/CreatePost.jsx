@@ -10,7 +10,7 @@ import { FaImage } from "react-icons/fa";
 import ClipLoader from "react-spinners/ClipLoader";
 import { IoClose } from "react-icons/io5";
 import store from "../redux/store.js";
-// import { useParams } from "react-router-dom";
+
 import useGetProfile from "../hooks/useGetProfile.js";
 
 const CreatePost = () => {
@@ -71,7 +71,7 @@ const CreatePost = () => {
     }
   };
 
-  const handleAIGenerate = async () => {
+  const handleAIGenerate = async () => { 
     const formdata = new FormData();
     if (media) {
       formdata.append("media", media);
