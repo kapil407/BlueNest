@@ -46,10 +46,10 @@ const Signup = () => {
         dispatch(getUser(res.data.newUser));
         toast.success(res.data.message);
 
-        if (res.data.message === "User already exists") {
-          navigate("/login");
-        } else {
+        if (res.data.message === "Register succesfully.Please verify OTP sent to your email") {
           navigate("/otpVerify");
+        } else {
+          navigate("/login");
         }
       }
     } catch (error) {
