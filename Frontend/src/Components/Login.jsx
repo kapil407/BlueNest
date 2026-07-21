@@ -53,7 +53,7 @@ function Login() {
   };
 
   const registerHandler = () => {
-    navigate("/Signup");
+    navigate("/signup");
   };
   const showHandler = () => {
     setshow(!show);

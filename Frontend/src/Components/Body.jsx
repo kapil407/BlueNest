@@ -141,7 +141,7 @@ const Body = () => {
   const generateNewAccessToken = useGenerateAccessToken();
   const { user } = useSelector((store) => store.user);
   useEffect(() => {
-    const publicPaths = ["/login", "/signup", "/otpVerify"];
+    const publicPaths = ["/login", "/Signup", "/otpVerify"];
 
     if (publicPaths.includes(location.pathname)) {
       return;
