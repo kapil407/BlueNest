@@ -48,48 +48,9 @@ Built a reusable animated feed skeleton (Remmi effect) with theme
 support to optimize user experience during data fetching.
 
 
-<img width="1903" height="857" alt="Screenshot 2026-01-30 225237" src="https://github.com/user-attachments/assets/b572f483-a8b3-45c6-b449-61b30e899a57" />
-
-<img width="1903" height="872" alt="Screenshot 2026-01-30 225505" src="https://github.com/user-attachments/assets/34265c3e-ac88-4002-9ec6-ddbc37fdce83" />
-
-
-
-<video src="https://github.com/user-attachments/assets/1abcd5f4-74c5-433d-8883-aaab6829adc7
-"/>
-
-
-
-
-
-
-
-
-
-
-<img width="1919" height="859" alt="Screenshot 2026-01-30 230110" src="https://github.com/user-attachments/assets/4eb5aa4b-2f9d-4af4-ae7a-33e6838f157e" />
-
-<img width="1917" height="869" alt="Screenshot 2025-10-28 121014" src="https://github.com/user-attachments/assets/945323bd-c16c-437d-b16f-c128d66151d0" />
-<img width="1918" height="863" alt="Screenshot 2025-10-28 170324" src="https://github.com/user-attachments/assets/fab70205-b99c-48b1-8d0f-c4c6fcd2c23a" />
-<img width="1902" height="861" alt="Screenshot 2026-01-30 225658" src="https://github.com/user-attachments/assets/a6f5b9f6-bb5d-4f17-95db-fa39bae61f9e" />
-
-
-<video src="https://github.com/user-attachments/assets/5bceb634-1924-469c-84b0-bfe31f95c2ba"/>
-
-
-
-
-
-
-
-
-
-<!-- <img width="1902" height="861" alt="Screenshot 2026-01-30 225658" src="https://github.com/user-attachments/assets/a8aa285f-f9af-4cfd-8f36-ce25a7d1c2e0" /> -->
-
-
-
-
-
-
-
-
-
+<img width="1532" height="688" alt="Screenshot 2026-07-21 191746" src="https://github.com/user-attachments/assets/24ea8b21-c94b-4a60-b278-3e8b06dde413" />
+<img width="1535" height="696" alt="Screenshot 2026-07-21 191826" src="https://github.com/user-attachments/assets/31dce078-9590-42a5-b7a7-2f135668bc27" />
+<img width="1528" height="698" alt="Screenshot 2026-07-21 191848" src="https://github.com/user-attachments/assets/41401b4f-d55c-40b2-bc66-317fb04a62d1" />
+<img width="1526" height="692" alt="Screenshot 2026-07-21 200934" src="https://github.com/user-attachments/assets/1517fcbb-7fee-40ef-bdcb-872ffd67259e" />
+<img width="1532" height="701" alt="Screenshot 2026-07-21 191717" src="https://github.com/user-attachments/assets/1ab4265c-96ba-433d-bf04-565bff6a1f77" />
+<img width="1536" height="701" alt="Screenshot 2026-07-21 191651" src="https://github.com/user-attachments/assets/14d2b1eb-9ffe-444b-8b38-9579f47ae9e1" />
