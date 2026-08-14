@@ -104,7 +104,7 @@ const Message = () => {
   }
 
   return (
-    <div className="fixed inset-y-0 left-1/2 z-10 flex w-full max-w-3xl -translate-x-1/2 flex-col border-x border-gray-700 bg-white shadow-xl sm:w-[78%] lg:w-[55%]">
+    <div className="fixed inset-y-0 left-1/2 z-10 flex w-full max-w-3xl -translate-x-1/2 flex-col border-x border-gray-700 bg-white shadow-xl h-dvh lg:screen lg:w-[55%]">
       {/* Header */}
       <div
         className={`flex items-center gap-3 border-b px-4 py-3 ${theme == "light" ? "border-gray-200 bg-white text-gray-950" : "border-gray-700 bg-black text-white"}`}
