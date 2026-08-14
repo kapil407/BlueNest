@@ -45,14 +45,12 @@ const GenerateAccessToken = async (req, res) => {
    
     
     res.cookie("accessToken", newAccessToken, {
-   httpOnly: true,
-      secure: true,
+   
     });
    
 
     res.cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      secure: true,
+     
     });
     await user.save();
     return res.json({ message:"accesstoken generated" });
