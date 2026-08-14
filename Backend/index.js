@@ -29,8 +29,9 @@ app.use(cookieParser());
 app.get("/", (req, res) => {
   res.send("BlueNest Backend is running 🚀");
 });
-
+const frontendPort=5173 || 5174 || 5175 ;
 const corsOption = {
+  // origin: `http://localhost:${frontendPort}`,
   origin: "https://bluenest-frontend.onrender.com",
   credentials: true,
 };
