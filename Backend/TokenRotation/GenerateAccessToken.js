@@ -44,10 +44,16 @@ const GenerateAccessToken = async (req, res) => {
     user.RefreshToken.push({ token: hashedRefreshToken });  
    
     
-    res.cookie("accessToken", newAccessToken);
+    res.cookie("accessToken", newAccessToken, {
+      sameSite: "None",
+      secure: true,
+    });
    
 
-    res.cookie("refreshToken", newRefreshToken);
+    res.cookie("refreshToken", newRefreshToken, {
+      sameSite: "None",
+      secure: true,
+    });
     await user.save();
     return res.json({ message:"accesstoken generated" });
   } catch (error) {
