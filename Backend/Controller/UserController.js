@@ -354,8 +354,16 @@ export const LoginController = async (req, res) => {
 
     
 
-    res.cookie("accessToken", accessToken);
-    res.cookie("refreshToken", refreshToken);
+    res.cookie("accessToken", accessToken,{
+      sameSite: "None",
+      secure: true,
+      httpOnly: true,
+    });
+    res.cookie("refreshToken", refreshToken,{
+      sameSite: "None",
+      secure: true,
+      httpOnly: true,
+    });
     await user.save();
     return res.json({
       message: "Login successfully",
