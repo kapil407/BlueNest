@@ -9,6 +9,7 @@ import { AccessToken, RefreshToken } from "../GenerateTokens/Tokens.js";
 const GenerateAccessToken = async (req, res) => {
   try {
     const refreshtoken = req?.cookies?.refreshToken;
+    console.log("refresh token in backend",refreshtoken);
 
     if (!refreshtoken) {
       return res
