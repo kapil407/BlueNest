@@ -4,7 +4,7 @@ dotenv.config();
 export const AccessToken = (userId) => {
   return jwt.sign({ userId }, process.env.AccessToken_Secret_Key, {
     expiresIn: "15m",
-    sameSite: "None",
+   httpOnly: true,
     secure: true,
    
   });
@@ -12,7 +12,7 @@ export const AccessToken = (userId) => {
 export const RefreshToken = (userId) => {
   return jwt.sign({ userId }, process.env.RefreshToken_Secret_Key, {
     expiresIn: "7d",
-    sameSite: "None",
+   httpOnly: true,
     secure: true,
   });
 
