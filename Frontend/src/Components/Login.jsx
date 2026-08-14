@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile, getUser } from "../redux/userSlice";
 import { FiEye, FiEyeOff, FiLock, FiMail, FiX } from "react-icons/fi";
-
+import Typewriter from "./TypeWriter";
+import CursorSportLightEffect from './CursorSpotlightEffect.jsx'
 
 function Login() {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ function Login() {
         toast.success(`Welcome Back ${res?.data?.user?.firstName}`);
       }
     } catch (error) {
-      toast.success(error.response.data.message);
+      toast.success(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -85,12 +86,14 @@ function Login() {
 
   return (
     <div
-      className={`h-screen w-full overflow-hidden px-3 py-3 sm:px-5 sm:py-4 lg:px-8 ${
+      className={`h-full w-full overflow-hidden px-3 py-3 sm:px-5 sm:py-4 lg:px-8 ${
         theme == "light"
           ? "bg-[radial-gradient(circle_at_top_left,#dbeafe_0,#f8fafc_35%,#eef2ff_100%)] text-slate-950"
           : "bg-[radial-gradient(circle_at_top_left,#0f2d47_0,#020617_42%,#0f172a_100%)] text-white"
       }`}
     >
+      <CursorSportLightEffect/>
+      
       <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-center">
         <div
           className={`grid max-h-full w-full overflow-hidden rounded-[1.5rem] border shadow-2xl lg:grid-cols-[0.95fr_1.05fr] ${
@@ -100,23 +103,23 @@ function Login() {
           }`}
         >
           <div
-            className={`relative hidden min-h-0 flex-col justify-between p-7 xl:p-8 lg:flex ${
+            className={`relative hidden min-h-0  flex-col justify-between p-7 xl:p-8 lg:flex ${
               theme == "light"
                 ? "bg-sky-50/80"
                 : "bg-gradient-to-br from-slate-900 via-slate-950 to-sky-950"
             }`}
           >
             <div>
-              <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-sky-400/30 bg-sky-500/10 px-4 py-2 text-sm font-semibold text-sky-500">
+              <div className="mb-6  inline-flex items-center gap-3 rounded-full border border-sky-400/30 bg-sky-500/10 px-4 py-2 text-sm font-semibold text-sky-500">
                 <span className="h-2 w-2 rounded-full bg-sky-500" />
                 BlueNest Social
               </div>
-              <h1 className="max-w-md text-4xl font-black leading-tight tracking-normal xl:text-5xl">
-                Welcome back to your nest.
+              <h1 className="text-xl font-black leading-tight tracking-normal ">
+               <Typewriter word="Welcome back to your nest." />
               </h1>
-              <p className={`mt-4 max-w-sm text-sm leading-6 xl:text-base ${mutedText}`}>
-                Login karo aur apni feed, messages aur conversations ko wahi se
-                continue karo.
+              <p className={`mt-4 mb-2 max-w-sm text-sm leading-6 xl:text-base ${mutedText}`}>
+              Log in and continue your feed, messages, and conversations right where you left off.
+            
               </p>
             </div>
 
@@ -146,7 +149,9 @@ function Login() {
                   <p className="text-sm font-semibold text-sky-500">
                     BlueNest
                   </p>
-                  <h1 className="text-2xl font-black">Login</h1>
+                  <h1 className="text-2xl lg:text-2xl  font-black">
+                   <Typewriter word="Login" speedText={300} speedDelete={120}/>
+                    </h1>
                 </div>
               </div>
 
@@ -156,7 +161,7 @@ function Login() {
                 </p>
                 <h2 className="mt-2 text-3xl font-black xl:text-4xl">Login</h2>
                 <p className={`mt-2 text-sm leading-6 ${mutedText}`}>
-                  Apne BlueNest account mein sign in karo.
+                  Sign in to your BlueNest account to continue.
                 </p>
               </div>
 
@@ -207,7 +212,7 @@ function Login() {
                   <button
                     type="button"
                     onClick={() => setShowForgotPasswordBox(true)}
-                    className="text-sm font-semibold text-sky-500 transition hover:text-sky-400"
+                    className="text-sm font-semibold text-sky-500 transition cursor-pointer hover:text-sky-400"
                   >
                     Forgot password?
                   </button>
@@ -215,7 +220,7 @@ function Login() {
 
                 <button
                   type="submit"
-                  className="w-full rounded-2xl bg-[#1D9BF0] px-5 py-3.5 font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5 hover:bg-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-500/30"
+                  className="w-full cursor-pointer rounded-2xl bg-[#1D9BF0] px-5 py-3.5 font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5 hover:bg-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-500/30"
                 >
                   Login
                 </button>
@@ -224,7 +229,7 @@ function Login() {
                   Don't have an account?
                   <button
                     type="button"
-                    className="ml-1 font-bold text-sky-500 hover:text-sky-400"
+                    className="ml-1 font-bold text-sky-500 cursor-pointer hover:text-sky-400"
                     onClick={registerHandler}
                   >
                     Register
@@ -297,7 +302,7 @@ function Login() {
 
               <button
                 type="submit"
-                className="w-full rounded-2xl bg-[#1D9BF0] px-5 py-3.5 font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5 hover:bg-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-500/30"
+                className="w-full cursor-pointer rounded-2xl bg-[#1D9BF0] px-5 py-3.5 font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5 hover:bg-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-500/30"
               >
                 Reset password
               </button>

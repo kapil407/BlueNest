@@ -145,8 +145,9 @@ const Tweets = ({ tweet }) => {
           : "border-slate-800 hover:bg-slate-900/55"
       }`}
     >
-      <div className="flex gap-3">
-        <Link to={`profile/${tweet?.userId}`} className="shrink-0">
+      <div className=" gap-3">
+       <div className="flex gap-3">
+         <Link to={`profile/${tweet?.userId}`} className="shrink-0">
           {!image?.url ? (
             <Avatar
               className="cursor-pointer"
@@ -158,12 +159,12 @@ const Tweets = ({ tweet }) => {
             <img
               src={image?.url}
               alt="photo"
-              className="h-12 w-12 rounded-full object-cover ring-2 ring-sky-500/20"
+              className=" lg:h-12 lg:w-12 h-14 w-14 rounded-full object-cover ring-2 ring-sky-500/20"
             />
           )}
         </Link>
-        <div className="mr-6 w-full">
-          <div className=" flex">
+       
+          
             <div className="flex flex-col  gap-x-2 gap-y-1">
               <h1 className="font-black">
                 {firstUser?.firstName || "BlueNest User"}
@@ -174,8 +175,9 @@ const Tweets = ({ tweet }) => {
                 @{firstUser?.userName || "user"} ·{" "}
                 {formatMessageTime(tweet.createdAt)}
               </p>
-            </div>
+            
           </div>{" "}
+       </div>
           <div>
             {tweet?.description && (
               <p className="mt-2 whitespace-pre-wrap text-[15px] leading-6">
@@ -290,12 +292,12 @@ const Tweets = ({ tweet }) => {
                 onClick={() => handleCommentSubmit(tweet._id)}
                 className="mt-2 cursor-pointer rounded-full bg-[#1D9BF0] px-5 py-2 font-bold text-white hover:bg-sky-500"
               >
-                Comment
+              Add  comment
               </button>
             </div>
           )}
         </div>
-      </div>
+     
     </article>
   );
 };

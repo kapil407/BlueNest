@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 
 import { Link, useParams } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -35,6 +35,17 @@ function Profile() {
   const dispatch = useDispatch();
 
   const { profile, otherUsers, user } = useSelector((store) => store.user);
+    console.log("user in profile",profile);
+    console.log("user in profile",tweet);
+    let cnt=0;
+    for( let post of tweet){
+     
+      if(post?.userId===profile?._id){
+          cnt++;
+           console.log("kapiol");
+      }
+    }
+    console.log("tweet cnt",cnt);
 
   const [image, setimage] = useState(null);
   const navigate = useNavigate();
@@ -149,7 +160,7 @@ function Profile() {
             <div className="ml-3 flex flex-col">
               <h1 className="text-lg font-black">{profile?.firstName}</h1>
               <p className={theme == "light" ? "text-sm text-slate-500" : "text-sm text-slate-400"}>
-                {tweet?.length} post
+                {cnt} post
               </p>
             </div>
           </div>
@@ -269,10 +280,11 @@ function Profile() {
                 </Link>
               </>
             ) : (
-              <>
+              <div className="flex items-center justify-end gap-2">
+                
                 <button
                   onClick={followAndUnfollowHandler}
-                  className={` px-4 py-2 mr-2 rounded-3xl  cursor-pointer ${theme == "light" ? "bg-black text-white" : "bg-gray-400 text-black"}`}
+                  className={` lg:px-4 lg:py-2 lg:mr-2 px-3 py-2 rounded-3xl  cursor-pointer ${theme == "light" ? "bg-black text-white" : "bg-gray-400 text-black"}`}
                 >
                   {user?.following?.includes(id.toString())
                     ? "following"
@@ -286,7 +298,8 @@ function Profile() {
                     </button>
                   </Link>
                 )}
-              </>
+              
+              </div>
             )}
           </div>
          </div>

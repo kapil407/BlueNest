@@ -135,7 +135,9 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useGenerateAccessToken from "../GenerateAccessToken/useTokenRotation.js";
+
 const Body = () => {
+
   const navigate=useNavigate();
   const location = useLocation();
   const generateNewAccessToken = useGenerateAccessToken();
@@ -189,8 +191,8 @@ const Body = () => {
             <Route path="EditeProfile" element={<EditeProfile />} />
             <Route path="Message/:targetUserId" element={<Message />} />
             <Route path="bookmarks/:id" element={<Bookmarks />} />
-          </Route>
-
+          </Route> 
+            {/* {end of Home Route in which all sub-routes are defined like Feed,profile,editeProfile,Message,Bookmarks } */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/otpVerify" element={<OtpVerify />} />

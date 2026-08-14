@@ -13,6 +13,8 @@ import {
   FiMail,
   FiUser,
 } from "react-icons/fi";
+import Typewriter from "./TypeWriter.jsx";
+import CursorSportLightEffect from './CursorSpotlightEffect.jsx'
 
 const Signup = () => {
   const theme = useSelector((store) => store.theme.theme);
@@ -80,6 +82,7 @@ const Signup = () => {
           : "bg-[radial-gradient(circle_at_top_left,#0f2d47_0,#020617_42%,#0f172a_100%)] text-white"
       }`}
     >
+      <CursorSportLightEffect/>
       <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-center">
         <div
           className={`grid max-h-full w-full overflow-hidden rounded-[1.5rem] border shadow-2xl lg:grid-cols-[0.95fr_1.05fr] ${
@@ -100,12 +103,11 @@ const Signup = () => {
                 <span className="h-2 w-2 rounded-full bg-sky-500" />
                 BlueNest Social
               </div>
-              <h1 className="max-w-md text-4xl font-black leading-tight tracking-normal xl:text-5xl">
-                Apni awaaz ko ek fresh nest do.
+              <h1 className="max-w-md font-black leading-tight tracking-normal">
+              < Typewriter word="Your story starts here."/>
               </h1>
               <p className={`mt-4 max-w-sm text-sm leading-6 xl:text-base ${mutedText}`}>
-                Join karo, profile banao, aur apne thoughts ko clean, fast aur
-                friendly space mein share karo.
+                Join, create your profile, and share your thoughts in a clean, fast, and friendly space.
               </p>
             </div>
 
@@ -135,7 +137,9 @@ const Signup = () => {
                   <p className="text-sm font-semibold text-sky-500">
                     BlueNest
                   </p>
-                  <h1 className="text-2xl font-black">Create account</h1>
+                  <h1 className="text-2xl lg:text-2xl font-black">
+                   <Typewriter word="Create account" speedText={300} speedDelete={120} />
+                    </h1>
                 </div>
               </div>
 
@@ -145,7 +149,7 @@ const Signup = () => {
                 </p>
                 <h2 className="mt-2 text-3xl font-black xl:text-4xl">Create account</h2>
                 <p className={`mt-2 text-sm leading-6 ${mutedText}`}>
-                  Bas kuch details, phir BlueNest ready.
+                 Just a few details, and BlueNest is ready for you.
                 </p>
               </div>
 
@@ -245,7 +249,7 @@ const Signup = () => {
 
                 <button
                   type="submit"
-                  className="w-full rounded-2xl bg-[#1D9BF0] px-5 py-3 font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5 hover:bg-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-500/30"
+                  className="w-full rounded-2xl bg-[#1D9BF0] cursor-pointer px-5 py-3 font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5 hover:bg-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-500/30"
                 >
                   Create account
                 </button>
@@ -255,7 +259,7 @@ const Signup = () => {
                   <button
                     type="button"
                     onClick={LoginHandler}
-                    className="ml-1 font-bold text-sky-500 hover:text-sky-400"
+                    className="ml-1 font-bold text-sky-500 cursor-pointer hover:text-sky-400"
                   >
                     Login
                   </button>

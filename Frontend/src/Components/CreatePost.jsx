@@ -71,8 +71,9 @@ const CreatePost = () => {
     }
   };
 
-  const handleAIGenerate = async () => { 
+  const handleAIGenerate = async () => {
     const formdata = new FormData();
+    setLoading(true);
     if (media) {
       formdata.append("media", media);
     }
@@ -93,10 +94,12 @@ const CreatePost = () => {
         setShowInput(false);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response.statusText);
       setPrompt("");
 
-      console.log("error in AI", error.response.data.message);
+      console.log("error in AI", error.response.statusText);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -118,7 +121,7 @@ const CreatePost = () => {
                 <img
                   src={profileImage}
                   alt="profilePhoto"
-                  className="h-12 w-12 rounded-full object-cover ring-2 ring-sky-500/20"
+                  className="lg:h-14 lg:w-14 h-15 w-15 rounded-full object-cover ring-2 ring-sky-500/20"
                 />
               )}
             </Link>
@@ -129,7 +132,7 @@ const CreatePost = () => {
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
                 placeholder="What's happening?"
-                className={`w-full resize-none bg-transparent text-lg outline-none placeholder:text-slate-400 ${
+                className={`w-full resize-none mt-4 ml-2 bg-transparent text-xl outline-none placeholder:text-slate-400 ${
                   isLight ? "text-slate-950" : "text-slate-100"
                 }`}
               />
@@ -154,7 +157,7 @@ const CreatePost = () => {
                 </div>
               )}
 
-              <div className="mt-4 flex items-center justify-between">
+              <div className="mt-4 flex  items-center gap-3 lg:justify-between">
                 <input
                   type="file"
                   accept="image/*,video/*"
@@ -167,7 +170,7 @@ const CreatePost = () => {
                     htmlFor="galleryUpload"
                     className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-sky-500 transition hover:bg-sky-500/10"
                   >
-                    <FaImage size={22} />
+                    <FaImage lg:size={22} className="w-52 h-22" />
                   </label>
 
                   <span
@@ -184,44 +187,57 @@ const CreatePost = () => {
                 {!showInput ? (
                   <button
                     onClick={() => setShowInput(true)}
-                    className="bg-purple-500 text-white px-4 py-2  rounded-full cursor-pointer"
+                    className="bg-purple-500 text-white text-sm font-bold py-1  px-1.5  lg:px-3 lg:py-2 rounded-full cursor-pointer"
                   >
-                    Create Post By Gemini
+                    Post By Gemini
                   </button>
                 ) : (
                   <>
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-                      <div className="bg-white p-6 rounded-xl shadow-xl flex items-center gap-2">
+                    <div className="fixed inset-0 z-50 flex  items-center justify-center bg-black/30 backdrop-blur-sm">
+                      <div className=" p-6 rounded-xl shadow-xl flex bg-cover bg-center flex-col  lg:w-[40%] lg:h-[30%]  items-center gap-2" style={{backgroundImage:`url(geminiImage.jpg)`}}>
                         <input
                           type="text"
                           placeholder="Create Post"
-                          className="p-2 border rounded w-64 text-black outline-none"
+                          className="p-2 border border-white/20 lg:text-2xl rounded w-65 lg:w-full text-white outline-none lg:h-[40%]"
                           value={prompt}
                           onChange={(e) => setPrompt(e.target.value)}
                         />
+                        
+                          <button
+                            onClick={handleAIGenerate}
+                            disabled={!prompt.trim() || loading}
+                            className={` text-white flex  justify-center px-2 py-1 lg:w-[40%] lg:mt-4 lg:text-center rounded-full  ${!prompt.trim() || loading ? "opacity-50 cursor-not-allowed bg-gray-800 " : "cursor-pointer bg-blue-500"}`}
+                          >
+                            {loading ? (
+                              <>
+                                <ClipLoader
+                                  size={18}
+                                  color="#fff"
+                                  className="bg-gray-800"
+                                />
+                                Generating...
+                              </>
+                            ) : (
+                              "Generate"
+                            )}
+                          </button>
 
-                        <button
-                          onClick={handleAIGenerate}
-                          className="bg-blue-500 text-white px-4 py-2 rounded-full cursor-pointer"
-                        >
-                          Generate
-                        </button>
-
-                        <button
-                          onClick={() => setShowInput(false)}
-                          className="text-red-500 cursor-pointer"
-                        >
-                          Cancel
-                        </button>
+                          <button
+                            onClick={() => setShowInput(false)}
+                            className="text-white-500 px-2 py-1 w-20 cursor-pointer lg:w-[40%] border rounded-2xl lg:p-1 bg-red-400"
+                          >
+                            Cancel
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                   
                   </>
                 )}
 
                 <button
                   onClick={submitHandler}
                   disabled={(!media && !description?.trim()) || loading}
-                  className={`flex min-w-24 items-center justify-center gap-2 rounded-full px-5 py-2.5 font-bold text-white transition disabled:opacity-60 ${
+                  className={`flex min-w-24 items-center justify-center gap-2 rounded-full lg:px-5 lg:py-2.5 py-3 font-bold text-white transition disabled:opacity-60 ${
                     (!media && !description?.trim()) || loading
                       ? "cursor-not-allowed bg-slate-400"
                       : "cursor-pointer bg-[#1D9BF0] shadow-lg shadow-sky-500/20 hover:bg-sky-500"

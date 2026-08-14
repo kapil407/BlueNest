@@ -27,8 +27,9 @@ body {
 .Selected {
   background-color: rgb(211, 211, 211);
 }
-.initial-loader {
+#root {
   height: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;

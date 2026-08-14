@@ -5,8 +5,10 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getOtherUsers } from "../redux/userSlice";
 import toast from "react-hot-toast";
+import { IoClose } from "react-icons/io5";
+import {getRefresh} from "../redux/tweetSlice.js";
 
-function RightSideBar({ otherUsers }) {
+function RightSideBar({ otherUsers ,className,onClose}) {
   const theme = useSelector((store) => store.theme.theme);
   const isLight = theme == "light";
   const array = otherUsers ? Object.values(otherUsers) : [];
@@ -25,15 +27,32 @@ function RightSideBar({ otherUsers }) {
     } else {
       toast.success("User not found");
     }
-
+    
+    
     setSearchName("");
   };
-
+        console.log("otherUsers in right sidebar", otherUsers);
   return (
-    <div className="ml-auto flex h-full mr-8 w-full max-w-[340px] flex-col gap-4">
+    <div className={`lg:ml-auto flex h-full w-65 lg:w-full border-slate-700  flex-col gap-4 ${className}`}>
+      <div>
+        {onClose && (
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className={`absolute left-1   top-1 flex h-9 w-14 items-center justify-center rounded-full transition lg:hidden ${
+                    isLight
+                      ? "text-slate-700 hover:bg-slate-100"
+                      : "text-slate-200 hover:bg-slate-900"
+                  }`}
+                  aria-label="Close sidebar"
+                >
+                  <IoClose size={25} />
+                </button>
+              )}
+      </div>
       <form
         onSubmit={searchHandler}
-        className={`sticky top-4 z-10 flex items-center gap-3 rounded-2xl border px-4 py-3 ${
+        className={`sticky top-4 z-10 flex items-center gap-3 rounded-2xl border  lg:px-4 lg:py-3 py-2 px-2 ${
           isLight
             ? "border-slate-200 bg-white text-slate-950 shadow-sm"
             : "border-slate-800 bg-slate-900 text-slate-100"
@@ -68,7 +87,7 @@ function RightSideBar({ otherUsers }) {
             <div
               key={otherUser?._id}
               className={`flex items-center justify-between gap-3 rounded-2xl p-2 transition ${
-                isLight ? "hover:bg-slate-100" : "hover:bg-slate-800"
+                isLight ? "hover:bg-slate-100" : "hover:bg-slate-800c "
               }`}
             >
               <div className="flex min-w-0 items-center gap-3">

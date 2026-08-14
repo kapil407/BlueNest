@@ -6,7 +6,8 @@ import { getRefresh } from "../redux/tweetSlice.js";
 import { useDispatch } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import Tweets from "./Tweets.jsx";
-
+import { FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
 const Bookmarks = () => {
  
   const [loading, setLoading] = useState(false);
@@ -50,7 +51,10 @@ const Bookmarks = () => {
             : "border-slate-800 bg-slate-950/85"
         }`}
       >
+        <div className="flex gap-4">
+            <Link to='/'><FaArrowLeft size={18} className="mt-2 cursor-pointer" /></Link>
         <h1 className="text-2xl font-black">Saved</h1>
+        </div>
         <p className={`text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}>
           Posts you bookmarked
         </p>

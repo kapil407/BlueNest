@@ -1,8 +1,9 @@
 import React from "react";
 import { CgProfile } from "react-icons/cg";
 import { IoMdHome, IoMdLogOut } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
 import { PiBookmarkSimple } from "react-icons/pi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { USER_API_END_POINT } from "../Utils/constant.js";
@@ -10,12 +11,13 @@ import { toast } from "react-hot-toast";
 import { getMyProfile, getOtherUsers, getUser } from "../redux/userSlice.js";
 import { getMyTweets } from "../redux/tweetSlice.js";
 
-
-const LeftSideBar = () => {
+const LeftSideBar = ({ className = "", onClose }) => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const { user } = useSelector((store) => store.user);
   const theme = useSelector((store) => store.theme.theme);
+  console.log("user->",user);
 
   const isLight = theme == "light";
   const navItems = [
@@ -26,21 +28,20 @@ const LeftSideBar = () => {
 
   const logoutHandler = async () => {
     try {
-     
-      const res = await axios.post(`${USER_API_END_POINT}/logout`, {},
-        {  withCredentials: true,  }
-        );
+      const res = await axios.post(
+        `${USER_API_END_POINT}/logout`,
+        {},
+        { withCredentials: true },
+      );
 
-       console.log("logout controller called",USER_API_END_POINT);
-
+      console.log("logout controller called", USER_API_END_POINT);
 
       dispatch(getMyTweets(null));
       dispatch(getUser(null));
       dispatch(getMyProfile(null));
       dispatch(getOtherUsers(null));
-     
 
-      if (res?.data?.success) { 
+      if (res?.data?.success) {
         toast.success(res?.data?.message);
         navigate("/login");
       }
@@ -60,26 +61,43 @@ const LeftSideBar = () => {
   );
 
   return (
-    <div className="flex h-full ml-2 flex-col justify-between">
+    <div className={`flex h-full  lg:w-[70%] lg:px-2 lg:py-2 rounded-2xl border border-slate-700 flex-col justify-between ${className}`}>
       <div>
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            className={`absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full transition lg:hidden ${
+              isLight
+                ? "text-slate-700 hover:bg-slate-100"
+                : "text-slate-200 hover:bg-slate-900"
+            }`}
+            aria-label="Close sidebar"
+          >
+            <IoClose size={24} />
+          </button>
+        )}
+
         <Link
           to="/"
-          className="mb-8 flex items-center gap-3 rounded-2xl px-2 py-2 transition hover:bg-sky-500/10"
+          className="mb-8 flex lg:w-full items-center w-[65%] gap-3 rounded-2xl px-2 py-2 transition hover:bg-sky-500/10"
         >
           <img
-            className="h-12 w-12 rounded-2xl object-cover shadow-md"
+            className="w-14 lg:w-14 h-14 rounded-2xl object-cover shadow-md"
             src={isLight ? "/logo.png" : "/logo_Dark.png"}
             alt="BlueNest logo"
           />
           <div>
             <h1 className="text-xl font-black">BlueNest</h1>
-            <p className={`text-xs ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+            <p
+              className={`text-xs ${isLight ? "text-slate-500" : "text-slate-400"}`}
+            >
               Social space
             </p>
           </div>
         </Link>
 
-        <nav className="relative w-[65%] space-y-2">
+        <nav className="relative w-full lg:w-full space-y-2">
           <span
             className="pointer-events-none absolute left-0 top-0 h-14 w-full rounded-2xl bg-[#1D9BF0] shadow-lg shadow-sky-500/20 transition-transform duration-300 ease-out"
             style={{ transform: `translateY(${activeIndex * 4}rem)` }}
@@ -93,7 +111,7 @@ const LeftSideBar = () => {
               <Link
                 key={item.label}
                 to={item.to}
-                className={`group relative z-10 flex h-14 items-center gap-4 rounded-2xl px-4 text-lg font-bold transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] ${
+                className={`group relative z-10 lg:w-full flex h-14 items-center gap-4 rounded-2xl px-4 text-lg font-bold transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] ${
                   active
                     ? "text-white"
                     : isLight
@@ -115,19 +133,25 @@ const LeftSideBar = () => {
       </div>
 
       <div
-        className={`rounded-3xl w-[65%] border p-3 ${
+        className={`rounded-3xl w-full lg:w-full border p-3 ${
           isLight
             ? "border-slate-200 bg-slate-50"
             : "border-slate-800 bg-slate-900/70"
         }`}
       >
         <div className="mb-4  flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1D9BF0] text-sm font-black text-white">
-            {user?.firstName?.charAt(0) || "B"}
+            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1D9BF0] text-sm font-black text-white">
+              <Link to={`/profile/${user?._id}`}>
+                <img src={user?.profilePic?.url} alt="profileImage" className="rounded-full h-11 object-cover w-12"/>
+              </Link>            
           </div>
           <div className="min-w-0">
-            <h2 className="truncate font-bold">{user?.firstName || "BlueNest"}</h2>
-            <p className={`truncate text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+            <h2 className="truncate font-bold">
+              {user?.firstName || "BlueNest"}
+            </h2>
+            <p
+              className={`truncate text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}
+            >
               @{user?.userName || "user"}
             </p>
           </div>
@@ -135,7 +159,7 @@ const LeftSideBar = () => {
 
         <button
           onClick={logoutHandler}
-          className={`flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-2.5 font-bold transition ${
+          className={`flex w-full items-center cursor-pointer justify-center gap-2 rounded-2xl px-4 py-2.5 font-bold transition ${
             isLight
               ? "bg-slate-900 text-white hover:bg-slate-700"
               : "bg-white text-slate-950 hover:bg-slate-200"
