@@ -33,7 +33,7 @@ function RightSideBar({ otherUsers ,className,onClose}) {
   };
         console.log("otherUsers in right sidebar", otherUsers);
   return (
-    <div className={`lg:ml-auto flex h-full w-65 lg:w-full border-slate-700  flex-col gap-4 ${className}`}>
+    <div className={`lg:ml-auto flex h-full w-75 lg:w-full border-slate-700  flex-col gap-4 ${className}`}>
       <div>
         {onClose && (
                 <button
