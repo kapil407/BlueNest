@@ -14,6 +14,8 @@ import { AccessToken, RefreshToken } from "../GenerateTokens/Tokens.js";
 
 dotenv.config();
 
+
+
 const generateOTP = () => crypto.randomInt(10000, 100000);
 
 export const signUpController = async (req, res) => {
@@ -352,19 +354,8 @@ export const LoginController = async (req, res) => {
 
     
 
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-      maxAge: 15 * 60 * 1000,
-
-    });
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-       secure: true,
-      sameSite: "None",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    });
+    res.cookie("accessToken", accessToken);
+    res.cookie("refreshToken", refreshToken);
     await user.save();
     return res.json({
       message: "Login successfully",

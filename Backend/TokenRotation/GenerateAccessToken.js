@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 dotenv.config();
 import { AccessToken, RefreshToken } from "../GenerateTokens/Tokens.js";
 
+
 const GenerateAccessToken = async (req, res) => {
   try {
     const refreshtoken = req?.cookies?.refreshToken;
@@ -14,10 +15,7 @@ const GenerateAccessToken = async (req, res) => {
         .status(401)
         .json({ message: "Refresh token not found , please login again" });
     }
-    const decoded = jwt.verify(
-      refreshtoken,
-      process.env.RefreshToken_Secret_Key,
-    );
+    const decoded = jwt.verify(refreshtoken, process.env.RefreshToken_Secret_Key);
     const userId = decoded.userId;
 
     const user = await User.findById({ _id: userId });
@@ -45,24 +43,24 @@ const GenerateAccessToken = async (req, res) => {
     user.RefreshToken.push({ token: hashedRefreshToken });  
    
     
-    res.cookie("accessToken", newAccessToken, {
-      httpOnly: true,
-       secure: true,
-      sameSite: "None",
-      maxAge: 15 * 60 * 1000, // 15 minutes
-    });
+    res.cookie("accessToken", newAccessToken);
    
 
-    res.cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-       secure: false,
-      sameSite: "None",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    });
+    res.cookie("refreshToken", newRefreshToken);
     await user.save();
     return res.json({ message:"accesstoken generated" });
   } catch (error) {
     console.log("Error in GenerateAccessToken:", error);
+    if (
+      error.name === "JsonWebTokenError" ||
+      error.name === "TokenExpiredError"
+    ) {
+      return res
+        .status(401)
+        .json({
+          message: "Refresh token is invalid or expired, please login again",
+        });
+    }
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };

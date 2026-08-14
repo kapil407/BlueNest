@@ -37,7 +37,7 @@ export const getComments = async (req, res) => {
     }
     const user = req.user;
     const comments = await Comments.find({ post: req.params.postId })
-      .populate("user", "name profilePic")
+      .populate("user", "firstName userName profilePic")
       .sort({ createdAt: -1 });
     const Length = comments.length;
 
@@ -46,16 +46,66 @@ export const getComments = async (req, res) => {
     console.log("error get Comment", error);
   }
 };
-const DeleteComment = async (req, res) => {
+export const DeleteComment = async (req, res) => {
   try {
-    const id = req.params.postId;
-    const comment = await Comments.findByIdAndDelete(id);
-    if (!comment) {
-      return res.status(404).json({ message: "comment is not found " });
+    const { commentId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(commentId)) {
+      return res
+        .status(400)
+        .json({ message: "Invalid comment id", success: false });
     }
-    return res.status(200).json({ message: "comment delete successfully" });
+
+    const comment = await Comments.findById(commentId);
+    if (!comment) {
+      return res
+        .status(404)
+        .json({ message: "comment is not found", success: false });
+    }
+
+    if (comment.user.toString() !== req.userId.toString()) {
+      return res.status(403).json({
+        message: "You are not authorized to delete this comment",
+        success: false,
+      });
+    }
+
+    await Comments.findByIdAndDelete(commentId);
+
+    return res
+      .status(200)
+      .json({ message: "comment delete successfully", success: true });
   } catch (error) {
-    return res.status(500).json({ message: "error in comment delete", error });
+    return res
+      .status(500)
+      .json({ message: "error in comment delete", success: false });
   }
 };
-export default DeleteComment;
+ 
+export const likeOrdislikeComment=async(req,res)=>{
+  try {
+      const {commentId}=req.params;
+      if(!mongoose.Types.ObjectId.isValid(commentId)){
+        return res.status(400).json({mesage:"commentid is not valid "})
+      }
+        const comment=await Comments.findById(commentId);
+        if(!comment.likes.includes(req.userId)){
+          comment.likes.push(req.userId);
+             await comment.save();
+          return res.status(200).json({message:"Like comment",comment});
+        }
+        else{
+           comment.likes.pull(req.userId);
+              await comment.save();
+           return res.status(200).json({message:"Dislike comment",comment});
+        }
+     
+
+  } catch (error) {
+      return res.status(500).json({mesage:"error in like comment",error});
+  }
+}
+
+
+
+

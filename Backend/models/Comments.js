@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
+import User from "./User.js";
 
 const commentSchema = new mongoose.Schema(
   {
-    post: {
+    // {post->>postId->>comentId}
+    post: { 
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tweet",
       required: true,
@@ -16,6 +18,10 @@ const commentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    likes:[{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'User'
+    }]
   },
   { timestamps: true }
 );
