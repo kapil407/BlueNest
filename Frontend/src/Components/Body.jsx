@@ -29,7 +29,7 @@ const Body = () => {
   const location = useLocation();
   const generateNewAccessToken = useGenerateAccessToken();
   const { user } = useSelector((store) => store.user);
-  
+
   useEffect(() => {
   const publicPaths = ["/login", "/signup", "/otpverify"];
   const currentPath = location.pathname.toLowerCase();
@@ -53,7 +53,7 @@ const Body = () => {
   }, 14 * 60 * 1000);
 
   return () => clearInterval(intervalId);
-}, [location.pathname, navigate, generateNewAccessToken]);
+}, []);
 
   return (
    
