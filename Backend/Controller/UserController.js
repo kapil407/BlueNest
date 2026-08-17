@@ -11,10 +11,9 @@ import nodemailer from "nodemailer";
 import crypto, { secureHeapUsed } from "crypto";
 import uploadCloudinary from "../Middleware/Cloudinary.js";
 import { AccessToken, RefreshToken } from "../GenerateTokens/Tokens.js";
+import Comment from '../models/Comments.js'
 
 dotenv.config();
-
-
 
 const generateOTP = () => crypto.randomInt(10000, 100000);
 
@@ -262,6 +261,7 @@ export const LoginController = async (req, res) => {
 
     // Search User in data
     const user = await User.findOne({ emailId: emailId });
+    const userId=user?._id;
 
     if (!user) {
       return res.status(400).json({ message: "User not found" });
@@ -283,7 +283,11 @@ export const LoginController = async (req, res) => {
     // creating tokein rotation  for security
     const accessToken = AccessToken(user?._id);
     const refreshToken = RefreshToken(user?._id);
+    const refreshToken1 = RefreshToken(user?._id);
+    console.log("login refresh token", refreshToken1);
+    console.log("login refresh token", refreshToken);
     const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+
     const DeviceInfo = req.headers["user-agent"] || "Unknown Device";
     user.RefreshToken.push({
       token: hashedRefreshToken,
@@ -352,24 +356,27 @@ export const LoginController = async (req, res) => {
       },
     );
 
-    
-
-    res.cookie("accessToken", accessToken,{
+    res.cookie("accessToken", accessToken, {
       sameSite: "None",
       secure: true,
       httpOnly: true,
     });
-    res.cookie("refreshToken", refreshToken,{
+    res.cookie("refreshToken", refreshToken, {
       sameSite: "None",
       secure: true,
       httpOnly: true,
     });
     await user.save();
+
+   const updatedUser = await User.findById(userId);
+
+console.log("FROM DB:", updatedUser.RefreshToken);
+console.log("FROM DB COUNT:", updatedUser.RefreshToken.length);
+
     return res.json({
       message: "Login successfully",
       user,
       success: true,
-      
     });
   } catch (err) {
     console.log("catch in login", err);
@@ -665,18 +672,100 @@ export const changeBackgroundImage = async (req, res) => {
 };
 export const changePasswordController = async (req, res) => {
   try {
-    
     const { newPassword, emailId } = req.body;
-    console.log("newPassword", newPassword,emailId);
+    console.log("newPassword", newPassword, emailId);
     const user = await User.findOne({ emailId });
     console.log("user in change password", user);
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedNewPassword;
     await user.save();
 
-    return res.status(200).json({ message: "Password changed successfully" ,success:true});
+    return res
+      .status(200)
+      .json({ message: "Password changed successfully", success: true });
   } catch (error) {
     console.log("error", error);
     return res.status(400).json({ message: error.message });
   }
 };
+
+export const changeEmailAndPasswordController = async (req, res) => {
+  try {
+    const { newEmail, newPassword } = req.body;
+
+    const userId = req.userId;
+
+    console.log("newEmail", newEmail, newPassword, userId);
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    if (!newEmail) {
+      user.email = user.email;
+      user.password = hashedNewPassword;
+    }
+    console.log("user in change email controller", user.password);
+    if (!newPassword) {
+      const hashedNewPassword = await bcrypt.hash(user.password, 10);
+      user.password = hashedNewPassword;
+      user.email = newEmail;
+    }
+
+    await user.save();
+    return res.status(200).json({
+      message: "Email or Password or both changed successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log("error in change email controller ", error);
+    return res.status(400).json({ message: error.message });
+  }
+};
+
+export const LogoutFromAllDevices = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const user = await User.findById(userId);
+    console.log("user in logout from aall", user);
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "user not found", success: false });
+    }
+    user.RefreshToken = [];
+
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
+    await user.save();
+    return res
+      .status(200)
+      .json({ message: "Logged out from all devices", success: true, user });
+  } catch (error) {
+    console.log("error in logout from all devics", error);
+    return res.status(500).json({ message: error });
+  }
+};
+
+export const DeleteAccountController = async(req,res)=>{
+  try{  
+    const userId=req.userId;
+    console.log("delete");
+      const comment=await Comment.deleteMany({userId});
+        const tweet=await Tweet.deleteMany({ userId: req.userId });
+        const user=await User.findByIdAndDelete(userId);
+        if(!user){
+          return res.json({message:"user is not found",success:false});
+        }
+         res.clearCookie('accessToken');
+        res.clearCookie('refreshToken');
+        return res.status(200).json({message:"Account is deleted",success:true});
+  }
+  catch(errror){
+    console.log("error in DeleteAccount component")
+    return res.status(500).json({message:error})
+  }
+}
+

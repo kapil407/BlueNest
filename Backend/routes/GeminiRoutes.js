@@ -8,4 +8,5 @@ import isAuthentication from "../Middleware/Authentication.js";
 GeminiRouter.post('/api/simple-image-post', upload.single('media'),
   generatePost,
 );
+GeminiRouter.post('/api/simple-chat',upload.single('media'),generatePost);
 export default GeminiRouter;

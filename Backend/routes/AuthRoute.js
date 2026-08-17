@@ -16,7 +16,10 @@ import {
   unFollowController,
   getBookmarksTweetsController,
   changeBackgroundImage,
-  changePasswordController
+  changePasswordController,
+  changeEmailAndPasswordController,
+  LogoutFromAllDevices,
+  DeleteAccountController
 } from "../Controller/UserController.js";
 
 const router = express.Router();
@@ -49,5 +52,8 @@ router.post("/getbookmarkedtweets", isAuth, getBookmarksTweetsController);
 router.post("/follow/:id", isAuth, FollowingController);
 router.post("/unfollow/:id", isAuth, unFollowController);
 router.post('/reset-password',changePasswordController);
+router.patch('/changeEmailAndPassword',isAuth,changeEmailAndPasswordController);
+router.post('/logout-all-devices',isAuth,LogoutFromAllDevices);
+router.delete('/delete-account',isAuth,DeleteAccountController);
 
 export default router;
