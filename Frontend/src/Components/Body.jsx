@@ -29,29 +29,31 @@ const Body = () => {
   const location = useLocation();
   const generateNewAccessToken = useGenerateAccessToken();
   const { user } = useSelector((store) => store.user);
+  
   useEffect(() => {
-    const publicPaths = ["/login", "/signup", "/otpverify"];
-    const currentPath = location.pathname.toLowerCase();
+  const publicPaths = ["/login", "/signup", "/otpverify"];
+  const currentPath = location.pathname.toLowerCase();
 
-    if (publicPaths.includes(currentPath)) {
-      return;
+  if (publicPaths.includes(currentPath)) {
+    return;
+  }
+
+  const refreshAccessToken = async () => {
+    const status = await generateNewAccessToken();
+
+    if (status === 401) {
+      navigate("/login");
     }
+  };
 
-    const refreshAccessToken = async () => {
-      const status = await generateNewAccessToken();
-      if (status === 401) {
-        navigate("/login");
-      }
-    };
+  refreshAccessToken();
 
-    refreshAccessToken();
+  const intervalId = setInterval(() => {
+    generateNewAccessToken();
+  }, 14 * 60 * 1000);
 
-    const intervalId = setInterval(() => {
-      generateNewAccessToken();
-    }, 14 * 60 * 1000); // 14 minutes in milliseconds
-
-    return () => clearInterval(intervalId);
-  }, [location.pathname, navigate, user, generateNewAccessToken]);
+  return () => clearInterval(intervalId);
+}, [location.pathname, navigate, generateNewAccessToken]);
 
   return (
    
