@@ -78,7 +78,7 @@ useGetTweets();
           )}
         </aside>
       </div>
-      <ThemeToggle />
+      {/* <ThemeToggle /> */}
     </div>
   );
 };
