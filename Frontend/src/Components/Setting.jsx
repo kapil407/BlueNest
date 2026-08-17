@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import Typewriter from "./TypeWriter.jsx";
 import ChangeEmailAndPasswordComponent from "./ChangeEmailAndPasswor.jsx";
 import store from "../redux/store.js";
+import ThemeToggle from "./Theme.jsx";
 
 const SettingComponent = () => {
 
@@ -76,6 +77,7 @@ const SettingComponent = () => {
               <Link to='/setting/deleteAccount'>
                <button className="border w-[90%] lg:w-full border-slate-800 p-2 mx-4  bg-transparent hover:bg-blue-400 backdrop-blur-sm text-black cursor-pointer  rounded-3xl ">Delete your account</button>
               </Link>
+                <ThemeToggle />
             </div>
 
       </div>
