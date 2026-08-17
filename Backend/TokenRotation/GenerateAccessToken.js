@@ -20,6 +20,11 @@ const GenerateAccessToken = async (req, res) => {
     const userId = decoded.userId;
 
     const user = await User.findById({ _id: userId });
+    if (!user) {
+      return res.status(401).json({
+        message: "User not found, please login again",
+      });
+    }
     let isValidToken = false;
     const tokenData=[];
     for (const token of user?.RefreshToken) {
@@ -40,8 +45,21 @@ const GenerateAccessToken = async (req, res) => {
     const newAccessToken = AccessToken(userId);
     const newRefreshToken = RefreshToken(userId);
     const hashedRefreshToken = await bcrypt.hash(newRefreshToken, 10);
-      user.RefreshToken = tokenData;
-    user.RefreshToken.push({ token: hashedRefreshToken });  
+      // user.RefreshToken = tokenData;
+      tokenData.push({
+      token: hashedRefreshToken,
+    });
+    // user.RefreshToken.push({ token: hashedRefreshToken });  
+     await User.updateOne(
+      {
+        _id: userId,
+      },
+      {
+        $set: {
+          RefreshToken: tokenData,
+        },
+      }
+    );
    
     
     res.cookie("accessToken", newAccessToken, {
