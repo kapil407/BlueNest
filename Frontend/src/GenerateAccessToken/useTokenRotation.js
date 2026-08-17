@@ -15,7 +15,7 @@ const useGenerateAccessToken = () => {
       return true
     } catch (error) {
       console.log("error in generating access token kapil", error); 
-      return error.response.status;
+      return error?.response?.status;
     }
   }, []);
 

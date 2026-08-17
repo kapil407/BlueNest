@@ -5,6 +5,7 @@ const userSlice = createSlice({
   initialState: {
     user: null,
     otherUsers: null,
+    searchUser:null,
     profile: null,
     bookmarksIds: null,
     // authUser:null,
@@ -17,6 +18,9 @@ const userSlice = createSlice({
     },
     getOtherUsers: (state, action) => {
       state.otherUsers = action.payload;
+    },
+    getSearchedUser:(state,action)=>{
+      state.searchUser=action.payload;
     },
     getProfile: (state, action) => {
       state.profile = action.payload;
@@ -50,5 +54,6 @@ export const {
   followingUpdate,
   getBookMarksIds,
   resetProfile,
+  getSearchedUser
 } = userSlice.actions;
 export default userSlice.reducer;

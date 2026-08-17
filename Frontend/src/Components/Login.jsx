@@ -183,11 +183,11 @@ function Login() {
                 </label>
 
                 <label className="block">
-                  <span className={`mb-2 block text-sm font-semibold ${mutedText}`}>
+                  <span className={`mb-2 block text-sm  font-semibold ${mutedText}`}>
                     Password
                   </span>
                   <div
-                    className={`flex items-center rounded-2xl border transition focus-within:ring-4 ${inputStyle}`}
+                    className={`flex items-center rounded-2xl border   focus:ring-4 transition ${inputStyle} `}
                   >
                     <FiLock className={`ml-4 shrink-0 ${mutedText}`} />
                     <input

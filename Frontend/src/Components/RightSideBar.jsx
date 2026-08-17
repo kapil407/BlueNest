@@ -3,7 +3,7 @@ import { IoSearch } from "react-icons/io5";
 import Avatar from "react-avatar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getOtherUsers } from "../redux/userSlice";
+import { getOtherUsers, getSearchedUser } from "../redux/userSlice";
 import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
 import {getRefresh} from "../redux/tweetSlice.js";
@@ -15,23 +15,27 @@ function RightSideBar({ otherUsers ,className,onClose}) {
   const dispatch = useDispatch();
   const [searchName, setSearchName] = useState("");
 
+  const {searchUser}=useSelector(store=>store.user);
   const searchHandler = (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  
 
-    const searchedUser = array?.find((other) =>
-      other?.firstName?.toLowerCase().includes(searchName.toLowerCase()),
-    );
+  const searchedUser = array?.find((other) =>
+    other?.firstName
+      ?.toLowerCase()
+      .includes(searchName.toLowerCase())
+  );
 
-    if (searchedUser) {
-      dispatch(getOtherUsers([searchedUser]));
-    } else {
-      toast.success("User not found");
-    }
-    
-    
-    setSearchName("");
-  };
-        console.log("otherUsers in right sidebar", otherUsers);
+  if (searchedUser) {
+    dispatch(getSearchedUser([searchedUser]));
+  } else {
+    dispatch(getSearchedUser([]));
+    toast.error("User not found");
+  }
+
+  setSearchName("");
+};
+       
   return (
     <div className={`lg:ml-auto flex h-full w-75 lg:w-full border-slate-700  flex-col gap-4 ${className}`}>
       <div>
@@ -67,6 +71,82 @@ function RightSideBar({ otherUsers ,className,onClose}) {
           className="min-w-0 flex-1 bg-transparent outline-none placeholder:text-slate-400"
         />
       </form>
+      {searchUser?.length > 0 && (
+  <section
+    className={`rounded-3xl border p-4 ${
+      isLight
+        ? "border-slate-200 bg-white shadow-sm"
+        : "border-slate-800 bg-slate-900/70"
+    }`}
+  >
+    <div className="mb-3 flex items-center justify-between">
+      <h2 className="text-xl font-black">Search Result</h2>
+
+      <button
+        onClick={() => dispatch(getSearchedUser([]))}
+        className="text-sm text-slate-500 hover:text-sky-500"
+      >
+        Clear
+      </button>
+    </div>
+
+    <div className="space-y-2">
+      {searchUser.map((user) => (
+        <div
+          key={user?._id}
+          className={`flex items-center justify-between gap-3 rounded-2xl p-2 ${
+            isLight
+              ? "hover:bg-slate-100"
+              : "hover:bg-slate-800"
+          }`}
+        >
+          <div className="flex min-w-0 items-center gap-3">
+            {!user?.profilePic ? (
+              <Avatar
+                src="https://tecdn.b-cdn.net/img/new/avatars/2.webp"
+                size="44"
+                round
+              />
+            ) : (
+              <img
+                src={user.profilePic?.url}
+                alt="profile"
+                className="h-11 w-11 rounded-full object-cover"
+              />
+            )}
+
+            <div className="min-w-0">
+              <h2 className="truncate font-bold">
+                {user?.firstName}
+              </h2>
+
+              <p
+                className={`truncate text-sm ${
+                  isLight
+                    ? "text-slate-500"
+                    : "text-slate-400"
+                }`}
+              >
+                @{user?.userName}
+              </p>
+            </div>
+          </div>
+
+          <Link
+            to={`/profile/${user?._id}`}
+            className={`shrink-0 rounded-full px-4 py-2 text-sm font-bold ${
+              isLight
+                ? "bg-slate-950 text-white"
+                : "bg-white text-slate-950"
+            }`}
+          >
+            View
+          </Link>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
 
       <section
         className={`rounded-3xl border p-4 ${

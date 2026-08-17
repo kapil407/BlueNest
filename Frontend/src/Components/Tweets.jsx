@@ -20,7 +20,9 @@ import useBookmarks from "../hooks/useBookmarks.js";
 import { useEffect } from "react";
 import { setComment } from "../redux/commentSlice.js";
 
+
 const Tweets = ({ tweet }) => {
+
   const { accessToken } = useSelector((store) => store.user);
   console.log("tweet", accessToken);
   const [showComment, setShowComment] = useState(false);
@@ -180,7 +182,7 @@ const Tweets = ({ tweet }) => {
        </div>
           <div>
             {tweet?.description && (
-              <p className="mt-2 whitespace-pre-wrap text-[15px] leading-6">
+              <p className="mt-2 whitespace-pre-wrap font-black text-[15px] leading-6">
                 {tweet?.description}
               </p>
             )}
@@ -190,7 +192,7 @@ const Tweets = ({ tweet }) => {
                 <img
                   src={tweet?.image?.url}
                   alt="post"
-                  className="mt-3 max-h-[520px] mr-8 w-full rounded-3xl border border-slate-200 object-cover dark:border-slate-800"
+                  className="mt-3 max-h-[520px]  mr-8 w-full rounded-3xl border border-slate-200 object-cover  dark:border-slate-800"
                 />
               ) : (
                 <img
@@ -236,13 +238,13 @@ const Tweets = ({ tweet }) => {
                 onClick={() => likeDisLikeHandler(tweet?._id)}
                 className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm transition hover:bg-pink-500/10 hover:text-pink-500 ${
                   isLiked
-                    ? "text-pink-600"
+                    ? "text-pink-600 "
                     : isLight
                       ? "text-slate-500"
                       : "text-slate-400"
                 }`}
               >
-                <BiLike size={20} />
+                <BiLike size={20}  />
                 <span>{tweet.likes.length}</span>
               </button>
 

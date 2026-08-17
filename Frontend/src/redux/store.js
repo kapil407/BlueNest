@@ -5,6 +5,7 @@ import tweetSlice from "./tweetSlice.js";
 import messageSlice from "./messageSlice.js";
 import themeSlice from "./themeSlice.js";
 import commentSlice from './commentSlice.js'
+import chatSlice from './ChatSlice.js'
 
 
 import {
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   message: messageSlice,
   theme: themeSlice,
   comment:commentSlice,
+  chat:chatSlice
  
 });
 

@@ -110,7 +110,7 @@ const Message = () => {
         className={`flex items-center gap-3 border-b px-4 py-3 ${theme == "light" ? "border-gray-200 bg-white text-gray-950" : "border-gray-700 bg-black text-white"}`}
       >
         <Link
-          to="/"
+          to={`/profile/${targetUser?._id}`}
           className={`flex h-10 w-10 items-center justify-center rounded-full transition ${theme == "light" ? "hover:bg-gray-100" : "hover:bg-gray-800"}`}
         >
           {" "}
@@ -147,24 +147,24 @@ const Message = () => {
                 }`}
               >
                 <div
-                  className={`max-w-[78%] rounded-2xl px-4 py-2 text-left shadow-sm ${
+                  className={`max-w-[78%] rounded-2xl lg:px-2 lg:py-1 px-2 py-1 text-left shadow-sm ${
                     msg?.senderId === userId
-                      ? "rounded-br-md bg-blue-600 text-white"
+                      ? "rounded-br-md bg-blue-400 text-slate-800 font-black text-sm text-sm lg:text-xl"
                       : theme == "light"
-                        ? "rounded-bl-md bg-white text-gray-950 ring-1 ring-gray-200"
-                        : "rounded-bl-md bg-gray-800 text-white"
+                        ? "rounded-bl-md bg-gray-800 text-white ring-1 font-black ring-gray-200"
+                        : "rounded-bl-md bg-gray-800  text-slate-400 font-black"
                   }`}
                 >
-                  <div className="break-words whitespace-pre-wrap text-sm leading-relaxed">
+                  <div className="break-words whitespace-pre-wrap text-sm lg:text-xl leading-relaxed">
                     {msg?.message}
                   </div>
                   <span
-                    className={`mt-1 block text-right text-[10px] ${
+                    className={`mt-1 font-black block text-right text-xs ${
                       msg?.senderId === userId
-                        ? "text-blue-100"
+                        ? "text-white"
                         : theme == "light"
-                          ? "text-gray-500"
-                          : "text-gray-400"
+                          ? "text-blue-200"
+                          : "text-slate-400"
                     }`}
                   >
                     {formatMessageTime(msg.createdAt)}
@@ -178,19 +178,19 @@ const Message = () => {
 
       {/* Input Box */}
       <div
-        className={`flex items-center gap-3 border-t px-4 py-3 ${theme == "light" ? "border-gray-200 bg-white" : "border-gray-700 bg-black"}`}
+        className={`flex items-center gap-1 border-t lg:px-4 lg:py-3 pl-1  pt-1 pb-1 pr-2 ${theme == "light" ? "border-gray-200 bg-white" : "border-gray-700 bg-black"}`}
       >
         <input
           type="text"
           value={Message}
           onChange={(e) => setmessage(e.target.value)}
           placeholder="Write the message"
-          className={`h-12 flex-1 rounded-full border px-5 outline-none transition focus:ring-2 focus:ring-blue-500 ${theme == "light" ? "border-gray-200 bg-gray-50 text-gray-950 placeholder:text-gray-400" : "border-gray-700 bg-gray-900 text-white placeholder:text-gray-500"}`}
+          className={`h-12 flex-1 rounded-full border px-5 outline-none transition focus:ring-2 focus:ring-blue-500 ${theme == "light" ? "border-gray-200  bg-gray-50 text-gray-950 border-slate-700 placeholder:text-gray-800 font-black" : "border-gray-700 font-black bg-gray-900 text-white placeholder:text-gray-500"}`}
         />
         <button
           type="button"
           onClick={() => sendmessages()}
-          className="h-12 min-w-24 rounded-full bg-blue-600 px-5 font-medium text-white transition hover:bg-blue-700"
+          className="lg:h-12 lg:min-w-24 h-10 rounded-full bg-blue-600 px-5 font-medium text-white transition hover:bg-blue-700"
         >
           Send
         </button>

@@ -2,7 +2,9 @@ import React, { useEffect, useState, lazy } from "react";
 const LeftSideBar = lazy(() => import("./LeftSideBar.jsx"));
 const RightSideBar = lazy(() => import("./RightSideBar.jsx"));
 const LeftSideRemmi = lazy(() => import("../RimmiEffect_UI/LeftSideRemmi.jsx"));
-const RightSideRemmi = lazy(() => import("../RimmiEffect_UI/RightSideRemmi.jsx"));
+const RightSideRemmi = lazy(
+  () => import("../RimmiEffect_UI/RightSideRemmi.jsx"),
+);
 import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useOtherUsers from "../hooks/useOtherUsers.js";
@@ -18,7 +20,7 @@ const Home = () => {
   const theme = useSelector((store) => store.theme.theme);
 
   useOtherUsers();
-  useGetTweets();
+useGetTweets();
   useEffect(() => {
     if (!user) {
       navigate("/login");
@@ -45,8 +47,8 @@ const Home = () => {
           : "bg-slate-950 text-slate-100"
       }`}
     >
-      <CursorSportLightEffect/>
-    
+      <CursorSportLightEffect />
+
       <div className="mx-auto grid h-full w-full max-w-[1660px] grid-cols-1 lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[minmax(260px,1fr)_760px_minmax(260px,1fr)]">
         <aside
           className={`hidden h-screen border-r px-3 py-4 lg:block ${
@@ -59,7 +61,7 @@ const Home = () => {
         </aside>
 
         <main className="h-screen min-w-0  overflow-y-auto custom-scrollbar">
-          <Outlet />
+          <Outlet  />
         </main>
 
         <aside
@@ -69,7 +71,11 @@ const Home = () => {
               : "border-slate-800 bg-slate-950/70"
           }`}
         >
-          {loading ? <RightSideRemmi /> : <RightSideBar otherUsers={otherUsers} />}
+          {loading ? (
+            <RightSideRemmi />
+          ) : (
+            <RightSideBar otherUsers={otherUsers} />
+          )}
         </aside>
       </div>
       <ThemeToggle />

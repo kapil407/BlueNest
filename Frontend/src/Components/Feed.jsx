@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import CreatePost from "./CreatePost";
 import Tweets from "./Tweets";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,9 @@ import LeftSideBar from "./LeftSideBar.jsx";
 import RightSideBar from "./RightSideBar.jsx";
 import Typewriter from "./TypeWriter.jsx";
 
+
 const Feed = () => {
+  
   const { tweet, isActive } = useSelector((store) => store?.tweet);
   const { otherUsers } = useSelector((store) => store.user);
   const theme = useSelector((store) => store.theme.theme);
@@ -24,6 +26,8 @@ const Feed = () => {
     if (isLeftOpen) setIsLeftOpen(false);
     setIsRightOpen((prev) => !prev);
   };
+ 
+  
 
   return (
     <div className="mx-auto flex   w-full flex-col">
@@ -56,7 +60,10 @@ const Feed = () => {
               <p
                 className={`text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}
               >
-              <Typewriter word="Fresh posts from your circle" className="text-sm"/>
+                <Typewriter
+                  word="Fresh posts from your circle"
+                  className="text-sm"
+                />
               </p>
             </div>
           </div>
@@ -140,6 +147,7 @@ const Feed = () => {
         {tweet?.map((tweet) => (
           <Tweets key={tweet?._id} tweet={tweet} />
         ))}
+       
       </div>
     </div>
   );

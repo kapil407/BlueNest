@@ -10,8 +10,14 @@ import { USER_API_END_POINT } from "../Utils/constant.js";
 import { toast } from "react-hot-toast";
 import { getMyProfile, getOtherUsers, getUser } from "../redux/userSlice.js";
 import { getMyTweets } from "../redux/tweetSlice.js";
+import { IoMdSettings } from "react-icons/io";
+import { MdNotificationsActive } from "react-icons/md";
+import NotificationComponent from "./Notification.jsx";
+import Typewriter from "./TypeWriter.jsx";
+import { RiRobot2Line } from "react-icons/ri";
 
 const LeftSideBar = ({ className = "", onClose }) => {
+
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,6 +30,9 @@ const LeftSideBar = ({ className = "", onClose }) => {
     { label: "Home", icon: IoMdHome, to: "/" },
     { label: "Profile", icon: CgProfile, to: `/profile/${user?._id}` },
     { label: "Saved", icon: PiBookmarkSimple, to: `/bookmarks/${user?._id}` },
+    { label: "Settings", icon: IoMdSettings, to: `/setting` },
+    {label: "Notifications", icon: MdNotificationsActive, to: `/notifications/${user?._id}`},
+    {label:"let's chat with AI", icon:RiRobot2Line,to:`/Chat-Bot`}
   ];
 
   const logoutHandler = async () => {
@@ -61,7 +70,9 @@ const LeftSideBar = ({ className = "", onClose }) => {
   );
 
   return (
-    <div className={`flex h-full  lg:w-[70%] lg:px-2 lg:py-2 rounded-2xl border border-slate-700 flex-col justify-between ${className}`}>
+    <div className={`flex h-full  lg:w-[70%] lg:px-2 lg:py-2 rounded-2xl border bg-slate-900 border-slate-700 flex-col justify-between ${className}
+    ${isLight ? "bg-white text-slate-950" : "bg-slate-900 text-white"}`
+    }>
       <div>
         {onClose && (
           <button
@@ -80,17 +91,20 @@ const LeftSideBar = ({ className = "", onClose }) => {
 
         <Link
           to="/"
-          className="mb-8 flex lg:w-full items-center w-[65%] gap-3 rounded-2xl px-2 py-2 transition hover:bg-sky-500/10"
+          className="mb-8 flex lg:w-full items-center w-[65%] gap-3 rounded-2xl px-2 py-1 lg:py-4 transition hover:bg-sky-500/10"
         >
           <img
-            className="w-14 lg:w-14 h-14 rounded-2xl object-cover shadow-md"
+            className="w-18 h-18  lg:w-14 lg:h-10 rounded-full object-cover  shadow-md"
             src={isLight ? "/logo.png" : "/logo_Dark.png"}
             alt="BlueNest logo"
           />
-          <div>
-            <h1 className="text-xl font-black">BlueNest</h1>
+          <div className="w-full  h-full">
+            <h1 className=" font-black">
+              
+              <Typewriter word="BlueNest" speedText={500} className="text-xl" />
+              </h1>
             <p
-              className={`text-xs ${isLight ? "text-slate-500" : "text-slate-400"}`}
+              className={`text-xs  mb-2 fixed ${isLight ? "text-slate-500" : "text-slate-400"}`}
             >
               Social space
             </p>
@@ -136,10 +150,10 @@ const LeftSideBar = ({ className = "", onClose }) => {
         className={`rounded-3xl w-full lg:w-full border p-3 ${
           isLight
             ? "border-slate-200 bg-slate-50"
-            : "border-slate-800 bg-slate-900/70"
+            : "border-slate-700 bg-slate-900/70"
         }`}
       >
-        <div className="mb-4  flex items-center gap-3">
+        <div className="mb-4  flex  items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1D9BF0] text-sm font-black text-white">
               <Link to={`/profile/${user?._id}`}>
                 <img src={user?.profilePic?.url} alt="profileImage" className="rounded-full h-11 object-cover w-12"/>

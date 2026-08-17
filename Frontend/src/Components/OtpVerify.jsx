@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import ThemeToggle from "./Theme.jsx";
 import { FiCheckCircle, FiClock, FiMail, FiRefreshCw, FiShield } from "react-icons/fi";
+import Typewriter from "./TypeWriter.jsx";
 
 function OtpVerify() {
   const theme = useSelector((store) => store.theme.theme);
@@ -84,7 +85,7 @@ function OtpVerify() {
                 <FiShield size={28} />
               </div>
               <h1 className="text-5xl font-black leading-tight tracking-normal">
-                Secure your BlueNest account
+                <Typewriter word="Secure your BlueNest account" speedText={300}/>
               </h1>
               <p
                 className={`mt-5 text-base leading-7 ${

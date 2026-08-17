@@ -26,7 +26,7 @@ function Typewriter({word,className,speedText=120,speedDelete=80}) {
   }, [text, isDeleting]);
 
   return (
-    <h1 className={`text-3xl font-bold || ${className}`}>
+    <h1 className={` font-bold || ${className}`}>
       {text}
       <span className={`animate-pulse `}>|</span>
     </h1>

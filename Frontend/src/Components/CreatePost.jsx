@@ -198,7 +198,7 @@ const CreatePost = () => {
                         <input
                           type="text"
                           placeholder="Create Post"
-                          className="p-2 border border-white/20 lg:text-2xl rounded w-65 lg:w-full text-white outline-none lg:h-[40%]"
+                          className="p-2 border border-white/20 backdrop-blur-xs lg:text-2xl rounded w-65 lg:w-full text-white outline-none lg:h-[40%]"
                           value={prompt}
                           onChange={(e) => setPrompt(e.target.value)}
                         />
@@ -206,7 +206,7 @@ const CreatePost = () => {
                           <button
                             onClick={handleAIGenerate}
                             disabled={!prompt.trim() || loading}
-                            className={` text-white flex  justify-center px-2 py-1 lg:w-[40%] lg:mt-4 lg:text-center rounded-full  ${!prompt.trim() || loading ? "opacity-50 cursor-not-allowed bg-gray-800 " : "cursor-pointer bg-blue-500"}`}
+                            className={` text-white flex   justify-center px-2 py-1 lg:w-[40%] lg:mt-4 lg:text-center rounded-full  ${!prompt.trim() || loading ? "opacity-50 cursor-not-allowed bg-gray-800 " : "cursor-pointer bg-blue-500"}`}
                           >
                             {loading ? (
                               <>

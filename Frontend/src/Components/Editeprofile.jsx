@@ -6,12 +6,14 @@ import { getRefresh } from "../redux/tweetSlice";
 import { USER_API_END_POINT } from "../Utils/constant.js";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa";
-
+import { FaLongArrowAltLeft } from "react-icons/fa";
 import { getMyProfile } from "../redux/userSlice.js";
+import Typewriter from "./TypeWriter.jsx";
 const EditeProfile = () => {
  
   const { tweet } = useSelector((store) => store?.tweet);
   const theme = useSelector((store) => store.theme.theme);
+
 
   const dispatch = useDispatch();
   const { profile, user } = useSelector((store) => store.user);
@@ -57,32 +59,35 @@ const EditeProfile = () => {
   };
 
   return (
-    <div>
-      <div
-        className={`flex-1 ml-[8%] mt-10 border  justify-center items-center  rounded-2xl w-[100%] ${theme == "light" ? "bg-gray-100  border-gray-300" : "bg-black border-gray-600"}`}
-        style={{
-          boxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
-          WebkitBoxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
-          MozBoxShadow: "-1px -1px 5px -1px rgba(0,0,0,0.75)",
-        }}
-      >
-        <h1 className="text-center p-2 font-bold text-2xl border-b border-gray-300">
-          Edit your profile
+    
+    <div className="lg:w-screen fixed gap-8 justify-center gap-4 lg:h-screen backdrop-blur-sm  flex-col items-center z-50 inset-0 bg-transparent ">
+         <Link to={`/profile/${user?._id}`}>
+          <FaLongArrowAltLeft className="lg:m-4 m-2 text-2xl cursor-pointer"/>
+         </Link>
+        <h1 className="text-center mb-8 z-50  font-bold text-2xl ">
+         
+          <Typewriter word="Edite your profile" speedText={250}/>
         </h1>
-        <div className="m-8 w-[80%] p-2">
+       
+      <div
+        className={`flex-1  text-black lg:h-[60%] border  justify-center  bg-center bg-cover lg:ml-[30%] lg:mt-[5%] mt-10 items-center fixed rounded-2xl lg:w-[40%] `}
+        style={{backgroundImage:`url(/edite3.jpg)`}}
+      
+      > 
+        <div className="m-8 w-[80%] p-2 text-xl font-bold text-white">
           <input
             type="text"
             placeholder="Enter firstName"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            className="border border-gray-600 outline-blue-400 w-full p-2 rounded-full my-2"
+            className="border border-gray-600 outline-blue-400 w-full inset-0 z-50 backdrop-blur-xs p-2 rounded-xl my-2"
           />
           <input
             type="text"
             placeholder="Enter lastName"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            className="border border-gray-600 outline-blue-400 w-full p-2 rounded-full my-2"
+            className="border border-gray-600 outline-blue-400 w-full p-2 inset-0 z-50 backdrop-blur-xs rounded-xl my-2"
           />
 
           <input
@@ -90,14 +95,14 @@ const EditeProfile = () => {
             placeholder="Enter userName"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            className="border border-gray-600 outline-blue-400 w-full p-2 rounded-full my-2"
+            className="border border-gray-600 outline-blue-400 w-full p-2 inset-0 z-50 backdrop-blur-xs  rounded-xl my-2"
           />
           <input
             type="text"
             placeholder="Enter Bio"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
-            className="border border-gray-600 outline-blue-400 w-full p-2 rounded-full my-2"
+            className="border border-gray-600 outline-blue-400 inset-0 z-50 backdrop-blur-xs w-full p-2 rounded-xl my-2"
           />
           <input
             type="file"
@@ -119,7 +124,7 @@ const EditeProfile = () => {
           <Link
             onClick={EditeHandler}
             to={"/"}
-            className="flex bg-[#1D9BF0]  hover:bg-blue-400 items-center justify-center  mb-4 rounded text-white w-[25%] p-2 "
+            className="flex bg-[#1D9BF0]  hover:bg-blue-400 items-center justify-center  mb-4 rounded-xl text-white w-[35%] p-2 "
           >
             <button>Save</button>
           </Link>

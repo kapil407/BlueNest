@@ -176,7 +176,7 @@ function Profile() {
               <img
                 src={`${profile?.backGroundImage?.url}?v=${profile?.updatedAt}`}
                 alt="backcoverImage"
-                className="h-64 w-full object-cover"
+                className="h-64 w-full object-cover "
               />
             )}
             {profile?._id === user?._id && (
@@ -273,8 +273,8 @@ function Profile() {
           <div className="text-right">
             {profile?._id === user?._id ? (
               <>
-                <Link to={"/EditeProfile"}>
-                  <button className="bg-blue-500 text-white px-9 py-2 mr-2 rounded-3xl cursor-pointer">
+                <Link to={"/profile/EditeProfile"}>
+                  <button className="bg-blue-500 lg:font-black text-white px-9 py-2 mr-2 rounded-3xl cursor-pointer">
                     Edit Profile
                   </button>
                 </Link>
