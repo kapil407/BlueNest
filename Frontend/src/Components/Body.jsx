@@ -53,7 +53,7 @@ const Body = () => {
   }, 14 * 60 * 1000);
 
   return () => clearInterval(intervalId);
-}, []);
+}, [location.pathname,navigate]);
 
   return (
    

@@ -7,17 +7,15 @@ import { FiEyeOff } from "react-icons/fi";
 import axios from "axios";
 import { USER_API_END_POINT } from "../Utils/constant.js";
 import { toast } from "react-hot-toast";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Typewriter from "./TypeWriter.jsx";
 import store from "../redux/store.js";
 
 const ChangeEmailAndPasswordComponent = () => {
-
-   const theme = useSelector((store) => store.theme.theme);
-  
+  const theme = useSelector((store) => store.theme.theme);
 
   const islight = theme == "light";
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [newEmail, setEmail] = useState("");
   const [newPassword, setPassword] = useState("");
 
@@ -29,24 +27,24 @@ const ChangeEmailAndPasswordComponent = () => {
       setSeen("password");
     }
   };
- 
+
   const changeEmailHandler = async () => {
     try {
       const res = await axios.patch(
         `${USER_API_END_POINT}/changeEmailAndPassword`,
-        { newEmail, newPassword,},
-        { withCredentials: true,}
+        { newEmail, newPassword },
+        { withCredentials: true },
       );
-        console.log("changeEmailAndPassword", res);
-        if (res?.data?.success) {
-            toast.success(res?.data?.message);
-            navigate("/");
-        } else {
-            toast.error(res?.data?.message);
-        }
+      console.log("changeEmailAndPassword", res);
+      if (res?.data?.success) {
+        toast.success(res?.data?.message);
+        navigate("/");
+      } else {
+        toast.error(res?.data?.message);
+      }
     } catch (error) {
       console.log(error);
-    //   toast.error(res?.data?.message);
+      //   toast.error(res?.data?.message);
     }
   };
 
@@ -57,20 +55,25 @@ const ChangeEmailAndPasswordComponent = () => {
         ${islight ? "  lg:text-lg text-xl" : " text-white "}
         `}
     >
-            <h1 className="text-xl mb-2 lg:mb-[3%] font-bold bg-cover bg-center bg-clip-text text-transparent" 
-                style={{
-                    backgroundImage: `url(/textImage3.avif)`,
-                   
-                }}
-            >
-            <Typewriter word="Manage your email, password" speedText={200} speedDelete={100} className="text-2xl lg:text-5xl" />
-            </h1>
+      <h1
+        className="text-xl mb-2 lg:mb-[3%] font-bold bg-cover bg-center bg-clip-text text-transparent"
+        style={{
+          backgroundImage: `url(/textImage3.avif)`,
+        }}
+      >
+        <Typewriter
+          word="Manage your email, password"
+          speedText={200}
+          speedDelete={100}
+          className="text-2xl lg:text-5xl"
+        />
+      </h1>
       <div
         className={`flex h-full w-full flex-col  lg:w-[50%] lg:h-[70%]  lg:rounded-xl object-cover   lg:border border-slate-700   text-xl font-black
               `}
         style={{
           backgroundImage: `url(/Image.jpg)`,
-         backgroundSize: "cover",
+          backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >

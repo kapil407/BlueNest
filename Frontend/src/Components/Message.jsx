@@ -190,7 +190,7 @@ const Message = () => {
         <button
           type="button"
           onClick={() => sendmessages()}
-          className="lg:h-12 lg:min-w-24 h-10 rounded-full bg-blue-600 px-5 font-medium text-white transition hover:bg-blue-700"
+          className="lg:h-12 lg:min-w-24 h-10  rounded-full bg-blue-600 px-5 font-medium text-white transition hover:bg-blue-700"
         >
           Send
         </button>
