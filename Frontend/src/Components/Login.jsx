@@ -86,7 +86,7 @@ function Login() {
 
   return (
     <div
-      className={`h-full w-full overflow-hidden px-3 py-3 sm:px-5 sm:py-4 lg:px-8 ${
+      className={`h-[100vh] w-full overflow-hidden px-3 py-3 sm:px-5 sm:py-4 lg:px-8 ${
         theme == "light"
           ? "bg-[radial-gradient(circle_at_top_left,#dbeafe_0,#f8fafc_35%,#eef2ff_100%)] text-slate-950"
           : "bg-[radial-gradient(circle_at_top_left,#0f2d47_0,#020617_42%,#0f172a_100%)] text-white"
