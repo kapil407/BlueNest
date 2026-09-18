@@ -64,11 +64,17 @@ router.get(
 );
 
 router.get("/auth/me", isAuth, (req, res) => {
-   console.log("USER : in /auth/me ", req.user);
-  return res.status(200).json({
-    success: true,
-    user: req.user,
-  });
+
+  try {
+     console.log("USER : in /auth/me ", req.user);
+    return res.status(200).json({
+      success: true,
+      user: req.user,
+    });
+  } catch (error) {
+      console.log("error in 'auth/me ",error);
+      return res.json("error in /auth/me ",error);
+  }
 });
 
 export default router;
