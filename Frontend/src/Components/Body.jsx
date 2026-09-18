@@ -21,7 +21,7 @@ const SettingComponent = lazy(() => import("./Setting.jsx"));
 const DeleteAccountComponent = lazy(() => import("./DeleteAccount.jsx"));
 
 import ChatBotComponent from "./Chatbot.jsx";
-import GoogleSuccess from "./GoogleSucess.jsx";
+// import GoogleSuccess from "./GoogleSucess.jsx";
 
 const Body = () => {
   
@@ -61,7 +61,7 @@ const Body = () => {
         {/* {end of Home Route in which all sub-routes are defined like Feed,profile,editeProfile,Message,Bookmarks } */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/auth/google/success" element={<GoogleSuccess />} />
+      
         <Route path="/auth/google/success" element={<GoogleAuthSuccess />} />
         <Route path="/otpVerify" element={<OtpVerify />} />
       </Routes>
