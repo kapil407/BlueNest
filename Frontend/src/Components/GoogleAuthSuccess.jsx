@@ -14,7 +14,7 @@ const GoogleAuthSuccess = () => {
 
   useEffect(() => {
     const completeGoogleLogin = async () => {
-      
+        console.log("before api call ",USER_API_END_POINT);
       try {
         const res = await axios.get(`${USER_API_END_POINT}/auth/me`, {
           withCredentials: true,
