@@ -5,7 +5,7 @@ import isAuth from '../Middleware/Authentication.js'
 import { AccessToken, RefreshToken } from '../GenerateTokens/Tokens.js'
 
 const router=express.Router();
-const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173" || "https://bluenest-frontend.onrender.com";
+const frontendUrl = process.env.FRONTEND_URL || "https://bluenest-frontend.onrender.com";
 
 const cookieOptions = {
   sameSite: "None",
