@@ -19,7 +19,7 @@ const GoogleAuthSuccess = () => {
         const res = await axios.get(`${USER_API_END_POINT}/auth/me`, {
           withCredentials: true,
         });
-
+          console.log("res in /auth/me ", res);
         dispatch(getUser(res?.data?.user));
         dispatch(getMyProfile(res?.data?.user));
         toast.success(`Welcome ${res?.data?.user?.firstName}`);
