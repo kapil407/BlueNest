@@ -3,9 +3,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { USER_API_END_POINT } from "../Utils/constant";
-import { getMyProfile, getUser } from "../redux/userSlice";
-import Spinner from "./Spinner";
+import { USER_API_END_POINT } from "../Utils/constant.js";
+import { getMyProfile, getUser } from "../redux/userSlice.js";
+import Spinner from "./Spinner.jsx";
 
 const GoogleAuthSuccess = () => {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ const GoogleAuthSuccess = () => {
 
   useEffect(() => {
     const completeGoogleLogin = async () => {
+      
       try {
         const res = await axios.get(`${USER_API_END_POINT}/auth/me`, {
           withCredentials: true,
