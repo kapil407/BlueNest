@@ -392,7 +392,7 @@ export const LogOutController = async (req, res) => {
   try {
     const refreshtoken = req?.cookies?.refreshToken;
     // console.log("refreshToken in logout", refreshtoken);
-    if (!refreshToken) {
+    if (!refreshtoken) {
       res.clearCookie("accessToken");
       res.clearCookie("refreshToken");
 
