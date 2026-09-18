@@ -33,8 +33,8 @@ app.get("/", (req, res) => {
 });
 const frontendPort=5173 || 5174 || 5175 ;
 const corsOption = {
-  // origin: process.env.FRONTEND_URL || `http://localhost:${frontendPort}`,
-  origin: "https://bluenest-frontend.onrender.com",
+  origin: process.env.FRONTEND_URL || `http://localhost:${frontendPort}` || "https://bluenest-frontend.onrender.com" ,
+  // origin: "https://bluenest-frontend.onrender.com",
   credentials: true,
 };
 app.use(cors(corsOption));
@@ -48,7 +48,7 @@ app.use("/", MessageRouter);
 app.use('/',OtpRouter);
 app.use('/comments',commentRoute);
 app.use('/',GeminiRouter);
-// app.use('/api',Mailrouter);
+
 app.use('/',Tokenrouter);
 app.use('/',GoogleRouter);
 initSocket(server);
