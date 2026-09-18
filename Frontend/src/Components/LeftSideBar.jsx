@@ -15,6 +15,7 @@ import { MdNotificationsActive } from "react-icons/md";
 import NotificationComponent from "./Notification.jsx";
 import Typewriter from "./TypeWriter.jsx";
 import { RiRobot2Line } from "react-icons/ri";
+import ThemeToggle from "./Theme.jsx";
 
 const LeftSideBar = ({ className = "", onClose }) => {
 
@@ -32,7 +33,8 @@ const LeftSideBar = ({ className = "", onClose }) => {
     { label: "Saved", icon: PiBookmarkSimple, to: `/bookmarks/${user?._id}` },
     { label: "Settings", icon: IoMdSettings, to: `/setting` },
     {label: "Notifications", icon: MdNotificationsActive, to: `/notifications/${user?._id}`},
-    {label:"let's chat with AI", icon:RiRobot2Line,to:`/Chat-Bot`}
+    {label:"let's chat with AI", icon:RiRobot2Line,to:`/Chat-Bot`},
+    
   ];
 
   const logoutHandler = async () => {
@@ -143,6 +145,21 @@ const LeftSideBar = ({ className = "", onClose }) => {
               </Link>
             );
           })}
+          <div className="flex justify-between ">
+            <ThemeToggle/>
+             <Link
+                key={item.label}
+                to={item.to}
+                className={`group relative z-10 lg:w-full flex h-14 items-center gap-4 rounded-2xl px-4 text-lg font-bold transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] ${
+                  
+                     isLight
+                      ? "text-slate-700 hover:bg-slate-100/80 hover:text-slate-950"
+                      : "text-slate-300 hover:bg-slate-900/80 hover:text-white"
+                }`}
+              >
+               
+              </Link>
+          </div>
         </nav>
       </div>
 
