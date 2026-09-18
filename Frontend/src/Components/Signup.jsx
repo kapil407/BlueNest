@@ -13,6 +13,7 @@ import {
   FiMail,
   FiUser,
 } from "react-icons/fi";
+import { FcGoogle } from "react-icons/fc";
 import Typewriter from "./TypeWriter.jsx";
 import CursorSportLightEffect from './CursorSpotlightEffect.jsx'
 
@@ -67,6 +68,10 @@ const Signup = () => {
     setshow(!show);
   };
 
+  const googleSignupHandler = () => {
+    window.location.href = `${USER_API_END_POINT}/auth/google`;
+  };
+
   const inputStyle =
     theme == "light"
       ? "border-slate-200 bg-white text-slate-950 placeholder:text-slate-400 focus:border-sky-500 focus:ring-sky-500/20"
@@ -92,7 +97,7 @@ const Signup = () => {
           }`}
         >
           <div
-            className={`relative hidden min-h-0 flex-col justify-between p-7 xl:p-8 lg:flex ${
+            className={`relative hidden min-h-0 flex-col justify-evenly p-7 xl:p-8 lg:flex ${
               theme == "light"
                 ? "bg-sky-50/80"
                 : "bg-gradient-to-br from-slate-900 via-slate-950 to-sky-950"
@@ -252,6 +257,19 @@ const Signup = () => {
                   className="w-full rounded-2xl bg-[#1D9BF0] cursor-pointer px-5 py-3 font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5 hover:bg-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-500/30"
                 >
                   Create account
+                </button>
+
+                <button
+                  type="button"
+                  onClick={googleSignupHandler}
+                  className={`flex w-full cursor-pointer items-center justify-center gap-3 rounded-2xl border px-5 py-3 font-bold transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-sky-500/20 ${
+                    theme == "light"
+                      ? "border-slate-200 bg-white text-slate-800 hover:bg-slate-50"
+                      : "border-slate-700 bg-slate-950 text-slate-100 hover:bg-slate-900"
+                  }`}
+                >
+                  <FcGoogle className="text-xl" />
+                  Continue with Google
                 </button>
 
                 <p className={`text-center text-sm ${mutedText}`}>

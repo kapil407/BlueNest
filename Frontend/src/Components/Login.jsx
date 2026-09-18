@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile, getUser } from "../redux/userSlice";
 import { FiEye, FiEyeOff, FiLock, FiMail, FiX } from "react-icons/fi";
+import { FcGoogle } from "react-icons/fc";
 import Typewriter from "./TypeWriter";
 import CursorSportLightEffect from './CursorSpotlightEffect.jsx'
 
@@ -58,6 +59,10 @@ function Login() {
   };
   const showHandler = () => {
     setshow(!show);
+  };
+
+  const googleLoginHandler = () => {
+    window.location.href = `${USER_API_END_POINT}/auth/google`;
   };
 
   const forgotPasswordHandler = async (e) => {
@@ -223,6 +228,19 @@ function Login() {
                   className="w-full cursor-pointer rounded-2xl bg-[#1D9BF0] px-5 py-3.5 font-bold text-white shadow-lg shadow-sky-500/25 transition hover:-translate-y-0.5 hover:bg-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-500/30"
                 >
                   Login
+                </button>
+
+                <button
+                  type="button"
+                  onClick={googleLoginHandler}
+                  className={`flex w-full cursor-pointer items-center justify-center gap-3 rounded-2xl border px-5 py-3.5 font-bold transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-sky-500/20 ${
+                    theme == "light"
+                      ? "border-slate-200 bg-white text-slate-800 hover:bg-slate-50"
+                      : "border-slate-700 bg-slate-950 text-slate-100 hover:bg-slate-900"
+                  }`}
+                >
+                  <FcGoogle className="text-xl" />
+                  Continue with Google
                 </button>
 
                 <p className={`text-center text-sm ${mutedText}`}>

@@ -11,6 +11,7 @@ import useOtherUsers from "../hooks/useOtherUsers.js";
 import useGetTweets from "../hooks/useGetTweets.js";
 import ThemeToggle from "./Theme.jsx";
 import CursorSportLightEffect from "./CursorSpotlightEffect.jsx";
+import TokenRotation from "./TokenRotation.jsx";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -40,6 +41,8 @@ useGetTweets();
   }
 
   return (
+  <>
+  <TokenRotation/>
     <div
       className={`h-screen w-full overflow-hidden ${
         theme == "light"
@@ -80,6 +83,7 @@ useGetTweets();
       </div>
       {/* <ThemeToggle /> */}
     </div>
+  </>
   );
 };
 
