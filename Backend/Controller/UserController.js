@@ -392,6 +392,16 @@ export const LogOutController = async (req, res) => {
   try {
     const refreshtoken = req?.cookies?.refreshToken;
     // console.log("refreshToken in logout", refreshtoken);
+    if (!refreshToken) {
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
+
+      return res.status(200).json({
+        message: "logout successfully",
+        success: true,
+      });
+    }
+
 
     const decoded = jwt.verify(
       refreshtoken,
