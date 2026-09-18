@@ -38,6 +38,8 @@ router.get(
       }
 
       try {
+         console.log("✅ GOOGLE CALLBACK HIT");
+      console.log("USER:", req.user);
         const accessToken = AccessToken(user._id);
         const refreshToken = RefreshToken(user._id);
         const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
