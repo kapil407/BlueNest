@@ -39,7 +39,7 @@ router.get(
 
       try {
          console.log("✅ GOOGLE CALLBACK HIT");
-      console.log("USER:", req.user);
+     
         const accessToken = AccessToken(user._id);
         const refreshToken = RefreshToken(user._id);
         const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
@@ -64,6 +64,7 @@ router.get(
 );
 
 router.get("/auth/me", isAuth, (req, res) => {
+   console.log("USER : in /auth/me ", req.user);
   return res.status(200).json({
     success: true,
     user: req.user,
