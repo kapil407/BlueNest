@@ -11,7 +11,7 @@ import nodemailer from "nodemailer";
 import crypto, { secureHeapUsed } from "crypto";
 import uploadCloudinary from "../Middleware/Cloudinary.js";
 import { AccessToken, RefreshToken } from "../GenerateTokens/Tokens.js";
-import Comment from '../models/Comments.js'
+import Comment from "../models/Comments.js";
 
 dotenv.config();
 
@@ -261,10 +261,16 @@ export const LoginController = async (req, res) => {
 
     // Search User in data
     const user = await User.findOne({ emailId: emailId });
-    const userId=user?._id;
+    const userId = user?._id;
 
     if (!user) {
       return res.status(400).json({ message: "User not found" });
+    }
+    if (user.authProvider === "google" && !user.password) {
+      return res.status(400).json({
+        message: "Please continue with Google for this account",
+        success: false,
+      });
     }
     const userPassword = user.password;
 
@@ -283,9 +289,7 @@ export const LoginController = async (req, res) => {
     // creating tokein rotation  for security
     const accessToken = AccessToken(user?._id);
     const refreshToken = RefreshToken(user?._id);
-    const refreshToken1 = RefreshToken(user?._id);
-    console.log("login refresh token", refreshToken1);
-    console.log("login refresh token", refreshToken);
+   
     const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
 
     const DeviceInfo = req.headers["user-agent"] || "Unknown Device";
@@ -368,10 +372,10 @@ export const LoginController = async (req, res) => {
     });
     await user.save();
 
-   const updatedUser = await User.findById(userId);
+    const updatedUser = await User.findById(userId);
 
-console.log("FROM DB:", updatedUser.RefreshToken);
-console.log("FROM DB COUNT:", updatedUser.RefreshToken.length);
+    // console.log("FROM DB:", updatedUser.RefreshToken);
+    // console.log("FROM DB COUNT:", updatedUser.RefreshToken.length);
 
     return res.json({
       message: "Login successfully",
@@ -387,7 +391,7 @@ console.log("FROM DB COUNT:", updatedUser.RefreshToken.length);
 export const LogOutController = async (req, res) => {
   try {
     const refreshtoken = req?.cookies?.refreshToken;
-    console.log("refreshToken in logout", refreshtoken);
+    // console.log("refreshToken in logout", refreshtoken);
 
     const decoded = jwt.verify(
       refreshtoken,
@@ -397,7 +401,7 @@ export const LogOutController = async (req, res) => {
 
     const filteredTokens = [];
     let isTokenMatched = false;
-    console.log("user in logout", user);
+    // console.log("user in logout", user);
 
     for (const tokenData of user?.RefreshToken) {
       const isMatch = await bcrypt.compare(refreshtoken, tokenData.token);
@@ -749,23 +753,23 @@ export const LogoutFromAllDevices = async (req, res) => {
   }
 };
 
-export const DeleteAccountController = async(req,res)=>{
-  try{  
-    const userId=req.userId;
+export const DeleteAccountController = async (req, res) => {
+  try {
+    const userId = req.userId;
     console.log("delete");
-      const comment=await Comment.deleteMany({userId});
-        const tweet=await Tweet.deleteMany({ userId: req.userId });
-        const user=await User.findByIdAndDelete(userId);
-        if(!user){
-          return res.json({message:"user is not found",success:false});
-        }
-         res.clearCookie('accessToken');
-        res.clearCookie('refreshToken');
-        return res.status(200).json({message:"Account is deleted",success:true});
+    const comment = await Comment.deleteMany({ userId });
+    const tweet = await Tweet.deleteMany({ userId: req.userId });
+    const user = await User.findByIdAndDelete(userId);
+    if (!user) {
+      return res.json({ message: "user is not found", success: false });
+    }
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    return res
+      .status(200)
+      .json({ message: "Account is deleted", success: true });
+  } catch (errror) {
+    console.log("error in DeleteAccount component");
+    return res.status(500).json({ message: error });
   }
-  catch(errror){
-    console.log("error in DeleteAccount component")
-    return res.status(500).json({message:error})
-  }
-}
-
+};

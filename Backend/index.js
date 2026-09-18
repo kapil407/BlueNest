@@ -2,6 +2,7 @@ import express from "express";
 import http from "http";
 import { Server } from "socket.io";
 import { connectDB } from "./config/database.js";
+import './Controller/Passport.js'
 
 import userRoutes from "./routes/AuthRoute.js";
 import tweetRoutes from "./routes/TweetRoute.js";
@@ -12,6 +13,7 @@ import commentRoute from './routes/CommentRoute.js';
 import GeminiRouter from './routes/GeminiRoutes.js'
 // import Mailrouter from './routes/test.js';
 import Tokenrouter from './routes/TokenRotation.js';
+import GoogleRouter from './routes/GoogleRoute.js';
 
 
 import cookieParser from "cookie-parser";
@@ -31,8 +33,8 @@ app.get("/", (req, res) => {
 });
 const frontendPort=5173 || 5174 || 5175 ;
 const corsOption = {
-  // origin: `http://localhost:${frontendPort}`,
-  origin: "https://bluenest-frontend.onrender.com",
+  origin: process.env.FRONTEND_URL || `http://localhost:${frontendPort}`,
+  // origin: "https://bluenest-frontend.onrender.com",
   credentials: true,
 };
 app.use(cors(corsOption));
@@ -48,6 +50,7 @@ app.use('/comments',commentRoute);
 app.use('/',GeminiRouter);
 // app.use('/api',Mailrouter);
 app.use('/',Tokenrouter);
+app.use('/',GoogleRouter);
 initSocket(server);
 
 // DB connection + Server start

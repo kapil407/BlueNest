@@ -32,7 +32,9 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: function () {
+        return this.authProvider === "local";
+      },
     },
     following: [
       {
@@ -73,6 +75,11 @@ const userSchema = new mongoose.Schema(
     },
     expiryOtp: {
       type: Date,
+    },
+    authProvider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
     },
     verificationCode: String,
     RefreshToken:[
