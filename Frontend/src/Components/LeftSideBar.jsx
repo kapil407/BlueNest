@@ -93,7 +93,7 @@ const LeftSideBar = ({ className = "", onClose }) => {
 
         <Link
           to="/"
-          className="mb-8 flex lg:w-full items-center w-[65%] gap-3 rounded-2xl px-2 py-1 lg:py-4 transition hover:bg-sky-500/10"
+          className="mb-2 flex lg:w-full items-center w-[65%] gap-3 rounded-2xl px-2 py-1 lg:py-4 transition hover:bg-sky-500/10"
         >
           <img
             className="w-18 h-18  lg:w-14 lg:h-10 rounded-full object-cover  shadow-md"
@@ -147,7 +147,7 @@ const LeftSideBar = ({ className = "", onClose }) => {
           })}
           <div className="flex justify-between ">
            
-            <ThemeToggle/>
+           
              <Link
                
                 className={`group relative z-10 lg:w-full flex h-14 items-center gap-4 rounded-2xl px-4 text-lg font-bold transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] ${
@@ -157,6 +157,8 @@ const LeftSideBar = ({ className = "", onClose }) => {
                       : "text-slate-300 hover:bg-slate-900/80 hover:text-white"
                 }`}
               >
+                 <ThemeToggle/>
+                 <p>Change theme</p>
                
               </Link>
           </div>
