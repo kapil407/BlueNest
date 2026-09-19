@@ -131,8 +131,8 @@ const LeftSideBar = ({ className = "", onClose }) => {
                   active
                     ? "text-white"
                     : isLight
-                      ? "text-slate-700 hover:bg-slate-100/80 hover:text-slate-950"
-                      : "text-slate-300 hover:bg-slate-900/80 hover:text-white"
+                      ? "text-slate-300 hover:bg-slate-100/80 hover:text-slate-950"
+                      : "text-slate-700 hover:bg-slate-900/80 hover:text-white"
                 }`}
               >
                 <Icon
@@ -166,8 +166,8 @@ const LeftSideBar = ({ className = "", onClose }) => {
       <div
         className={`rounded-3xl w-full lg:w-full border p-3 ${
           isLight
-            ? "border-slate-200 bg-slate-50"
-            : "border-slate-700 bg-slate-900/70"
+            ? "border-slate-700 bg-slate-900/70 "
+            : "border-slate-200 bg-slate-50"
         }`}
       >
         <div className="mb-4  flex  items-center gap-3">
