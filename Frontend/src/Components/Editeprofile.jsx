@@ -13,7 +13,7 @@ const EditeProfile = () => {
  
   const { tweet } = useSelector((store) => store?.tweet);
   const theme = useSelector((store) => store.theme.theme);
-
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const { profile, user } = useSelector((store) => store.user);
@@ -36,6 +36,7 @@ const EditeProfile = () => {
       formdata.append("lastName", lastName);
       formdata.append("userName", userName);
       formdata.append("bio", bio);
+      setLoading(true);
       const res = await axios.patch(
         `${USER_API_END_POINT}/updateProfile`,
         formdata,
@@ -50,11 +51,15 @@ const EditeProfile = () => {
       if (res?.data?.success) {
         toast.success(res.data.message);
         dispatch(getMyProfile(res?.data?.updated));
+        
       }
 
       dispatch(getRefresh());
     } catch (error) {
       console.error(error);
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -127,7 +132,25 @@ const EditeProfile = () => {
             to={"/"}
             className="flex bg-[#1D9BF0]  hover:bg-blue-400 items-center justify-center  mb-4 rounded-xl text-white w-[35%] p-2 "
           >
-            <button>Save</button>
+           
+              <button
+                  onClick={EditeHandler}
+                  disabled={(!firstName.trim() && !lastName?.trim() && !userName && !image && !bio) || loading}
+                  className={`flex min-w-24 items-center justify-center gap-2 rounded-full lg:px-5 lg:py-2.5 py-3 font-bold text-white transition disabled:opacity-60 ${
+                    (!media && !description?.trim()) || loading
+                      ? "cursor-not-allowed bg-slate-400"
+                      : "cursor-pointer bg-[#1D9BF0] shadow-lg shadow-sky-500/20 hover:bg-sky-500"
+                  }`}
+                >
+                  {loading ? (
+                    <>
+                      <ClipLoader size={18} color="#fff" />
+                      Updating...
+                    </>
+                  ) : (
+                    "Update"
+                  )}
+                </button>
           </Link>
         </div>
       </div>
