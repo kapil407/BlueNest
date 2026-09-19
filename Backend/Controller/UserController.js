@@ -468,13 +468,16 @@ export const editProfileController = async (req, res) => {
     }
 
     Object.keys(req.body).forEach((field) => {
-      if (req.body[field] !== undefined && req.body[field] !== null) {
+      if (
+        req.body[field] !== undefined &&
+        req.body[field] !== null &&
+        req.body[field] !== ""
+      ) {
         loggedinUser[field] = req.body[field];
       }
     });
 
     const updated = await loggedinUser.save();
-    // console.log("updated", updated.profilePic);
 
     await Tweet.updateMany(
       { userId },
