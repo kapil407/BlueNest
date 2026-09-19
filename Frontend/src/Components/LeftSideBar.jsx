@@ -145,12 +145,12 @@ const LeftSideBar = ({ className = "", onClose }) => {
               </Link>
             );
           })}
-          <div className="flex justify-between ">
+
            
            
-             <Link
+             <div
                
-                className={`group relative z-10 lg:w-full flex h-14 items-center gap-4 rounded-2xl px-4 text-lg font-bold transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] ${
+                className={`group relative z-10 mb-1 lg:w-full flex h-14 items-center gap-4 rounded-2xl px-4 text-lg font-bold transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] ${
                   
                      isLight
                       ? "text-slate-700 hover:bg-slate-100/80 hover:text-slate-950"
@@ -158,18 +158,22 @@ const LeftSideBar = ({ className = "", onClose }) => {
                 }`}
               >
                  <ThemeToggle/>
-                 <p>Change theme</p>
+                 <p className={`${
+                  
+                     isLight
+                      ? "text-slate-700 hover:bg-slate-100/80 hover:text-slate-950"
+                      : "text-slate-300 hover:bg-slate-900/80 hover:text-white"}`}>Change theme</p>
                
-              </Link>
-          </div>
+              </div>
+        
         </nav>
       </div>
 
       <div
-        className={`rounded-3xl w-full lg:w-full border p-3 ${
+        className={`rounded-3xl w-full lg:w-full  p-3 ${
           isLight
-            ? "border-slate-700 bg-slate-900/70 "
-            : "border-slate-200 bg-slate-50"
+            ? " bg-slate-800 "
+            : "bg-slate-200"
         }`}
       >
         <div className="mb-4  flex  items-center gap-3">
