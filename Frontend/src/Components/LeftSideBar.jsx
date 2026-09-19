@@ -148,8 +148,7 @@ const LeftSideBar = ({ className = "", onClose }) => {
           <div className="flex justify-between ">
             <ThemeToggle/>
              <Link
-                key={item.label}
-                to={item.to}
+               
                 className={`group relative z-10 lg:w-full flex h-14 items-center gap-4 rounded-2xl px-4 text-lg font-bold transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] ${
                   
                      isLight
