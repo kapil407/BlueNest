@@ -201,6 +201,7 @@ function OtpVerify() {
               </button>
               <button
                 type="button"
+                disabled={timer > 0 || loading || otp}
                 className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl border px-4 font-bold transition hover:-translate-y-0.5 ${
                   timer > 0 || loading || otp
                     ? "cursor-not-allowed border-slate-200 bg-white text-slate-700 "
