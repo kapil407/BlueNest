@@ -659,7 +659,7 @@ export const unFollowController = async (req, res) => {
       });
     }
 
-    // return res.json({message:`${user.firstName} has not follwed yet`});
+    
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -743,11 +743,21 @@ export const changeEmailAndPasswordController = async (req, res) => {
 
 export const LogoutFromAllDevices = async (req, res) => {
   try {
+    const refreshtoken = req?.cookies?.refreshToken;
+    if (!refreshtoken) {
+      res.clearCookie("refreshToken");
+      res.clearCookie("accessToken");
+      return res
+        .status(200)
+        .json({ message: "Account is deleted", success: true });
+    }
     const userId = req.userId;
 
     const user = await User.findById(userId);
     console.log("user in logout from aall", user);
     if (!user) {
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
       return res
         .status(400)
         .json({ message: "user not found", success: false });
@@ -769,12 +779,22 @@ export const LogoutFromAllDevices = async (req, res) => {
 
 export const DeleteAccountController = async (req, res) => {
   try {
+    const refreshtoken = req?.cookies?.refreshToken;
+    if (!refreshtoken) {
+      res.clearCookie("refreshToken");
+      res.clearCookie("accessToken");
+      return res
+        .status(200)
+        .json({ message: "Account is deleted", success: true });
+    }
     const userId = req.userId;
     console.log("delete");
     const comment = await Comment.deleteMany({ userId });
     const tweet = await Tweet.deleteMany({ userId: req.userId });
     const user = await User.findByIdAndDelete(userId);
     if (!user) {
+      res.clearCookie("accessToken");
+      res.clearCookie("refreshToken");
       return res.json({ message: "user is not found", success: false });
     }
     res.clearCookie("accessToken");
