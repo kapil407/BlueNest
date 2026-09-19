@@ -78,7 +78,7 @@ const GenerateAccessToken = async (req, res) => {
 
     await user.save();
     
-    console.log("refresh token in backend after",req?.cookies?.refreshToken,"    and acceessToken ",req?.cookies?.accessToken);
+    console.log("refresh token in backend after",newRefreshToken,"    and acceessToken ",newAccessToken);
     return res.json({ message:"accesstoken generated" });
   } catch (error) {
     console.log("Error in GenerateAccessToken:", error);
