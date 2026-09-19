@@ -36,7 +36,7 @@ const GoogleAuthSuccess = () => {
   return (
     <div
       className={`flex h-screen w-full items-center justify-center ${
-        theme == "light" ? "bg-slate-50 text-slate-950" : "bg-slate-950 text-white"
+        theme == "light" ? " bg-slate-950 text-white" : "bg-slate-50 text-slate-950"
       }`}
     >
       <Spinner />

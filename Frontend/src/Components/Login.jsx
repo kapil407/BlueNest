@@ -84,17 +84,17 @@ function Login() {
 
   const inputStyle =
     theme == "light"
-      ? "border-slate-200 bg-white text-slate-950 placeholder:text-slate-400 focus:border-sky-500 focus:ring-sky-500/20"
-      : "border-slate-700 bg-slate-950/70 text-slate-100 placeholder:text-slate-500 focus:border-sky-400 focus:ring-sky-400/20";
+      ? "border-slate-700 bg-slate-950/70 text-slate-100 placeholder:text-slate-500 focus:border-sky-400 focus:ring-sky-400/20 "
+      : "border-slate-200 bg-white text-slate-950 placeholder:text-slate-400 focus:border-sky-500 focus:ring-sky-500/20";
 
-  const mutedText = theme == "light" ? "text-slate-500" : "text-slate-400";
+  const mutedText = theme == "light" ? "text-slate-400" : "text-slate-500";
 
   return (
     <div
       className={`h-screen w-full overflow-hidden px-3 py-3 sm:px-5 sm:py-4 lg:px-8 ${
         theme == "light"
-          ? "bg-[radial-gradient(circle_at_top_left,#dbeafe_0,#f8fafc_35%,#eef2ff_100%)] text-slate-950"
-          : "bg-[radial-gradient(circle_at_top_left,#0f2d47_0,#020617_42%,#0f172a_100%)] text-white"
+          ? "bg-[radial-gradient(circle_at_top_left,#0f2d47_0,#020617_42%,#0f172a_100%)] text-white "
+          : "bg-[radial-gradient(circle_at_top_left,#dbeafe_0,#f8fafc_35%,#eef2ff_100%)] text-slate-950"
       }`}
     >
       <CursorSportLightEffect/>
@@ -103,15 +103,15 @@ function Login() {
         <div
           className={`grid max-h-full w-full overflow-hidden rounded-[1.5rem] border shadow-2xl lg:grid-cols-[0.95fr_1.05fr] ${
             theme == "light"
-              ? "border-white/80 bg-white/75 shadow-sky-900/10"
-              : "border-slate-800/80 bg-slate-950/80 shadow-black/40"
+              ? "border-slate-800/80 bg-slate-950/80 shadow-black/40 "
+              : "border-white/80 bg-white/75 shadow-sky-900/10"
           }`}
         >
           <div
             className={`relative hidden min-h-0  flex-col justify-between p-7 xl:p-8 lg:flex ${
               theme == "light"
-                ? "bg-sky-50/80"
-                : "bg-gradient-to-br from-slate-900 via-slate-950 to-sky-950"
+                ? "bg-gradient-to-br from-slate-900 via-slate-950 to-sky-950 "
+                : "bg-sky-50/80"
             }`}
           >
             <div>
@@ -131,7 +131,7 @@ function Login() {
             <div className="relative">
               <div
                 className={`absolute inset-8 rounded-full blur-3xl ${
-                  theme == "light" ? "bg-sky-300/40" : "bg-sky-500/20"
+                  theme == "light" ? "bg-sky-500/20" : "bg-sky-300/40"
                 }`}
               />
               <img
@@ -235,8 +235,8 @@ function Login() {
                   onClick={googleLoginHandler}
                   className={`flex w-full cursor-pointer items-center justify-center gap-3 rounded-2xl border px-5 py-3.5 font-bold transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-sky-500/20 ${
                     theme == "light"
-                      ? "border-slate-200 bg-white text-slate-800 hover:bg-slate-50"
-                      : "border-slate-700 bg-slate-950 text-slate-100 hover:bg-slate-900"
+                      ? "border-slate-700 bg-slate-950 text-slate-100 hover:bg-slate-900 "
+                      : "border-slate-200 bg-white text-slate-800 hover:bg-slate-50"
                   }`}
                 >
                   <FcGoogle className="text-xl" />
@@ -264,8 +264,8 @@ function Login() {
           <div
             className={`w-full max-w-md rounded-3xl border p-6 shadow-2xl ${
               theme == "light"
-                ? "border-white bg-white text-slate-950"
-                : "border-slate-700 bg-slate-950 text-white"
+                ? "border-slate-700 bg-slate-950 text-white "
+                : "border-white bg-white text-slate-950"
             }`}
           >
             <div className="mb-5 flex items-start justify-between gap-4">

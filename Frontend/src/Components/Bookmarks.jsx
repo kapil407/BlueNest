@@ -47,22 +47,22 @@ const Bookmarks = () => {
       <div
         className={`sticky top-0 z-20 border-b px-4 py-4 backdrop-blur-xl ${
           isLight
-            ? "border-slate-200 bg-white/85"
-            : "border-slate-800 bg-slate-950/85"
+            ? " border-slate-800 bg-slate-950/85"
+            : "border-slate-200 bg-white/85"
         }`}
       >
         <div className="flex gap-4">
             <Link to='/'><FaArrowLeft size={18} className="mt-2 cursor-pointer" /></Link>
         <h1 className="text-2xl font-black">Saved</h1>
         </div>
-        <p className={`text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+        <p className={`text-sm ${isLight ? "text-slate-400" : "text-slate-500"}`}>
           Posts you bookmarked
         </p>
       </div>
 
       <div
         className={`min-h-screen border-x ${
-          isLight ? "border-slate-200 bg-white" : "border-slate-800 bg-slate-950"
+          isLight ? "border-slate-800  bg-slate-950 " : "border-slate-200 bg-white"
         }`}
       >
         {loading ? (
@@ -75,8 +75,8 @@ const Bookmarks = () => {
             <div
               className={`rounded-3xl border px-8 py-6 ${
                 isLight
-                  ? "border-slate-200 bg-slate-50 text-slate-600"
-                  : "border-slate-800 bg-slate-900 text-slate-300"
+                  ? "border-slate-800 bg-slate-900 text-slate-300"
+                  : " border-slate-200 bg-slate-50 text-slate-600"
               }`}
             >
               <h2 className="text-xl font-black">No bookmarks yet</h2>

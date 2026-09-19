@@ -46,8 +46,8 @@ useGetTweets();
     <div
       className={`h-screen w-full overflow-hidden ${
         theme == "light"
-          ? "bg-slate-100 text-slate-950"
-          : "bg-slate-950 text-slate-100"
+          ? "bg-slate-950 text-slate-100 "
+          : "bg-slate-100 text-slate-950"
       }`}
     >
       <CursorSportLightEffect />
@@ -56,8 +56,8 @@ useGetTweets();
         <aside
           className={`hidden h-screen border-r px-3 py-4 lg:block ${
             theme == "light"
-              ? "border-slate-200 bg-white/80"
-              : "border-slate-800 bg-slate-950/90"
+              ? "border-slate-800 bg-slate-950/90 "
+              : "border-slate-200 bg-white/80"
           }`}
         >
           {loading ? <LeftSideRemmi /> : <LeftSideBar />}
@@ -70,8 +70,8 @@ useGetTweets();
         <aside
           className={`hidden h-screen border-l py-4 pl-8 pr-4 xl:block ${
             theme == "light"
-              ? "border-slate-200 bg-white/60"
-              : "border-slate-800 bg-slate-950/70"
+              ? "border-slate-800 bg-slate-950/70"
+              : " border-slate-200 bg-white/60"
           }`}
         >
           {loading ? (

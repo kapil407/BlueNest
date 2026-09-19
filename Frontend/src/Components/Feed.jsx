@@ -8,9 +8,7 @@ import LeftSideBar from "./LeftSideBar.jsx";
 import RightSideBar from "./RightSideBar.jsx";
 import Typewriter from "./TypeWriter.jsx";
 
-
 const Feed = () => {
-  
   const { tweet, isActive } = useSelector((store) => store?.tweet);
   const { otherUsers } = useSelector((store) => store.user);
   const theme = useSelector((store) => store.theme.theme);
@@ -26,16 +24,14 @@ const Feed = () => {
     if (isLeftOpen) setIsLeftOpen(false);
     setIsRightOpen((prev) => !prev);
   };
- 
-  
 
   return (
     <div className="mx-auto flex   w-full flex-col">
       <div
         className={`border-b px-4 py-4 ${
           isLight
-            ? "border-slate-200 bg-white"
-            : "border-slate-800 bg-slate-950"
+            ? "border-slate-800 bg-slate-950"
+            : " border-slate-200 bg-white"
         }`}
       >
         <div className="flex justify-between">
@@ -50,7 +46,7 @@ const Feed = () => {
     fixed top-0 left-0 z-50 lg:hidden
     h-full w-[60%] lg:w-50 px-4 py-4 shadow-2xl
     transition-transform duration-400 ease-in-out
-    ${isLight ? "bg-white" : "bg-slate-950"}
+    ${isLight ? "bg-slate-950" : " bg-white"}
     ${isLeftOpen ? "translate-x-0 border-r  " : "-translate-x-full"}
   `}
               onClose={() => setIsLeftOpen(false)}
@@ -58,7 +54,7 @@ const Feed = () => {
             <div className="flex flex-col">
               <h1 className="text-2xl font-black">Home</h1>
               <p
-                className={`text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}
+                className={`text-sm ${isLight ? "text-slate-400" : "text-slate-500"}`}
               >
                 <Typewriter
                   word="Fresh posts from your circle"
@@ -80,7 +76,7 @@ const Feed = () => {
     fixed top-0 right-0 z-50 lg:hidden
     h-full  px-8 py-4 shadow-2xl
     transition-transform duration-300 ease-in-out
-    ${isLight ? "bg-white" : "bg-slate-950"}
+    ${isLight ? " bg-slate-950"  : "bg-white"}
     ${isRightOpen ? "translate-x-0 border-l" : "translate-x-full"}
   `}
               onClose={() => setIsRightOpen(false)}
@@ -92,15 +88,15 @@ const Feed = () => {
       <div
         className={`border-x ${
           isLight
-            ? "border-slate-200 bg-white"
-            : "border-slate-800 bg-slate-950"
+            ? " border-slate-800 bg-slate-950"
+            : "border-slate-200 bg-white"
         }`}
       >
         <div
           className={`sticky top-0 z-30 grid grid-cols-2 border-b backdrop-blur-xl ${
             isLight
-              ? "border-slate-200 bg-white/90"
-              : "border-slate-800 bg-slate-950/90"
+              ? "border-slate-800 bg-slate-950/90 "
+              : "border-slate-200 bg-white/90"
           }`}
         >
           <button
@@ -110,8 +106,8 @@ const Feed = () => {
               isActive
                 ? "text-sky-500"
                 : isLight
-                  ? "text-slate-500"
-                  : "text-slate-400"
+                  ? "text-slate-400"
+                  : "text-slate-500"
             }`}
           >
             <span className="relative px-4 py-4 text-base font-black">
@@ -129,8 +125,8 @@ const Feed = () => {
               !isActive
                 ? "text-sky-500"
                 : isLight
-                  ? "text-slate-500"
-                  : "text-slate-400"
+                  ? "text-slate-400"
+                  : "text-slate-500"
             }`}
           >
             <span className="relative px-4 py-4 text-base font-black">
@@ -147,7 +143,6 @@ const Feed = () => {
         {tweet?.map((tweet) => (
           <Tweets key={tweet?._id} tweet={tweet} />
         ))}
-       
       </div>
     </div>
   );

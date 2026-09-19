@@ -143,8 +143,8 @@ const Tweets = ({ tweet }) => {
     <article
       className={`border-b px-4 py-5 transition ${
         isLight
-          ? "border-slate-200 hover:bg-slate-50"
-          : "border-slate-800 hover:bg-slate-900/55"
+          ? "border-slate-800 hover:bg-slate-900/55 "
+          : "border-slate-200 hover:bg-slate-50"
       }`}
     >
       <div className=" gap-3">
@@ -172,7 +172,7 @@ const Tweets = ({ tweet }) => {
                 {firstUser?.firstName || "BlueNest User"}
               </h1>
               <p
-                className={`text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}
+                className={`text-sm ${isLight ? "text-slate-400" : "text-slate-500"}`}
               >
                 @{firstUser?.userName || "user"} ·{" "}
                 {formatMessageTime(tweet.createdAt)}
@@ -226,7 +226,7 @@ const Tweets = ({ tweet }) => {
                 type="button"
                 onClick={() => HandleGetComment(tweet._id)}
                 className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm transition hover:bg-emerald-500/10 hover:text-emerald-500 ${
-                  isLight ? "text-slate-500" : "text-slate-400"
+                  isLight ? "text-slate-400" : "text-slate-500"
                 }`}
               >
                 <FaRegComment size={18} />
@@ -240,8 +240,8 @@ const Tweets = ({ tweet }) => {
                   isLiked
                     ? "text-pink-600 "
                     : isLight
-                      ? "text-slate-500"
-                      : "text-slate-400"
+                      ? "text-slate-400"
+                      : "text-slate-500"
                 }`}
               >
                 <BiLike size={20}  />
@@ -256,8 +256,8 @@ const Tweets = ({ tweet }) => {
                     isBookmarked
                       ? "text-yellow-500"
                       : isLight
-                        ? "text-slate-500"
-                        : "text-slate-400"
+                        ? "text-slate-400"
+                        : "text-slate-500"
                   }`}
                 >
                   <PiBookmarkSimpleBold size={20} />
@@ -267,7 +267,7 @@ const Tweets = ({ tweet }) => {
                   type="button"
                   onClick={() => DeleteTweetHandler(tweet?._id)}
                   className={`rounded-full px-3 py-2 transition hover:bg-red-500/10 hover:text-red-500 ${
-                    isLight ? "text-slate-500" : "text-slate-400"
+                    isLight ? "text-slate-400" : "text-slate-500"
                   }`}
                 >
                   <MdOutlineDelete size={21} />
@@ -286,8 +286,8 @@ const Tweets = ({ tweet }) => {
                 onChange={(e) => setAddComment(e.target.value)}
                 className={`w-full resize-none rounded-2xl border p-3 outline-none transition focus:ring-4 focus:ring-sky-500/20 ${
                   isLight
-                    ? "border-slate-200 bg-white text-slate-950"
-                    : "border-slate-800 bg-slate-900 text-slate-100"
+                    ? "border-slate-800 bg-slate-900 text-slate-100 "
+                    : "border-slate-200 bg-white text-slate-950"
                 }`}
               />
               <button

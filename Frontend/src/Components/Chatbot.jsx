@@ -90,7 +90,7 @@ const ChatBotComponent = () => {
   return (
     <>
       <div
-        className={`lg:w-[70%] flex  flex-col justify-between h-full fixed backdrop-blur  z-50 ${islight ? "text-black" : "text-white"}`}
+        className={`lg:w-[70%] flex  flex-col justify-between h-full fixed backdrop-blur  z-50 ${islight ? "text-white" : "text-black"}`}
       >
         <div className="flex border-b lg:w-full px-4 border-slate-700 bg-slate-850 lg:h-[6%] items-center">
           <Link to="/">
@@ -155,7 +155,7 @@ const ChatBotComponent = () => {
               value={prompt}
               onChange={(e) => setPrompt(e?.target?.value)}
               placeholder="Ask anything"
-              className={`text-xl lg:w-full w-[70%] outline-none font-black  ${islight ? "text-black placeholder-black" : "text-white placeholder-white"}`}
+              className={`text-xl lg:w-full w-[70%] outline-none font-black  ${islight ? "text-white placeholder-white" : " text-black placeholder-black"}`}
             />
           </div>
           <div className="lg:mr-[2%]   lg:h-10 h-12 flex items-center  justify-center">

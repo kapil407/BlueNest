@@ -13,11 +13,9 @@ import { formatMessageTime } from "../Utils/setTime.js";
 import store from "../redux/store.js";
 import { getRefresh } from "../redux/tweetSlice.js";
 
-
 const Message = () => {
-  
   const theme = useSelector((store) => store.theme.theme);
-  const {refresh}=useSelector(store=>store.tweet);
+  const { refresh } = useSelector((store) => store.tweet);
   useGetMessages();
   const socket = useSocket();
 
@@ -48,7 +46,6 @@ const Message = () => {
         `${USER_API_END_POINT}/sendMessage/${targetUserId}`,
         { message: Message },
         {
-          
           withCredentials: true,
         },
       );
@@ -93,7 +90,7 @@ const Message = () => {
     });
 
     return () => socket.off("receiveMessage");
-  }, [socket, message,refresh]);
+  }, [socket, message, refresh]);
 
   let array = [];
 
@@ -107,11 +104,11 @@ const Message = () => {
     <div className="fixed inset-y-0 left-1/2 z-10 flex w-full max-w-3xl -translate-x-1/2 flex-col border-x border-gray-700 bg-white shadow-xl h-dvh lg:screen lg:w-[55%]">
       {/* Header */}
       <div
-        className={`flex items-center gap-3 border-b px-4 py-3 ${theme == "light" ? "border-gray-200 bg-white text-gray-950" : "border-gray-700 bg-black text-white"}`}
+        className={`flex items-center gap-3 border-b px-4 py-3 ${theme == "light" ? " border-gray-700 bg-black text-white" : "border-gray-200 bg-white text-gray-950"}`}
       >
         <Link
           to={`/profile/${targetUser?._id}`}
-          className={`flex h-10 w-10 items-center justify-center rounded-full transition ${theme == "light" ? "hover:bg-gray-100" : "hover:bg-gray-800"}`}
+          className={`flex h-10 w-10 items-center justify-center rounded-full transition ${theme == "light" ? "hover:bg-gray-800" : "hover:bg-gray-100"}`}
         >
           {" "}
           <IoMdArrowRoundBack size={22} className="cursor-pointer" />
@@ -126,7 +123,7 @@ const Message = () => {
             {targetUser?.firstName} {targetUser?.lastName}
           </h1>
           <p
-            className={`text-sm ${theme == "light" ? "text-gray-500" : "text-gray-400"}`}
+            className={`text-sm ${theme == "light" ? "text-gray-400" : "text-gray-500"}`}
           >
             Messages
           </p>
@@ -135,7 +132,7 @@ const Message = () => {
 
       {/* Chat Messages */}
       <div
-        className={`custom-scrollbar flex-1 overflow-auto px-4 py-5 ${theme == "light" ? "bg-gray-50" : "bg-gray-950"}`}
+        className={`custom-scrollbar flex-1 overflow-auto px-4 py-5 ${theme == "light" ? "bg-gray-950" : "bg-gray-50"}`}
       >
         {array &&
           array?.map((msg, idx) => {
@@ -151,8 +148,8 @@ const Message = () => {
                     msg?.senderId === userId
                       ? "rounded-br-md bg-blue-400 text-slate-800 font-black text-sm text-sm lg:text-xl"
                       : theme == "light"
-                        ? "rounded-bl-md bg-gray-800 text-white ring-1 font-black ring-gray-200"
-                        : "rounded-bl-md bg-gray-800  text-slate-400 font-black"
+                        ? "rounded-bl-md bg-gray-800  text-slate-400 font-black "
+                        : "rounded-bl-md bg-gray-800 text-white ring-1 font-black ring-gray-200"
                   }`}
                 >
                   <div className="break-words whitespace-pre-wrap text-sm lg:text-xl leading-relaxed">
@@ -163,8 +160,8 @@ const Message = () => {
                       msg?.senderId === userId
                         ? "text-white"
                         : theme == "light"
-                          ? "text-blue-200"
-                          : "text-slate-400"
+                          ? "text-blue-400"
+                          : "text-slate-200"
                     }`}
                   >
                     {formatMessageTime(msg.createdAt)}
@@ -178,14 +175,14 @@ const Message = () => {
 
       {/* Input Box */}
       <div
-        className={`flex items-center gap-1 border-t lg:px-4 lg:py-3 pl-1  pt-1 pb-1 pr-2 ${theme == "light" ? "border-gray-200 bg-white" : "border-gray-700 bg-black"}`}
+        className={`flex items-center gap-1 border-t lg:px-4 lg:py-3 pl-1  pt-1 pb-1 pr-2 ${theme == "light" ? "border-gray-700 bg-black" : "border-gray-200 bg-white"}`}
       >
         <input
           type="text"
           value={Message}
           onChange={(e) => setmessage(e.target.value)}
           placeholder="Write the message"
-          className={`h-12 flex-1 rounded-full border px-5 outline-none transition focus:ring-2 focus:ring-blue-500 ${theme == "light" ? "border-gray-200  bg-gray-50 text-gray-950 border-slate-700 placeholder:text-gray-800 font-black" : "border-gray-700 font-black bg-gray-900 text-white placeholder:text-gray-500"}`}
+          className={`h-12 flex-1 rounded-full border px-5 outline-none transition focus:ring-2 focus:ring-blue-500 ${theme == "light" ? "border-gray-700 font-black bg-gray-900 text-white placeholder:text-gray-500 " : "border-gray-200  bg-gray-50 text-gray-950 border-slate-700 placeholder:text-gray-800 font-black"}`}
         />
         <button
           type="button"

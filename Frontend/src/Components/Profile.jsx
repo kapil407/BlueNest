@@ -35,8 +35,8 @@ function Profile() {
   const dispatch = useDispatch();
 
   const { profile, otherUsers, user } = useSelector((store) => store.user);
-    console.log("user in profile",profile);
-    console.log("user in profile",tweet);
+    // console.log("user in profile",profile);
+    // console.log("user in profile",tweet);
     let cnt=0;
     for( let post of tweet){
      
@@ -135,16 +135,16 @@ function Profile() {
       <div
         className={`min-h-screen border-x ${
           theme == "light"
-            ? "border-slate-200 bg-white"
-            : "border-slate-800 bg-slate-950"
+            ? "border-slate-800 bg-slate-950 "
+            : "border-slate-200 bg-white"
         }`}
       >
         <div>
           <div
             className={`sticky top-0 z-20 flex items-center border-b px-4 py-3 backdrop-blur-xl ${
               theme == "light"
-                ? "border-slate-200 bg-white/85"
-                : "border-slate-800 bg-slate-950/85"
+                ? "border-slate-800 bg-slate-950/85 "
+                : "border-slate-200 bg-white/85"
             }`}
           >
             <Link
@@ -154,12 +154,12 @@ function Profile() {
             >
               <IoMdArrowRoundBack
                 size={24}
-                className={theme == "light" ? "text-slate-700" : "text-slate-200"}
+                className={theme == "light" ? "text-slate-200" : "text-slate-700"}
               />
             </Link>
             <div className="ml-3 flex flex-col">
               <h1 className="text-lg font-black">{profile?.firstName}</h1>
-              <p className={theme == "light" ? "text-sm text-slate-500" : "text-sm text-slate-400"}>
+              <p className={theme == "light" ? "text-sm text-slate-400" : "text-sm text-slate-500"}>
                 {cnt} post
               </p>
             </div>
@@ -197,8 +197,8 @@ function Profile() {
                   className={`h-10 rounded-full px-4 font-bold shadow-lg
                   ${
                     !image || loading
-                      ? "bg-gray-400 cursor-not-allowed text-black"
-                      : "bg-green-400 cursor-pointer text-white "
+                      ? "bg-green-400 cursor-pointer text-white "
+                      : " bg-gray-400 cursor-not-allowed text-black"
                   }
                 `}
                 >
@@ -254,7 +254,7 @@ function Profile() {
             }
            
          
-          <div className={`${theme=="dark"?"text-sm text-slate-400 bg-slate-950/85":"bg-white"}`}>
+          <div className={`${theme=="dark"?"bg-white":" text-sm text-slate-400 bg-slate-950/85"}`}>
             <div className="my-5">
               <p>{profile?.bio}</p>
             </div>
@@ -284,7 +284,7 @@ function Profile() {
                 
                 <button
                   onClick={followAndUnfollowHandler}
-                  className={` lg:px-4 lg:py-2 lg:mr-2 px-3 py-2 rounded-3xl  cursor-pointer ${theme == "light" ? "bg-black text-white" : "bg-gray-400 text-black"}`}
+                  className={` lg:px-4 lg:py-2 lg:mr-2 px-3 py-2 rounded-3xl  cursor-pointer ${theme == "light" ? "bg-gray-400 text-black " : "bg-black text-white"}`}
                 >
                   {user?.following?.includes(id.toString())
                     ? "following"

@@ -107,7 +107,7 @@ const CreatePost = () => {
     <div className="w-full">
       <div>
         <div
-          className={`border-b p-4 ${isLight ? "border-slate-200" : "border-slate-800"}`}
+          className={`border-b p-4 ${isLight ? "border-slate-800" : "border-slate-200"}`}
         >
           <div className="flex gap-3">
             <Link to={`/profile/${user?._id}`}>
@@ -133,7 +133,7 @@ const CreatePost = () => {
                 rows={3}
                 placeholder="What's happening?"
                 className={`w-full resize-none mt-4 ml-2 bg-transparent text-xl outline-none placeholder:text-slate-400 ${
-                  isLight ? "text-slate-950" : "text-slate-100"
+                  isLight ? "text-slate-100" : "text-slate-950"
                 }`}
               />
 
@@ -141,8 +141,8 @@ const CreatePost = () => {
                 <div
                   className={`mt-3 flex items-center justify-between rounded-2xl border px-4 py-2 text-sm ${
                     isLight
-                      ? "border-slate-200 bg-slate-50 text-slate-600"
-                      : "border-slate-800 bg-slate-900 text-slate-300"
+                      ? "border-slate-800 bg-slate-900 text-slate-300"
+                      : "  border-slate-200 bg-slate-50 text-slate-600"
                   }`}
                 >
                   <span className="truncate">{media.name}</span>
@@ -176,8 +176,8 @@ const CreatePost = () => {
                   <span
                     className={`pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded px-2 py-1 text-xs opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${
                       isLight
-                        ? "bg-slate-950 text-white"
-                        : "bg-white text-slate-950"
+                        ? "bg-white text-slate-950"
+                        : " bg-slate-950 text-white"
                     }`}
                   >
                     Upload

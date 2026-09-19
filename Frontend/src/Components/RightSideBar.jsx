@@ -45,8 +45,8 @@ function RightSideBar({ otherUsers ,className,onClose}) {
                   onClick={onClose}
                   className={`absolute left-1   top-1 flex h-9 w-14 items-center justify-center rounded-full transition lg:hidden ${
                     isLight
-                      ? "text-slate-700 hover:bg-slate-100"
-                      : "text-slate-200 hover:bg-slate-900"
+                      ? "text-slate-200 hover:bg-slate-900 "
+                      : "text-slate-700 hover:bg-slate-100"
                   }`}
                   aria-label="Close sidebar"
                 >
@@ -58,11 +58,11 @@ function RightSideBar({ otherUsers ,className,onClose}) {
         onSubmit={searchHandler}
         className={`sticky top-4 z-10 flex items-center gap-3 rounded-2xl border  lg:px-4 lg:py-3 py-2 px-2 ${
           isLight
-            ? "border-slate-200 bg-white text-slate-950 shadow-sm"
-            : "border-slate-800 bg-slate-900 text-slate-100"
+            ? "border-slate-800 bg-slate-900 text-slate-100 "
+            : "border-slate-200 bg-white text-slate-950 shadow-sm"
         }`}
       >
-        <IoSearch size={22} className={isLight ? "text-slate-500" : "text-slate-400"} />
+        <IoSearch size={22} className={isLight ? "text-slate-400" : "text-slate-500"} />
         <input
           type="text"
           value={searchName}
@@ -75,8 +75,8 @@ function RightSideBar({ otherUsers ,className,onClose}) {
   <section
     className={`rounded-3xl border p-4 ${
       isLight
-        ? "border-slate-200 bg-white shadow-sm"
-        : "border-slate-800 bg-slate-900/70"
+        ? "border-slate-800 bg-slate-900/70 "
+        : "border-slate-200 bg-white shadow-sm"
     }`}
   >
     <div className="mb-3 flex items-center justify-between">
@@ -96,8 +96,8 @@ function RightSideBar({ otherUsers ,className,onClose}) {
           key={user?._id}
           className={`flex items-center justify-between gap-3 rounded-2xl p-2 ${
             isLight
-              ? "hover:bg-slate-100"
-              : "hover:bg-slate-800"
+              ? "hover:bg-slate-800"
+              : "hover:bg-slate-100"
           }`}
         >
           <div className="flex min-w-0 items-center gap-3">
@@ -123,8 +123,8 @@ function RightSideBar({ otherUsers ,className,onClose}) {
               <p
                 className={`truncate text-sm ${
                   isLight
-                    ? "text-slate-500"
-                    : "text-slate-400"
+                    ? "text-slate-400"
+                    : "text-slate-500"
                 }`}
               >
                 @{user?.userName}
@@ -136,8 +136,8 @@ function RightSideBar({ otherUsers ,className,onClose}) {
             to={`/profile/${user?._id}`}
             className={`shrink-0 rounded-full px-4 py-2 text-sm font-bold ${
               isLight
-                ? "bg-slate-950 text-white"
-                : "bg-white text-slate-950"
+                ? "bg-white text-slate-950 "
+                : "bg-slate-950 text-white"
             }`}
           >
             View
@@ -151,13 +151,13 @@ function RightSideBar({ otherUsers ,className,onClose}) {
       <section
         className={`rounded-3xl border p-4 ${
           isLight
-            ? "border-slate-200 bg-white shadow-sm"
-            : "border-slate-800 bg-slate-900/70"
+            ?  "border-slate-800 bg-slate-900/70 "
+            : "border-slate-200 bg-white shadow-sm"
         }`}
       >
         <div className="mb-3">
           <h1 className="text-xl font-black">Who to follow</h1>
-          <p className={`text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+          <p className={`text-sm ${isLight ? "text-slate-400" : "text-slate-500"}`}>
             Discover people around you
           </p>
         </div>
@@ -167,7 +167,7 @@ function RightSideBar({ otherUsers ,className,onClose}) {
             <div
               key={otherUser?._id}
               className={`flex items-center justify-between gap-3 rounded-2xl p-2 transition ${
-                isLight ? "hover:bg-slate-100" : "hover:bg-slate-800c "
+                isLight ? "hover:bg-slate-800" : "hover:bg-slate-100 "
               }`}
             >
               <div className="flex min-w-0 items-center gap-3">
@@ -189,7 +189,7 @@ function RightSideBar({ otherUsers ,className,onClose}) {
                   <h2 className="truncate font-bold">{otherUser?.firstName}</h2>
                   <p
                     className={`truncate text-sm ${
-                      isLight ? "text-slate-500" : "text-slate-400"
+                      isLight ? "text-slate-400" : "text-slate-500"
                     }`}
                   >
                     @{otherUser?.userName}
@@ -201,8 +201,8 @@ function RightSideBar({ otherUsers ,className,onClose}) {
                 to={`/profile/${otherUser?._id}`}
                 className={`shrink-0 rounded-full px-4 py-2 text-sm font-bold transition ${
                   isLight
-                    ? "bg-slate-950 text-white hover:bg-slate-700"
-                    : "bg-white text-slate-950 hover:bg-slate-200"
+                    ? "bg-white text-slate-950 hover:bg-slate-200 "
+                    : "bg-slate-950 text-white hover:bg-slate-700"
                 }`}
               >
                 View
@@ -215,15 +215,15 @@ function RightSideBar({ otherUsers ,className,onClose}) {
       <section
         className={`rounded-3xl border p-4 ${
           isLight
-            ? "border-slate-200 bg-white shadow-sm"
-            : "border-slate-800 bg-slate-900/70"
+            ? "border-slate-800 bg-slate-900/70 "
+            : "border-slate-200 bg-white shadow-sm"
         }`}
       >
         <h2 className="font-black">Trending</h2>
         <div className="mt-3 space-y-3">
           {["#BlueNest", "#WebDev", "#React"].map((tag) => (
             <div key={tag}>
-              <p className={`text-xs ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+              <p className={`text-xs ${isLight ? "text-slate-400" : "text-slate-500"}`}>
                 Trending now
               </p>
               <p className="font-bold">{tag}</p>

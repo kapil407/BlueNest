@@ -146,7 +146,7 @@ const LeftSideBar = ({ className = "", onClose }) => {
             );
           })}
           <div className="flex justify-between ">
-            <p>Change theme</p>
+           
             <ThemeToggle/>
              <Link
                

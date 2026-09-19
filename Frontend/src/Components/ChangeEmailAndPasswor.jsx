@@ -52,7 +52,7 @@ const ChangeEmailAndPasswordComponent = () => {
   return (
     <div
       className={`fixed h-full z-50 inset-0  backdrop-blur-sm w-full flex flex-col text-white  items-center justify-center
-        ${islight ? "  lg:text-lg text-xl" : " text-white "}
+        ${islight ? "   text-white " : " lg:text-lg text-xl "}
         `}
     >
       <h1

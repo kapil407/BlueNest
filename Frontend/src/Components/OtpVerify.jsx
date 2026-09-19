@@ -69,8 +69,8 @@ function OtpVerify() {
     <div
       className={`min-h-screen w-full overflow-hidden px-4 py-5 sm:px-6 ${
         theme == "light"
-          ? "bg-[radial-gradient(circle_at_top_left,#dbeafe_0,#f8fafc_38%,#eef2ff_100%)] text-slate-950"
-          : "bg-[radial-gradient(circle_at_top_left,#0f2d47_0,#020617_44%,#0f172a_100%)] text-slate-100"
+          ? "bg-[radial-gradient(circle_at_top_left,#0f2d47_0,#020617_44%,#0f172a_100%)] text-slate-100 "
+          : "bg-[radial-gradient(circle_at_top_left,#dbeafe_0,#f8fafc_38%,#eef2ff_100%)] text-slate-950"
       }`}
     >
       <div className="mx-auto flex min-h-[calc(100vh-2.5rem)] w-full max-w-6xl flex-col">
@@ -89,7 +89,7 @@ function OtpVerify() {
               </h1>
               <p
                 className={`mt-5 text-base leading-7 ${
-                  theme == "light" ? "text-slate-600" : "text-slate-400"
+                  theme == "light" ? "text-slate-400" : "text-slate-600"
                 }`}
               >
                 Enter the one-time code sent to your email and finish setting up
@@ -101,8 +101,8 @@ function OtpVerify() {
           <div
             className={`mx-auto w-full max-w-md rounded-[1.5rem] border p-5 shadow-2xl sm:p-7 ${
               theme == "light"
-                ? "border-white/80 bg-white/80 shadow-sky-900/10"
-                : "border-slate-800/80 bg-slate-950/85 shadow-black/45"
+                ? "border-slate-800/80 bg-slate-950/85 shadow-black/45 "
+                : "border-white/80 bg-white/80 shadow-sky-900/10"
             }`}
           >
             <div className="mb-7 text-center">
@@ -112,7 +112,7 @@ function OtpVerify() {
               <h1 className="text-3xl font-black tracking-normal">Verify OTP</h1>
               <p
                 className={`mt-2 text-sm leading-6 ${
-                  theme == "light" ? "text-slate-500" : "text-slate-400"
+                  theme == "light" ? "text-slate-400" : "text-slate-500"
                 }`}
               >
                 {email ? `Code sent to ${email}` : "Enter the code sent to your email"}
@@ -122,7 +122,7 @@ function OtpVerify() {
             <label className="block">
               <span
                 className={`mb-2 block text-sm font-semibold ${
-                  theme == "light" ? "text-slate-600" : "text-slate-300"
+                  theme == "light" ? "text-slate-300" : "text-slate-600"
                 }`}
               >
                 One-time password
@@ -132,8 +132,8 @@ function OtpVerify() {
                 placeholder="Enter OTP"
                 className={`h-14 w-full rounded-2xl border px-5 text-center text-2xl font-black tracking-[0.35em] outline-none transition focus:border-sky-500 focus:ring-4 focus:ring-sky-500/20 ${
                   theme == "light"
-                    ? "border-slate-200 bg-white text-slate-950 placeholder:text-slate-300"
-                    : "border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-600"
+                    ? "border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-600 "
+                    : "border-slate-200 bg-white text-slate-950 placeholder:text-slate-300"
                 }`}
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
@@ -145,11 +145,11 @@ function OtpVerify() {
               className={`mt-4 flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold ${
                 timer > 0
                   ? theme == "light"
-                    ? "bg-emerald-50 text-emerald-700"
-                    : "bg-emerald-500/10 text-emerald-300"
+                    ? "bg-emerald-500/10 text-emerald-300 "
+                    : "bg-emerald-50 text-emerald-700"
                   : theme == "light"
-                    ? "bg-red-50 text-red-700"
-                    : "bg-red-500/10 text-red-300"
+                    ? "bg-red-500/10 text-red-300 "
+                    : "bg-red-50 text-red-700"
               }`}
             >
               <FiClock />
@@ -164,8 +164,8 @@ function OtpVerify() {
                 className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-4 font-bold transition ${
                   timer <= 0
                     ? theme == "light"
-                      ? "cursor-not-allowed bg-slate-200 text-slate-400"
-                      : "cursor-not-allowed bg-slate-800 text-slate-500"
+                      ? "cursor-not-allowed bg-slate-800 text-slate-500 "
+                      : "cursor-not-allowed bg-slate-200 text-slate-400"
                     : "bg-[#1D9BF0] text-white shadow-lg shadow-sky-500/25 hover:-translate-y-0.5 hover:bg-sky-500"
                 }`}
                 onClick={EmailverifyHandler}
@@ -177,8 +177,8 @@ function OtpVerify() {
                 type="button"
                 className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl border px-4 font-bold transition hover:-translate-y-0.5 ${
                   theme == "light"
-                    ? "border-slate-200 bg-white text-slate-700 hover:border-sky-300 hover:text-sky-600"
-                    : "border-slate-700 bg-slate-900 text-slate-200 hover:border-sky-500 hover:text-sky-300"
+                    ? "border-slate-700 bg-slate-900 text-slate-200 hover:border-sky-500 hover:text-sky-300 "
+                    : "border-slate-200 bg-white text-slate-700 hover:border-sky-300 hover:text-sky-600"
                 }`}
                 onClick={resendOtpHandler}
               >

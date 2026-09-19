@@ -40,7 +40,7 @@ const DeleteAccountComponent = () => {
           <img src="/danger.png" alt="danger" className="w-30 h-30" />
           <h1
             className={`lg:mb-10 lg:text-xl  ml-6  font-black px-2 py-1 lg:px-4 lg:py-2 rounded-xl  lg:mx-4
-                ${isLight ? "text-black" : "text-wehite"}
+                ${isLight ? "text-white" : "text-black"}
                 `}
           >
             Are you sure you want to permanently delete your account? <br /> All
