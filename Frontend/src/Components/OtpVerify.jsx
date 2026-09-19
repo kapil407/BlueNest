@@ -5,12 +5,18 @@ import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import ThemeToggle from "./Theme.jsx";
-import { FiCheckCircle, FiClock, FiMail, FiRefreshCw, FiShield } from "react-icons/fi";
+import {
+  FiCheckCircle,
+  FiClock,
+  FiMail,
+  FiRefreshCw,
+  FiShield,
+} from "react-icons/fi";
 import Typewriter from "./TypeWriter.jsx";
 import { ClipLoader } from "react-spinners";
 
 function OtpVerify() {
-  const {loading,setLoading}=useState(false);
+  const [ loading, setLoading ] = useState(false);
   const theme = useSelector((store) => store.theme.theme);
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(120);
@@ -49,8 +55,7 @@ function OtpVerify() {
       }
     } catch (error) {
       console.log("error", error);
-    }
-    finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -91,7 +96,10 @@ function OtpVerify() {
                 <FiShield size={28} />
               </div>
               <h1 className="text-3xl font-black leading-tight tracking-normal">
-                <Typewriter word="Secure your BlueNest account" speedText={300}/>
+                <Typewriter
+                  word="Secure your BlueNest account"
+                  speedText={300}
+                />
               </h1>
               <p
                 className={`mt-5 text-base leading-7 ${
@@ -115,13 +123,17 @@ function OtpVerify() {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-sky-500 text-white shadow-lg shadow-sky-500/30">
                 <FiMail size={30} />
               </div>
-              <h1 className="text-3xl font-black tracking-normal">Verify OTP</h1>
+              <h1 className="text-3xl font-black tracking-normal">
+                Verify OTP
+              </h1>
               <p
                 className={`mt-2 text-sm leading-6 ${
                   theme == "light" ? "text-slate-400" : "text-slate-500"
                 }`}
               >
-                {email ? `Code sent to ${email}` : "Enter the code sent to your email"}
+                {email
+                  ? `Code sent to ${email}`
+                  : "Enter the code sent to your email"}
               </p>
             </div>
 
@@ -165,40 +177,31 @@ function OtpVerify() {
             </div>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {/* <button
+            
+              <button
                 type="button"
+                onClick={EmailverifyHandler}
+                disabled={!otp.trim() || timer <= 0 || loading}
                 className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-4 font-bold transition ${
-                  timer <= 0
-                    ? theme == "light"
-                      ? "cursor-not-allowed bg-slate-800 text-slate-500 "
+                  !otp.trim() || timer <= 0 || loading
+                    ? theme === "light"
+                      ? "cursor-not-allowed bg-slate-800 text-slate-500"
                       : "cursor-not-allowed bg-slate-200 text-slate-400"
                     : "bg-[#1D9BF0] text-white shadow-lg shadow-sky-500/25 hover:-translate-y-0.5 hover:bg-sky-500"
                 }`}
-                onClick={EmailverifyHandler}
               >
-                <FiCheckCircle />
-                Verify OTP
-              </button> */}
-               <button
-                  onClick={EmailverifyHandler}
-                 
-                  className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-4 font-bold transition ${
-                    timer <= 0
-                    ? theme == "light"
-                      ? "cursor-not-allowed bg-slate-800 text-slate-500 "
-                      : "cursor-not-allowed bg-slate-200 text-slate-400"
-                    : "bg-[#1D9BF0] text-white shadow-lg shadow-sky-500/25 hover:-translate-y-0.5 hover:bg-sky-500"
-                  }`}
-                >
-                  {loading ? (
-                    <>
-                      <ClipLoader size={18} color="#fff" />
-                        Verify...
-                    </>
-                  ) : (
-                    "  Verify OTP"
-                  )}
-                </button>
+                {loading ? (
+                  <>
+                    <ClipLoader size={18} color="#fff" />
+                    Verifying...
+                  </>
+                ) : (
+                  <>
+                    <FiCheckCircle />
+                    Verify OTP
+                  </>
+                )}
+              </button>
               <button
                 type="button"
                 className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl border px-4 font-bold transition hover:-translate-y-0.5 ${
