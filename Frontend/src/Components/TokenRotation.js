@@ -17,7 +17,7 @@ const TokenRotation = () => {
 
     // Har 14 minutes
 
-    const intervalId = setInterval(refreshAccessToken, 14 * 60 * 1000);
+    const intervalId = setInterval(refreshAccessToken, 1 * 60 * 1000);
 
     return () => clearInterval(intervalId);
   }, []);

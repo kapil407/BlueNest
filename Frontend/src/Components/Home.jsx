@@ -11,7 +11,7 @@ import useOtherUsers from "../hooks/useOtherUsers.js";
 import useGetTweets from "../hooks/useGetTweets.js";
 import ThemeToggle from "./Theme.jsx";
 import CursorSportLightEffect from "./CursorSpotlightEffect.jsx";
-import TokenRotation from "./TokenRotation.jsx";
+import TokenRotation from "./TokenRotation.js";
 
 const Home = () => {
   const navigate = useNavigate();
