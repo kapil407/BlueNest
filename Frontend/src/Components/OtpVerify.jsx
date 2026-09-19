@@ -90,7 +90,7 @@ function OtpVerify() {
               <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-500 text-white shadow-lg shadow-sky-500/30">
                 <FiShield size={28} />
               </div>
-              <h1 className="text-5xl font-black leading-tight tracking-normal">
+              <h1 className="text-3xl font-black leading-tight tracking-normal">
                 <Typewriter word="Secure your BlueNest account" speedText={300}/>
               </h1>
               <p

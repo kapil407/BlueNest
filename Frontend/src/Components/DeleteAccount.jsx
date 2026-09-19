@@ -32,8 +32,9 @@ const DeleteAccountComponent = () => {
   return (
     <>
       <div className="  fixed w-full  lg:w-[72%] h-full insite-0 z-50 backdrop-blur-sm  ">
-        <Link to="/setting">
+        <Link to="/setting" className="flex items-center">
           <FaLongArrowAltLeft className="ml-4 mt-4 cursor-pointer" size={25} />
+          <p>Back</p>
         </Link>
 
         <div className="flex flex-col items-center justify-center h-full">
