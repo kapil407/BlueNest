@@ -153,8 +153,8 @@ const LeftSideBar = ({ className = "", onClose }) => {
                 className={`group relative z-10 mb-1 lg:w-full flex h-14 items-center gap-4 rounded-2xl px-4 text-lg font-bold transition-all duration-300 ease-out hover:translate-x-1 active:scale-[0.98] ${
                   
                      isLight
-                      ? "text-slate-700 hover:bg-slate-100/80 hover:text-slate-950"
-                      : "text-slate-300 hover:bg-slate-900/80 hover:text-white"
+                      ? " hover:bg-slate-100/80 hover:text-slate-950"
+                      : " hover:bg-slate-900/80 hover:text-white"
                 }`}
               >
                  <ThemeToggle/>
