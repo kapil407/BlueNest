@@ -113,7 +113,7 @@ const LeftSideBar = ({ className = "", onClose }) => {
           </div>
         </Link>
 
-        <nav className="relative w-full lg:w-full space-y-1">
+        <nav className="relative w-full lg:w-full space-y-2">
           <span
             className="pointer-events-none absolute left-0 top-0 h-14 w-full rounded-2xl bg-[#1D9BF0] shadow-lg shadow-sky-500/20 transition-transform duration-300 ease-out"
             style={{ transform: `translateY(${activeIndex * 4}rem)` }}
@@ -192,7 +192,7 @@ const LeftSideBar = ({ className = "", onClose }) => {
           onClick={logoutHandler}
           className={`flex w-full items-center cursor-pointer justify-center gap-2 rounded-2xl px-4 py-2.5 font-bold transition ${
             isLight
-              ? "bg-slate-900 text-white hover:bg-slate-700"
+              ? "bg-slate-950 text-white hover:bg-slate-700"
               : "bg-white text-slate-950 hover:bg-slate-200"
           }`}
         >
