@@ -113,7 +113,7 @@ const LeftSideBar = ({ className = "", onClose }) => {
           </div>
         </Link>
 
-        <nav className="relative w-full lg:w-full space-y-2">
+        <nav className="relative w-full lg:w-full space-y-1">
           <span
             className="pointer-events-none absolute left-0 top-0 h-14 w-full rounded-2xl bg-[#1D9BF0] shadow-lg shadow-sky-500/20 transition-transform duration-300 ease-out"
             style={{ transform: `translateY(${activeIndex * 4}rem)` }}
@@ -146,6 +146,7 @@ const LeftSideBar = ({ className = "", onClose }) => {
             );
           })}
           <div className="flex justify-between ">
+            <p>Change theme</p>
             <ThemeToggle/>
              <Link
                
