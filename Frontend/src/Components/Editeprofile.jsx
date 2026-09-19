@@ -9,6 +9,7 @@ import { FaImage } from "react-icons/fa";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { getMyProfile } from "../redux/userSlice.js";
 import Typewriter from "./TypeWriter.jsx";
+import { ClipLoader } from "react-spinners";
 const EditeProfile = () => {
   const navigate=useNavigate();
  
