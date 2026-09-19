@@ -49,8 +49,7 @@ support to optimize user experience during data fetching.
 
 
 <img width="1532" height="688" alt="Screenshot 2026-07-21 191746" src="https://github.com/user-attachments/assets/24ea8b21-c94b-4a60-b278-3e8b06dde413" />
-<img width="720" height="1600" alt="WhatsApp Image 2026-09-19 at 6 03 44 PM (1)" src="https://github.com/user-attachments/assets/9b365151-1117-4b0c-b1e2-c3f4e2563226" />
-<img width="720" height="1600" alt="WhatsApp Image 2026-09-19 at 6 03 44 PM" src="https://github.com/user-attachments/assets/6455ff4c-c4ea-4a89-bbe7-f6006e3ba2f7" />
+
 
 
 <img width="1526" height="692" alt="Screenshot 2026-07-21 200934" src="https://github.com/user-attachments/assets/1517fcbb-7fee-40ef-bdcb-872ffd67259e" />
