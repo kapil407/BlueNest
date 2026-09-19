@@ -61,8 +61,9 @@ const EditeProfile = () => {
   return (
     
     <div className="lg:w-screen fixed gap-8 justify-center gap-4 lg:h-screen backdrop-blur-sm  flex-col items-center z-50 inset-0 bg-transparent ">
-         <Link to={`/profile/${user?._id}`}>
+         <Link to={`/profile/${user?._id}`} className="flex ">
           <FaLongArrowAltLeft className="lg:m-4 m-2 text-2xl cursor-pointer"/>
+          <p className="ml-2"> Back</p>
          </Link>
         <h1 className="text-center mb-8 z-50  font-bold text-2xl ">
          
