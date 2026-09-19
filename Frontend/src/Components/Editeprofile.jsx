@@ -19,14 +19,14 @@ const EditeProfile = () => {
   const dispatch = useDispatch();
   const { profile, user } = useSelector((store) => store.user);
 
-  const [firstName, setFirstName] = useState(user?.firstName || "");
+  const [firstName, setFirstName] = useState("");
   const [image, setImage] = useState(null);
 
-  const [lastName, setLastName] = useState(user?.lastName || "");
+  const [lastName, setLastName] = useState("");
 
-  const [userName, setUserName] = useState(user?.userName || "");
+  const [userName, setUserName] = useState("");
 
-  const [bio, setBio] = useState(user?.bio || "");
+  const [bio, setBio] = useState("");
   const EditeHandler = async () => {
     try {
       const formdata = new FormData();
@@ -130,11 +130,7 @@ const EditeProfile = () => {
         </div>
 
         <div className="w-[100%] flex justify-center items-center">
-          <Link
-           
-           
-            className="flex bg-[#1D9BF0]  hover:bg-blue-400 items-center justify-center  mb-4 rounded-xl text-white w-[35%] p-2 "
-          >
+         
            
               <button
                   onClick={EditeHandler}
@@ -154,7 +150,7 @@ const EditeProfile = () => {
                     "Update"
                   )}
                 </button>
-          </Link>
+       
         </div>
       </div>
     </div>
