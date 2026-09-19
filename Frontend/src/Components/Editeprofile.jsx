@@ -7,7 +7,7 @@ import { USER_API_END_POINT } from "../Utils/constant.js";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa";
 import { FaLongArrowAltLeft } from "react-icons/fa";
-import { getMyProfile } from "../redux/userSlice.js";
+import { getMyProfile, getUser } from "../redux/userSlice.js";
 import Typewriter from "./TypeWriter.jsx";
 import { ClipLoader } from "react-spinners";
 const EditeProfile = () => {
@@ -53,11 +53,13 @@ const EditeProfile = () => {
       if (res?.data?.success) {
         toast.success(res.data.message);
         dispatch(getMyProfile(res?.data?.updated));
+        dispatch(getUser(res?.data?.updated));
+        dispatch(getRefresh());
          navigate('/');
         
       }
 
-      dispatch(getRefresh());
+      
     } catch (error) {
       console.error(error);
     }
