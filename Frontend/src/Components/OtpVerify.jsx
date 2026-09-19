@@ -16,7 +16,7 @@ import Typewriter from "./TypeWriter.jsx";
 import { ClipLoader } from "react-spinners";
 
 function OtpVerify() {
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
   const theme = useSelector((store) => store.theme.theme);
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(120);
@@ -177,17 +177,14 @@ function OtpVerify() {
             </div>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            
               <button
                 type="button"
                 onClick={EmailverifyHandler}
                 disabled={!otp.trim() || timer <= 0 || loading}
                 className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-4 font-bold transition ${
                   !otp.trim() || timer <= 0 || loading
-                    ? theme === "light"
-                      ? "cursor-not-allowed bg-slate-800 text-slate-500"
-                      : "cursor-not-allowed bg-slate-200 text-slate-400"
-                    : "bg-[#1D9BF0] text-white shadow-lg shadow-sky-500/25 hover:-translate-y-0.5 hover:bg-sky-500"
+                    ? "cursor-not-allowed bg-slate-200 text-slate-400"
+                    : "cursor-not-allowed bg-[#1D9BF0] text-white shadow-lg shadow-sky-500/25 hover:-translate-y-0.5 hover:bg-sky-500"
                 }`}
               >
                 {loading ? (
@@ -205,9 +202,9 @@ function OtpVerify() {
               <button
                 type="button"
                 className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl border px-4 font-bold transition hover:-translate-y-0.5 ${
-                  theme == "light"
-                    ? "border-slate-700 bg-slate-900 text-slate-200 hover:border-sky-500 hover:text-sky-300 "
-                    : "border-slate-200 bg-white text-slate-700 hover:border-sky-300 hover:text-sky-600"
+                  timer > 0 || loading || otp
+                    ? "cursor-not-allowed border-slate-200 bg-white text-slate-700 hover:border-sky-300 hover:text-sky-600"
+                    : " bg-slate-200 text-slate-400"
                 }`}
                 onClick={resendOtpHandler}
               >
