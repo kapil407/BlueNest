@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { getRefresh } from "../redux/tweetSlice";
 import { USER_API_END_POINT } from "../Utils/constant.js";
@@ -10,6 +10,7 @@ import { FaLongArrowAltLeft } from "react-icons/fa";
 import { getMyProfile } from "../redux/userSlice.js";
 import Typewriter from "./TypeWriter.jsx";
 const EditeProfile = () => {
+  const navigate=useNavigate();
  
   const { tweet } = useSelector((store) => store?.tweet);
   const theme = useSelector((store) => store.theme.theme);
@@ -51,6 +52,7 @@ const EditeProfile = () => {
       if (res?.data?.success) {
         toast.success(res.data.message);
         dispatch(getMyProfile(res?.data?.updated));
+         navigate('/');
         
       }
 
@@ -60,6 +62,7 @@ const EditeProfile = () => {
     }
     finally{
       setLoading(false);
+     
     }
   };
 
@@ -128,8 +131,8 @@ const EditeProfile = () => {
 
         <div className="w-[100%] flex justify-center items-center">
           <Link
-            onClick={EditeHandler}
-            to={"/"}
+           
+           
             className="flex bg-[#1D9BF0]  hover:bg-blue-400 items-center justify-center  mb-4 rounded-xl text-white w-[35%] p-2 "
           >
            
@@ -137,7 +140,7 @@ const EditeProfile = () => {
                   onClick={EditeHandler}
                   disabled={(!firstName.trim() && !lastName?.trim() && !userName && !image && !bio) || loading}
                   className={`flex min-w-24 items-center justify-center gap-2 rounded-full lg:px-5 lg:py-2.5 py-3 font-bold text-white transition disabled:opacity-60 ${
-                    (!media && !description?.trim()) || loading
+                    (!firstName.trim() && !lastName?.trim() && !userName && !image && !bio) || loading
                       ? "cursor-not-allowed bg-slate-400"
                       : "cursor-pointer bg-[#1D9BF0] shadow-lg shadow-sky-500/20 hover:bg-sky-500"
                   }`}
