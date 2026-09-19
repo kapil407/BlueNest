@@ -289,7 +289,7 @@ export const LoginController = async (req, res) => {
     // creating tokein rotation  for security
     const accessToken = AccessToken(user?._id);
     const refreshToken = RefreshToken(user?._id);
-   
+
     const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
 
     const DeviceInfo = req.headers["user-agent"] || "Unknown Device";
@@ -402,7 +402,6 @@ export const LogOutController = async (req, res) => {
       });
     }
 
-
     const decoded = jwt.verify(
       refreshtoken,
       process.env.RefreshToken_Secret_Key,
@@ -468,9 +467,11 @@ export const editProfileController = async (req, res) => {
       loggedinUser.profilePic = imageUrl;
     }
 
-    Object.keys(req.body).forEach(
-      (field) => (loggedinUser[field] = req.body[field]),
-    );
+    Object.keys(req.body).forEach((field) => {
+      if (req.body[field] !== undefined && req.body[field] !== null) {
+        loggedinUser[field] = req.body[field];
+      }
+    });
 
     const updated = await loggedinUser.save();
     // console.log("updated", updated.profilePic);
