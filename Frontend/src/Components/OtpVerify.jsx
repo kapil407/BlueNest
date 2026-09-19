@@ -204,8 +204,8 @@ function OtpVerify() {
                 disabled={timer > 0 || loading || otp}
                 className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl border px-4 font-bold transition hover:-translate-y-0.5 ${
                   timer > 0 || loading || otp
-                    ? "cursor-not-allowed border-slate-200 bg-white text-slate-700 "
-                    : " bg-slate-200 text-slate-400 hover:border-sky-300 hover:text-sky-600"
+                    ? "cursor-not-allowed border-slate-200 bg-white text-slate-300 "
+                    : " bg-slate-600 text-slate-400 hover:border-sky-300 hover:text-sky-600"
                 }`}
                 onClick={resendOtpHandler}
               >
