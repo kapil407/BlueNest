@@ -72,7 +72,7 @@ const LeftSideBar = ({ className = "", onClose }) => {
   );
 
   return (
-    <div className={`flex h-full  lg:w-[70%] lg:px-2 lg:py-2 rounded-2xl border bg-slate-900 border-slate-700 flex-col justify-between ${className}
+    <div className={`flex h-full  lg:w-[70%] lg:px-2 lg:py-2 rounded-2xl border bg-slate-900 border-slate-200 flex-col justify-between ${className}
     ${isLight ? " bg-slate-900 text-white" : "bg-white text-slate-950"}`
     }>
       <div>
