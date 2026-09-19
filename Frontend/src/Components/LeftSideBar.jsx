@@ -161,8 +161,8 @@ const LeftSideBar = ({ className = "", onClose }) => {
                  <p className={`${
                   
                      isLight
-                      ? "text-slate-700 hover:bg-slate-100/80 hover:text-slate-950"
-                      : "text-slate-300 hover:bg-slate-900/80 hover:text-white"}`}>Change theme</p>
+                      ? "text-slate-300 "
+                      : "text-slate-700 "}`}>Change theme</p>
                
               </div>
         
