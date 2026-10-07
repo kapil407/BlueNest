@@ -771,30 +771,25 @@ export const LogoutFromAllDevices = async (req, res) => {
 
 export const DeleteAccountController = async (req, res) => {
   try {
-    const refreshtoken = req?.cookies?.refreshToken;
-    if (!refreshtoken) {
-      res.clearCookie("refreshToken");
-      res.clearCookie("accessToken");
-      return res
-        .status(200)
-        .json({ message: "Account is deleted", success: true });
-    }
+   
     const userId = req.userId;
-    console.log("delete");
-    const comment = await Comment.deleteMany({ userId });
-    const tweet = await Tweet.deleteMany({ userId: req.userId });
-    const user = await User.findByIdAndDelete(userId);
+     const user = await User.findById(userId);
     if (!user) {
       res.clearCookie("accessToken");
       res.clearCookie("refreshToken");
       return res.json({ message: "user is not found", success: false });
     }
+    console.log("delete");
+    const comment = await Comment.deleteMany({ userId });
+    const tweet = await Tweet.deleteMany({ userId: req.userId });
+    User.findByIdAndDelete(userId);
+   
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
     return res
       .status(200)
       .json({ message: "Account is deleted", success: true });
-  } catch (errror) {
+  } catch (error) {
     console.log("error in DeleteAccount component");
     return res.status(500).json({ message: error });
   }
