@@ -2,11 +2,10 @@ import bcrypt from "bcrypt";
 import axios from "axios";
 import User from "../models/User.js";
 
-import cookie from "cookie-parser";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import Tweet from "../models/Tweets.js";
-import mongoose from "mongoose";
+
 import nodemailer from "nodemailer";
 import crypto, { secureHeapUsed } from "crypto";
 import uploadCloudinary from "../Middleware/Cloudinary.js";
@@ -126,7 +125,7 @@ export const verifyOTP = async (req, res) => {
     console.log("backend", emailId);
 
     if (!emailId || !otp) {
-      return res.status(400).json("email is undefined");
+      return res.status(400).json("email or otp is undefined ");
     }
 
     const user = await User.findOne({ emailId: emailId });
@@ -658,8 +657,6 @@ export const unFollowController = async (req, res) => {
         success: true,
       });
     }
-
-    
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -691,9 +688,9 @@ export const changeBackgroundImage = async (req, res) => {
 export const changePasswordController = async (req, res) => {
   try {
     const { newPassword, emailId } = req.body;
-    console.log("newPassword", newPassword, emailId);
+   
     const user = await User.findOne({ emailId });
-    console.log("user in change password", user);
+   
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedNewPassword;
     await user.save();
@@ -726,7 +723,7 @@ export const changeEmailAndPasswordController = async (req, res) => {
     console.log("user in change email controller", user.password);
     if (!newPassword) {
       const hashedNewPassword = await bcrypt.hash(user.password, 10);
-      user.password = hashedNewPassword;
+      user.password = user.password;
       user.email = newEmail;
     }
 
@@ -743,18 +740,13 @@ export const changeEmailAndPasswordController = async (req, res) => {
 
 export const LogoutFromAllDevices = async (req, res) => {
   try {
-    const refreshtoken = req?.cookies?.refreshToken;
-    if (!refreshtoken) {
-      res.clearCookie("refreshToken");
-      res.clearCookie("accessToken");
-      return res
-        .status(200)
-        .json({ message: "Account is deleted", success: true });
-    }
-    const userId = req.userId;
+   
+     const userId = req.userId;
+      const user = await User.findById(userId);
 
-    const user = await User.findById(userId);
-    console.log("user in logout from aall", user);
+   
+   
+    
     if (!user) {
       res.clearCookie("accessToken");
       res.clearCookie("refreshToken");
