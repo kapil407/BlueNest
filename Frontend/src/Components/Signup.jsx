@@ -15,7 +15,7 @@ import {
 } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import Typewriter from "./TypeWriter.jsx";
-import CursorSportLightEffect from './CursorSpotlightEffect.jsx'
+import CursorSportLightEffect from "./CursorSpotlightEffect.jsx";
 
 const Signup = () => {
   const theme = useSelector((store) => store.theme.theme);
@@ -32,7 +32,6 @@ const Signup = () => {
   const submittedHandler = async (e) => {
     e.preventDefault();
     try {
-            
       const res = await axios.post(
         `${USER_API_END_POINT}/signup`,
         { firstName, lastName, userName, emailId, password },
@@ -43,13 +42,17 @@ const Signup = () => {
           withCredentials: true,
         },
       );
-   
+
       console.log("sign", res);
       if (res.status === 200) {
         dispatch(getUser(res.data.newUser));
         toast.success(res.data.message);
 
-        if (res.data.success && res.data.newUser && !res.data.newUser.otpVerified) {
+        if (
+          res.data.success &&
+          res.data.newUser &&
+          !res.data.newUser.otpVerified
+        ) {
           navigate("/otpVerify");
         } else {
           navigate("/login");
@@ -87,7 +90,7 @@ const Signup = () => {
           : "bg-[radial-gradient(circle_at_top_left,#dbeafe_0,#f8fafc_35%,#eef2ff_100%)] text-slate-950"
       }`}
     >
-      <CursorSportLightEffect/>
+      <CursorSportLightEffect />
       <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-center">
         <div
           className={`grid max-h-full w-full overflow-hidden rounded-[1.5rem] border shadow-2xl lg:grid-cols-[0.95fr_1.05fr] ${
@@ -109,10 +112,13 @@ const Signup = () => {
                 BlueNest Social
               </div>
               <h1 className="max-w-md font-black leading-tight tracking-normal">
-              < Typewriter word="Your story starts here."/>
+                <Typewriter word="Your story starts here." />
               </h1>
-              <p className={`mt-4 max-w-sm text-sm leading-6 xl:text-base ${mutedText}`}>
-                Join, create your profile, and share your thoughts in a clean, fast, and friendly space.
+              <p
+                className={`mt-4 max-w-sm text-sm leading-6 xl:text-base ${mutedText}`}
+              >
+                Join, create your profile, and share your thoughts in a clean,
+                fast, and friendly space.
               </p>
             </div>
 
@@ -139,12 +145,14 @@ const Signup = () => {
                   alt="BlueNest logo"
                 />
                 <div>
-                  <p className="text-sm font-semibold text-sky-500">
-                    BlueNest
-                  </p>
+                  <p className="text-sm font-semibold text-sky-500">BlueNest</p>
                   <h1 className="text-2xl lg:text-2xl font-black">
-                   <Typewriter word="Create account" speedText={300} speedDelete={120} />
-                    </h1>
+                    <Typewriter
+                      word="Create account"
+                      speedText={300}
+                      speedDelete={120}
+                    />
+                  </h1>
                 </div>
               </div>
 
@@ -152,20 +160,26 @@ const Signup = () => {
                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-500">
                   Get started
                 </p>
-                <h2 className="mt-2 text-3xl font-black xl:text-4xl">Create account</h2>
+                <h2 className="mt-2 text-3xl font-black xl:text-4xl">
+                  Create account
+                </h2>
                 <p className={`mt-2 text-sm leading-6 ${mutedText}`}>
-                 Just a few details, and BlueNest is ready for you.
+                  Just a few details, and BlueNest is ready for you.
                 </p>
               </div>
 
               <form onSubmit={submittedHandler} className="space-y-3">
                 <div className="grid gap-3 sm:grid-cols-2">
                   <label className="block">
-                    <span className={`mb-2 block text-sm font-semibold ${mutedText}`}>
+                    <span
+                      className={`mb-2 block text-sm font-semibold ${mutedText}`}
+                    >
                       First name
                     </span>
                     <div className="relative">
-                      <FiUser className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 ${mutedText}`} />
+                      <FiUser
+                        className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 ${mutedText}`}
+                      />
                       <input
                         type="text"
                         placeholder="Kapil"
@@ -177,11 +191,15 @@ const Signup = () => {
                   </label>
 
                   <label className="block">
-                    <span className={`mb-2 block text-sm font-semibold ${mutedText}`}>
+                    <span
+                      className={`mb-2 block text-sm font-semibold ${mutedText}`}
+                    >
                       Last name
                     </span>
                     <div className="relative">
-                      <FiUser className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 ${mutedText}`} />
+                      <FiUser
+                        className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 ${mutedText}`}
+                      />
                       <input
                         type="text"
                         placeholder="Sharma"
@@ -194,11 +212,15 @@ const Signup = () => {
                 </div>
 
                 <label className="block">
-                  <span className={`mb-2 block text-sm font-semibold ${mutedText}`}>
+                  <span
+                    className={`mb-2 block text-sm font-semibold ${mutedText}`}
+                  >
                     Username
                   </span>
                   <div className="relative">
-                    <FiAtSign className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 ${mutedText}`} />
+                    <FiAtSign
+                      className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 ${mutedText}`}
+                    />
                     <input
                       type="text"
                       placeholder="kapil_01"
@@ -210,11 +232,15 @@ const Signup = () => {
                 </label>
 
                 <label className="block">
-                  <span className={`mb-2 block text-sm font-semibold ${mutedText}`}>
+                  <span
+                    className={`mb-2 block text-sm font-semibold ${mutedText}`}
+                  >
                     Email
                   </span>
                   <div className="relative">
-                    <FiMail className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 ${mutedText}`} />
+                    <FiMail
+                      className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 ${mutedText}`}
+                    />
                     <input
                       type="email"
                       placeholder="kapil@example.com"
@@ -226,7 +252,9 @@ const Signup = () => {
                 </label>
 
                 <label className="block">
-                  <span className={`mb-2 block text-sm font-semibold ${mutedText}`}>
+                  <span
+                    className={`mb-2 block text-sm font-semibold ${mutedText}`}
+                  >
                     Password
                   </span>
                   <div
@@ -258,9 +286,10 @@ const Signup = () => {
                 >
                   Create account
                 </button>
-                <div className="w-full">
-                  <span className="border "></span>
-                  <span>or</span><span className="border"></span>
+                <div className="w-full flex items-center gap-3">
+                  <span className="flex-1 border-t border-gray-500"></span>
+                  <span className="text-gray-400 text-sm">or</span>
+                  <span className="flex-1 border-t border-gray-500"></span>
                 </div>
 
                 <button
