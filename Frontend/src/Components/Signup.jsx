@@ -258,6 +258,10 @@ const Signup = () => {
                 >
                   Create account
                 </button>
+                <div className="w-full">
+                  <span className="border "></span>
+                  <span>or</span><span className="border"></span>
+                </div>
 
                 <button
                   type="button"
