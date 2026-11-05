@@ -229,7 +229,11 @@ function Login() {
                 >
                   Login
                 </button>
-
+                     <div className="w-full flex items-center gap-3">
+                  <span className="flex-1 border-t border-gray-500"></span>
+                  <span className="text-gray-400 text-sm">or</span>
+                  <span className="flex-1 border-t border-gray-500"></span>
+                </div>
                 <button
                   type="button"
                   onClick={googleLoginHandler}
